@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
         .build();
   }
 
-  @Provides public WeatherService providesWeatherService(Retrofit retrofit) {
+  @Provides public WeatherService provideWeatherService(Retrofit retrofit) {
     return retrofit.create(WeatherService.class);
   }
 }

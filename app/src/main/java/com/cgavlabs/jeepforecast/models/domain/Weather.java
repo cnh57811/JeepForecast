@@ -2,6 +2,7 @@ package com.cgavlabs.jeepforecast.models.domain;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import java.util.Locale;
 
 public class Weather {
 
@@ -22,6 +23,11 @@ public class Weather {
   //@SerializedName("flags")
   //@Expose
   //private Flags flags;
+
+  @Override public String toString() {
+    return String.format(Locale.getDefault(), "Lat:%f, Long:%f, Timezone:%s, Offset:%d", latitude,
+        longitude, timezone, offset);
+  }
 
   /**
    * @return The latitude

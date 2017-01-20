@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.cgavlabs.jeepforecast.di.DaggerMainScreenComponent;
@@ -28,7 +27,6 @@ public class MainActivity extends BaseActivity {
   }
 
   private void callWeather() {
-    Log.d("PRESENTER", "callWeather: presenter is " + presenter == null ? "null" : "NOT null");
     presenter.callWeather(33.0, -77.4);
   }
 

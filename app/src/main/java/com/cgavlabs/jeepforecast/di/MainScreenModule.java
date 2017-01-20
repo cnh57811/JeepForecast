@@ -5,6 +5,7 @@ import com.cgavlabs.jeepforecast.Contract;
 import com.cgavlabs.jeepforecast.MainInteractor;
 import com.cgavlabs.jeepforecast.MainPresenter;
 import com.cgavlabs.jeepforecast.PagerAdapter;
+import com.cgavlabs.jeepforecast.WeatherService;
 import dagger.Module;
 import dagger.Provides;
 
@@ -24,7 +25,8 @@ import dagger.Provides;
     return new MainPresenter(interactor);
   }
 
-  @Provides public Contract.Main.Interactor provideInteractor() {
-    return new MainInteractor();
+  @Provides public Contract.Main.Interactor provideInteractor(WeatherService weatherSvc) {
+    return new MainInteractor(weatherSvc);
   }
+
 }

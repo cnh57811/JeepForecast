@@ -1,6 +1,5 @@
 package com.cgavlabs.jeepforecast;
 
-import android.util.Log;
 import javax.inject.Inject;
 
 public class MainPresenter implements Contract.Main.Presenter {
@@ -12,7 +11,6 @@ public class MainPresenter implements Contract.Main.Presenter {
   }
 
   @Override public void callWeather(Double latitude, Double longitude) {
-    Log.d("INTERACTOR", "callWeather: interactor is " + interactor == null ? "null" : "NOT null");
     interactor.callWeather(latitude, longitude);
   }
 }
