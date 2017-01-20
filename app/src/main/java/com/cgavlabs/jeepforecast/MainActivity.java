@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.cgavlabs.jeepforecast.di.DaggerMainScreenComponent;
@@ -13,6 +14,7 @@ import javax.inject.Inject;
 public class MainActivity extends BaseActivity {
 
   @Inject PagerAdapter pagerAdapter;
+  @Inject Contract.Main.Presenter presenter;
   private Toolbar toolbar;
   private ViewPager viewPager;
   private TabLayout tabs;
@@ -22,6 +24,12 @@ public class MainActivity extends BaseActivity {
     setContentView(R.layout.activity_main);
     setupViews();
     setSupportActionBar(toolbar);
+    callWeather();
+  }
+
+  private void callWeather() {
+    Log.d("PRESENTER", "callWeather: presenter is " + presenter == null ? "null" : "NOT null");
+    presenter.callWeather(33.0, -77.4);
   }
 
   private void setupViews() {
