@@ -13,6 +13,7 @@ import javax.inject.Inject;
 public class MainActivity extends BaseActivity {
 
   @Inject PagerAdapter pagerAdapter;
+  @Inject Contract.Main.Presenter presenter;
   private Toolbar toolbar;
   private ViewPager viewPager;
   private TabLayout tabs;
@@ -22,6 +23,11 @@ public class MainActivity extends BaseActivity {
     setContentView(R.layout.activity_main);
     setupViews();
     setSupportActionBar(toolbar);
+    callWeather();
+  }
+
+  private void callWeather() {
+    presenter.callWeather(37.554239, -77.658531);
   }
 
   private void setupViews() {
