@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Daily {
+public class Hourly {
 
   private String summary;
   private String icon;
-  private List<Datum__> data = null;
+  private List<Datum_> data = null;
   private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
   public String getSummary() {
@@ -27,11 +27,11 @@ public class Daily {
     this.icon = icon;
   }
 
-  public List<Datum__> getData() {
+  public List<Datum_> getData() {
     return data;
   }
 
-  public void setData(List<Datum__> data) {
+  public void setData(List<Datum_> data) {
     this.data = data;
   }
 

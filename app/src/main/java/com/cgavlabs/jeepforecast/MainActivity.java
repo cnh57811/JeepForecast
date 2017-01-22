@@ -27,7 +27,7 @@ public class MainActivity extends BaseActivity {
   }
 
   private void callWeather() {
-    presenter.callWeather(33.0, -77.4);
+    presenter.callWeather(37.554239, -77.658531);
   }
 
   private void setupViews() {
