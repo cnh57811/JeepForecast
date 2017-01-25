@@ -1,6 +1,9 @@
-package com.cgavlabs.jeepforecast;
+package com.cgavlabs.jeepforecast.main;
 
 import android.util.Log;
+import com.cgavlabs.jeepforecast.Contract;
+import com.cgavlabs.jeepforecast.repos.WeatherRepo;
+import com.cgavlabs.jeepforecast.services.WeatherService;
 import com.cgavlabs.jeepforecast.models.domain.Weather;
 import javax.inject.Inject;
 import rx.Subscriber;
@@ -14,9 +17,11 @@ public class MainInteractor implements Contract.Main.Interactor {
   }
 
   private final WeatherService weatherSvc;
+  private final WeatherRepo weatherRepo;
 
-  @Inject public MainInteractor(WeatherService weatherSvc) {
+  @Inject public MainInteractor(WeatherService weatherSvc, WeatherRepo weatherRepo) {
     this.weatherSvc = weatherSvc;
+    this.weatherRepo = weatherRepo;
   }
 
   private native String getDarkSkyKey();
@@ -34,8 +39,9 @@ public class MainInteractor implements Contract.Main.Interactor {
             Log.e("MainInteractor", "onError: ", e);
           }
 
-          @Override public void onNext(Weather weather) {
+          @Override public void onNext(final Weather weather) {
             Log.d("MainInteractor", weather.toString());
+            weatherRepo.insertOrUpdate(weather);
           }
         });
   }

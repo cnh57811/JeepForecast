@@ -1,15 +1,13 @@
 package com.cgavlabs.jeepforecast.models.domain;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import io.realm.RealmList;
+import io.realm.RealmObject;
 
-public class Minutely {
+public class Minutely extends RealmObject {
 
   private String summary;
   private String icon;
-  private List<Datum> data = null;
-  private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+  private RealmList<Data> data = null;
 
   public String getSummary() {
     return summary;
@@ -27,20 +25,11 @@ public class Minutely {
     this.icon = icon;
   }
 
-  public List<Datum> getData() {
+  public RealmList<Data> getData() {
     return data;
   }
 
-  public void setData(List<Datum> data) {
+  public void setData(RealmList<Data> data) {
     this.data = data;
   }
-
-  public Map<String, Object> getAdditionalProperties() {
-    return this.additionalProperties;
-  }
-
-  public void setAdditionalProperty(String name, Object value) {
-    this.additionalProperties.put(name, value);
-  }
-
 }

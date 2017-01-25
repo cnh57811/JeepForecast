@@ -1,10 +1,9 @@
 package com.cgavlabs.jeepforecast.models.domain;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import io.realm.RealmList;
+import io.realm.RealmObject;
 
-public class Weather {
+public class Weather extends RealmObject {
 
   private Double latitude;
   private Double longitude;
@@ -14,9 +13,7 @@ public class Weather {
   private Minutely minutely;
   private Hourly hourly;
   private Daily daily;
-  private List<Alert> alerts = null;
-  private Flags flags;
-  private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+  private RealmList<Alert> alerts = null;
 
   public Double getLatitude() {
     return latitude;
@@ -82,28 +79,11 @@ public class Weather {
     this.daily = daily;
   }
 
-  public List<Alert> getAlerts() {
+  public RealmList<Alert> getAlerts() {
     return alerts;
   }
 
-  public void setAlerts(List<Alert> alerts) {
+  public void setAlerts(RealmList<Alert> alerts) {
     this.alerts = alerts;
   }
-
-  public Flags getFlags() {
-    return flags;
-  }
-
-  public void setFlags(Flags flags) {
-    this.flags = flags;
-  }
-
-  public Map<String, Object> getAdditionalProperties() {
-    return this.additionalProperties;
-  }
-
-  public void setAdditionalProperty(String name, Object value) {
-    this.additionalProperties.put(name, value);
-  }
-
 }

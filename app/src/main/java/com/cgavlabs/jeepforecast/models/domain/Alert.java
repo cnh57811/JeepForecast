@@ -1,16 +1,14 @@
 package com.cgavlabs.jeepforecast.models.domain;
 
-import java.util.HashMap;
-import java.util.Map;
+import io.realm.RealmObject;
 
-public class Alert {
+public class Alert extends RealmObject {
 
   private String title;
   private Integer time;
   private Integer expires;
   private String description;
   private String uri;
-  private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
   public String getTitle() {
     return title;
@@ -51,13 +49,4 @@ public class Alert {
   public void setUri(String uri) {
     this.uri = uri;
   }
-
-  public Map<String, Object> getAdditionalProperties() {
-    return this.additionalProperties;
-  }
-
-  public void setAdditionalProperty(String name, Object value) {
-    this.additionalProperties.put(name, value);
-  }
-
 }
