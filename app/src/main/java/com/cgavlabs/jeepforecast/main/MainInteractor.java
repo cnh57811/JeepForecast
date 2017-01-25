@@ -1,8 +1,10 @@
-package com.cgavlabs.jeepforecast;
+package com.cgavlabs.jeepforecast.main;
 
 import android.util.Log;
+import com.cgavlabs.jeepforecast.Contract;
+import com.cgavlabs.jeepforecast.repos.WeatherRepo;
+import com.cgavlabs.jeepforecast.services.WeatherService;
 import com.cgavlabs.jeepforecast.models.domain.Weather;
-import io.realm.Realm;
 import javax.inject.Inject;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -15,11 +17,11 @@ public class MainInteractor implements Contract.Main.Interactor {
   }
 
   private final WeatherService weatherSvc;
-  private final Realm realm;
+  private final WeatherRepo weatherRepo;
 
-  @Inject public MainInteractor(WeatherService weatherSvc, Realm realm) {
+  @Inject public MainInteractor(WeatherService weatherSvc, WeatherRepo weatherRepo) {
     this.weatherSvc = weatherSvc;
-    this.realm = realm;
+    this.weatherRepo = weatherRepo;
   }
 
   private native String getDarkSkyKey();
@@ -39,19 +41,7 @@ public class MainInteractor implements Contract.Main.Interactor {
 
           @Override public void onNext(final Weather weather) {
             Log.d("MainInteractor", weather.toString());
-            realm.executeTransactionAsync(new Realm.Transaction() {
-              @Override public void execute(Realm realm) {
-                realm.insertOrUpdate(weather);
-              }
-            }, new Realm.Transaction.OnSuccess() {
-              @Override public void onSuccess() {
-                Log.d("MainInteractor", "onSuccess: weather saved successfully");
-              }
-            }, new Realm.Transaction.OnError() {
-              @Override public void onError(Throwable error) {
-                Log.d("MainInteractor", "ruh roh", error);
-              }
-            });
+            weatherRepo.insertOrUpdate(weather);
           }
         });
   }

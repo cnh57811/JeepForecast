@@ -1,15 +1,15 @@
-package com.cgavlabs.jeepforecast;
+package com.cgavlabs.jeepforecast.main;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.cgavlabs.jeepforecast.today.TodayFragment;
 
-public class PagerAdapter extends FragmentPagerAdapter {
+public class MainPagerAdapter extends FragmentPagerAdapter {
 
   public static final int NUM_FRAGMENTS = 3;
 
-  public PagerAdapter(FragmentManager fm) {
+  public MainPagerAdapter(FragmentManager fm) {
     super(fm);
   }
 

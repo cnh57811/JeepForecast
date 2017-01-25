@@ -1,4 +1,4 @@
-package com.cgavlabs.jeepforecast;
+package com.cgavlabs.jeepforecast.main;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -6,13 +6,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.cgavlabs.jeepforecast.di.DaggerMainScreenComponent;
-import com.cgavlabs.jeepforecast.di.MainScreenModule;
+import com.cgavlabs.jeepforecast.BaseActivity;
+import com.cgavlabs.jeepforecast.Contract;
+import com.cgavlabs.jeepforecast.R;
 import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity {
 
-  @Inject PagerAdapter pagerAdapter;
+  @Inject MainPagerAdapter pagerAdapter;
   @Inject Contract.Main.Presenter presenter;
   private Toolbar toolbar;
   private ViewPager viewPager;
@@ -49,8 +50,8 @@ public class MainActivity extends BaseActivity {
   }
 
   @Override public void inject() {
-    DaggerMainScreenComponent.builder()
-        .mainScreenModule(new MainScreenModule(getSupportFragmentManager()))
+    DaggerMainComponent.builder()
+        .mainModule(new MainModule(getSupportFragmentManager()))
         .build()
         .inject(this);
   }

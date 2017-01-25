@@ -1,5 +1,6 @@
-package com.cgavlabs.jeepforecast;
+package com.cgavlabs.jeepforecast.main;
 
+import com.cgavlabs.jeepforecast.Contract;
 import javax.inject.Inject;
 
 public class MainPresenter implements Contract.Main.Presenter {

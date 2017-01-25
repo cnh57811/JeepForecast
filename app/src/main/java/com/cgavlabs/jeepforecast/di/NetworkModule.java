@@ -1,6 +1,6 @@
 package com.cgavlabs.jeepforecast.di;
 
-import com.cgavlabs.jeepforecast.WeatherService;
+import com.cgavlabs.jeepforecast.services.WeatherService;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;

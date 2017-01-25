@@ -1,4 +1,4 @@
-package com.cgavlabs.jeepforecast;
+package com.cgavlabs.jeepforecast.services;
 
 import com.cgavlabs.jeepforecast.models.domain.Weather;
 import retrofit2.http.GET;
