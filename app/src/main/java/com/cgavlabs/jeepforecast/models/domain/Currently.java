@@ -1,9 +1,8 @@
 package com.cgavlabs.jeepforecast.models.domain;
 
-import java.util.HashMap;
-import java.util.Map;
+import io.realm.RealmObject;
 
-public class Currently {
+public class Currently extends RealmObject {
 
   private Double time;
   private String summary;
@@ -23,7 +22,6 @@ public class Currently {
   private Double cloudCover;
   private Double pressure;
   private Double ozone;
-  private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
   public Double getTime() {
     return time;
@@ -168,13 +166,4 @@ public class Currently {
   public void setOzone(Double ozone) {
     this.ozone = ozone;
   }
-
-  public Map<String, Object> getAdditionalProperties() {
-    return this.additionalProperties;
-  }
-
-  public void setAdditionalProperty(String name, Object value) {
-    this.additionalProperties.put(name, value);
-  }
-
 }

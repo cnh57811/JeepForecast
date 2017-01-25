@@ -1,9 +1,8 @@
 package com.cgavlabs.jeepforecast.models.domain;
 
-import java.util.HashMap;
-import java.util.Map;
+import io.realm.RealmObject;
 
-public class Datum__ {
+public class Data extends RealmObject {
 
   private Double time;
   private String summary;
@@ -12,14 +11,17 @@ public class Datum__ {
   private Double sunsetTime;
   private Double moonPhase;
   private Double precipIntensity;
+  private Double precipIntensityError;
   private Double precipIntensityMax;
   private Double precipIntensityMaxTime;
   private Double precipProbability;
   private String precipType;
+  private Double temperature;
   private Double temperatureMin;
   private Double temperatureMinTime;
   private Double temperatureMax;
   private Double temperatureMaxTime;
+  private Double apparentTemperature;
   private Double apparentTemperatureMin;
   private Double apparentTemperatureMinTime;
   private Double apparentTemperatureMax;
@@ -32,7 +34,6 @@ public class Datum__ {
   private Double cloudCover;
   private Double pressure;
   private Double ozone;
-  private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
   public Double getTime() {
     return time;
@@ -250,12 +251,27 @@ public class Datum__ {
     this.ozone = ozone;
   }
 
-  public Map<String, Object> getAdditionalProperties() {
-    return this.additionalProperties;
+  public Double getPrecipIntensityError() {
+    return precipIntensityError;
   }
 
-  public void setAdditionalProperty(String name, Object value) {
-    this.additionalProperties.put(name, value);
+  public void setPrecipIntensityError(Double precipIntensityError) {
+    this.precipIntensityError = precipIntensityError;
   }
 
+  public Double getTemperature() {
+    return temperature;
+  }
+
+  public void setTemperature(Double temperature) {
+    this.temperature = temperature;
+  }
+
+  public Double getApparentTemperature() {
+    return apparentTemperature;
+  }
+
+  public void setApparentTemperature(Double apparentTemperature) {
+    this.apparentTemperature = apparentTemperature;
+  }
 }

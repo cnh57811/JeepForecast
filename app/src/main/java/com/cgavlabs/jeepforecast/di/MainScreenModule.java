@@ -8,6 +8,8 @@ import com.cgavlabs.jeepforecast.PagerAdapter;
 import com.cgavlabs.jeepforecast.WeatherService;
 import dagger.Module;
 import dagger.Provides;
+import io.realm.Realm;
+import javax.inject.Singleton;
 
 @Module public class MainScreenModule {
 
@@ -17,7 +19,7 @@ import dagger.Provides;
     this.fm = fm;
   }
 
-  @Provides public PagerAdapter providesPagerAdapter() {
+  @Provides @Singleton public PagerAdapter providesPagerAdapter() {
     return new PagerAdapter(fm);
   }
 
@@ -25,8 +27,8 @@ import dagger.Provides;
     return new MainPresenter(interactor);
   }
 
-  @Provides public Contract.Main.Interactor provideInteractor(WeatherService weatherSvc) {
-    return new MainInteractor(weatherSvc);
+  @Provides public Contract.Main.Interactor provideInteractor(WeatherService weatherSvc, Realm realm) {
+    return new MainInteractor(weatherSvc, realm);
   }
 
 }
