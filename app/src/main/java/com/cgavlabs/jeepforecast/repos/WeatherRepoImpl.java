@@ -1,6 +1,5 @@
 package com.cgavlabs.jeepforecast.repos;
 
-import android.util.Log;
 import com.cgavlabs.jeepforecast.models.DataSavedEvent;
 import com.cgavlabs.jeepforecast.models.domain.Currently;
 import com.cgavlabs.jeepforecast.models.domain.Data;
@@ -8,6 +7,7 @@ import com.cgavlabs.jeepforecast.models.domain.Weather;
 import io.realm.Realm;
 import javax.inject.Inject;
 import org.greenrobot.eventbus.EventBus;
+import timber.log.Timber;
 
 public class WeatherRepoImpl implements WeatherRepo {
   private final Realm realm;
@@ -23,12 +23,12 @@ public class WeatherRepoImpl implements WeatherRepo {
       }
     }, new Realm.Transaction.OnSuccess() {
       @Override public void onSuccess() {
-        Log.d("WeatherRepoImpl", "onSuccess: weather saved successfully");
+        Timber.d("Weather successfully persisted to db");
         EventBus.getDefault().post(new DataSavedEvent());
       }
     }, new Realm.Transaction.OnError() {
       @Override public void onError(Throwable error) {
-        Log.d("WeatherRepoImpl", "ruh roh", error);
+        Timber.e(error);
       }
     });
   }

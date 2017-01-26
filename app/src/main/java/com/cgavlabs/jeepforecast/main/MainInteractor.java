@@ -1,6 +1,5 @@
 package com.cgavlabs.jeepforecast.main;
 
-import android.util.Log;
 import com.cgavlabs.jeepforecast.Contract;
 import com.cgavlabs.jeepforecast.models.domain.Weather;
 import com.cgavlabs.jeepforecast.repos.WeatherRepo;
@@ -9,6 +8,7 @@ import javax.inject.Inject;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class MainInteractor implements Contract.Main.Interactor {
 
@@ -32,15 +32,14 @@ public class MainInteractor implements Contract.Main.Interactor {
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Subscriber<Weather>() {
           @Override public void onCompleted() {
-            Log.d("MainInteractor", "COMPLETED");
           }
 
           @Override public void onError(Throwable e) {
-            Log.e("MainInteractor", "onError: ", e);
+            Timber.e(e);
           }
 
           @Override public void onNext(final Weather weather) {
-            Log.d("MainInteractor", weather.toString());
+            Timber.d("Weather successfully retrieved from network");
             weatherRepo.insertOrUpdate(weather);
           }
         });

@@ -1,7 +1,6 @@
 package com.cgavlabs.jeepforecast.today;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import javax.inject.Inject;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import timber.log.Timber;
 
 public class TodayFragment extends BaseFragment implements Contract.Today.View {
 
@@ -41,25 +41,21 @@ public class TodayFragment extends BaseFragment implements Contract.Today.View {
 
   @Override public void onStart() {
     super.onStart();
-    Log.d("TodayFragment", "onStart:");
     EventBus.getDefault().register(this);
   }
 
   @Override public void onResume() {
     super.onResume();
-    Log.d("TodayFragment", "onResume:");
     presenter.getTodaysWeather();
   }
 
   @Override public void onStop() {
     super.onStop();
-    Log.d("TodayFragment", "onStop:");
     EventBus.getDefault().unregister(this);
   }
 
-  @Subscribe(threadMode = ThreadMode.MAIN)
-  public void onWeatherDataUpdated(DataSavedEvent e){
-    Log.d("TodayFragment", "onWeatherDataUpdated: ");
+  @Subscribe(threadMode = ThreadMode.MAIN) public void onWeatherDataUpdated(DataSavedEvent e) {
+    Timber.d("Event bus initiated weather update");
     presenter.getTodaysWeather();
   }
 
@@ -67,7 +63,7 @@ public class TodayFragment extends BaseFragment implements Contract.Today.View {
     actualTemp.setText(day.getActualTemp());
     highTemp.setText(day.getHighTemp());
     lowTemp.setText(day.getLowTemp());
-    Log.d("TodayFragment", "updateTodaysWeather: updated actual temp field");
+    Timber.d("UI fields on TODAY screen updated");
   }
 
   @Override public void inject() {
