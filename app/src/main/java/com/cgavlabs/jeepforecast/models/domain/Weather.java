@@ -2,9 +2,12 @@ package com.cgavlabs.jeepforecast.models.domain;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class Weather extends RealmObject {
 
+  @PrimaryKey
+  private int id = 1;
   private Double latitude;
   private Double longitude;
   private String timezone;

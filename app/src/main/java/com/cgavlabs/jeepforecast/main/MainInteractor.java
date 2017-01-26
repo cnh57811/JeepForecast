@@ -2,9 +2,9 @@ package com.cgavlabs.jeepforecast.main;
 
 import android.util.Log;
 import com.cgavlabs.jeepforecast.Contract;
+import com.cgavlabs.jeepforecast.models.domain.Weather;
 import com.cgavlabs.jeepforecast.repos.WeatherRepo;
 import com.cgavlabs.jeepforecast.services.WeatherService;
-import com.cgavlabs.jeepforecast.models.domain.Weather;
 import javax.inject.Inject;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;

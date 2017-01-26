@@ -1,11 +1,13 @@
 package com.cgavlabs.jeepforecast.repos;
 
 import android.util.Log;
+import com.cgavlabs.jeepforecast.models.DataSavedEvent;
 import com.cgavlabs.jeepforecast.models.domain.Currently;
 import com.cgavlabs.jeepforecast.models.domain.Data;
 import com.cgavlabs.jeepforecast.models.domain.Weather;
 import io.realm.Realm;
 import javax.inject.Inject;
+import org.greenrobot.eventbus.EventBus;
 
 public class WeatherRepoImpl implements WeatherRepo {
   private final Realm realm;
@@ -22,6 +24,7 @@ public class WeatherRepoImpl implements WeatherRepo {
     }, new Realm.Transaction.OnSuccess() {
       @Override public void onSuccess() {
         Log.d("WeatherRepoImpl", "onSuccess: weather saved successfully");
+        EventBus.getDefault().post(new DataSavedEvent());
       }
     }, new Realm.Transaction.OnError() {
       @Override public void onError(Throwable error) {
@@ -31,7 +34,8 @@ public class WeatherRepoImpl implements WeatherRepo {
   }
 
   @Override public Data getTodaysWeather() {
-    return realm.where(Data.class).findFirst();
+    Double time = (Double) realm.where(Data.class).max("time");
+    return realm.where(Data.class).equalTo("time", time).findFirst();
   }
 
   @Override public Currently getCurrentWeather() {
