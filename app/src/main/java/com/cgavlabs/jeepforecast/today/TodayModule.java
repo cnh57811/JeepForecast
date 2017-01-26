@@ -10,9 +10,15 @@ import javax.inject.Singleton;
 @Module
 public class TodayModule {
 
+  private final Contract.Today.View view;
+
+  public TodayModule(Contract.Today.View view) {
+    this.view = view;
+  }
+
   @Provides
   public Contract.Today.Presenter providePresenter(Contract.Today.Interactor interactor) {
-    return new TodayPresenter(interactor);
+    return new TodayPresenter(view, interactor);
   }
 
   @Provides

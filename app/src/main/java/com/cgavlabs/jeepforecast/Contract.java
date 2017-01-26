@@ -17,8 +17,11 @@ public interface Contract {
   }
 
   interface Today {
+    interface View {
+      void updateTodaysWeather(Day day);
+    }
     interface Presenter {
-      Day getTodaysWeather();
+      void getTodaysWeather();
     }
 
     interface Interactor {
