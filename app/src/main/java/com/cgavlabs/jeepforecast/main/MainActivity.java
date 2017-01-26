@@ -15,15 +15,11 @@ public class MainActivity extends BaseActivity {
 
   @Inject MainPagerAdapter pagerAdapter;
   @Inject Contract.Main.Presenter presenter;
-  private Toolbar toolbar;
-  private ViewPager viewPager;
-  private TabLayout tabs;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     setupViews();
-    setSupportActionBar(toolbar);
     callWeather();
   }
 
@@ -32,9 +28,10 @@ public class MainActivity extends BaseActivity {
   }
 
   private void setupViews() {
-    toolbar = (Toolbar) findViewById(R.id.toolbar);
-    viewPager = (ViewPager) findViewById(R.id.viewPager);
-    tabs = (TabLayout) findViewById(R.id.tabs);
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
+    ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+    TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
     viewPager.setAdapter(pagerAdapter);
     tabs.setupWithViewPager(viewPager);
   }

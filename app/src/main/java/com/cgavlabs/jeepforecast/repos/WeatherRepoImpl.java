@@ -34,11 +34,11 @@ public class WeatherRepoImpl implements WeatherRepo {
   }
 
   @Override public Data getTodaysWeather() {
-    return realm.where(Data.class).equalTo("time", Double.valueOf(1485147600)).findFirst();
+    Double time = (Double) realm.where(Data.class).max("time");
+    return realm.where(Data.class).equalTo("time", time).findFirst();
   }
 
   @Override public Currently getCurrentWeather() {
-    Double maxTime = (Double) realm.where(Currently.class).max("time");
-    return realm.where(Currently.class).equalTo("time", maxTime).findFirst();
+    return realm.where(Currently.class).findFirst();
   }
 }

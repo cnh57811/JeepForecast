@@ -2,12 +2,10 @@ package com.cgavlabs.jeepforecast.main;
 
 import android.util.Log;
 import com.cgavlabs.jeepforecast.Contract;
-import com.cgavlabs.jeepforecast.models.DataSavedEvent;
 import com.cgavlabs.jeepforecast.models.domain.Weather;
 import com.cgavlabs.jeepforecast.repos.WeatherRepo;
 import com.cgavlabs.jeepforecast.services.WeatherService;
 import javax.inject.Inject;
-import org.greenrobot.eventbus.EventBus;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

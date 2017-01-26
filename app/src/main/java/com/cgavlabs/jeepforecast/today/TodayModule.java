@@ -4,11 +4,8 @@ import com.cgavlabs.jeepforecast.Contract;
 import com.cgavlabs.jeepforecast.repos.WeatherRepo;
 import dagger.Module;
 import dagger.Provides;
-import io.realm.Realm;
-import javax.inject.Singleton;
 
-@Module
-public class TodayModule {
+@Module public class TodayModule {
 
   private final Contract.Today.View view;
 
@@ -16,14 +13,11 @@ public class TodayModule {
     this.view = view;
   }
 
-  @Provides
-  public Contract.Today.Presenter providePresenter(Contract.Today.Interactor interactor) {
+  @Provides public Contract.Today.Presenter providePresenter(Contract.Today.Interactor interactor) {
     return new TodayPresenter(view, interactor);
   }
 
-  @Provides
-  public Contract.Today.Interactor provideInteractor(WeatherRepo weatherRepo) {
+  @Provides public Contract.Today.Interactor provideInteractor(WeatherRepo weatherRepo) {
     return new TodayInteractor(weatherRepo);
   }
-
 }
