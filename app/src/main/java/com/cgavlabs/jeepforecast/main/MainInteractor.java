@@ -32,6 +32,7 @@ public class MainInteractor implements Contract.Main.Interactor {
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Subscriber<Weather>() {
           @Override public void onCompleted() {
+            Timber.d("onCompleted");
           }
 
           @Override public void onError(Throwable e) {
