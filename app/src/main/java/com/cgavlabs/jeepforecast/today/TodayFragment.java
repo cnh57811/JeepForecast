@@ -46,6 +46,7 @@ public class TodayFragment extends BaseFragment implements Contract.Today.View {
 
   @Override public void onResume() {
     super.onResume();
+    Timber.d("onResume()");
     presenter.getTodaysWeather();
   }
 
