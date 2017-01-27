@@ -1,5 +1,6 @@
 package com.cgavlabs.jeepforecast.repos;
 
+import com.cgavlabs.jeepforecast.Utils;
 import com.cgavlabs.jeepforecast.models.DataSavedEvent;
 import com.cgavlabs.jeepforecast.models.domain.Currently;
 import com.cgavlabs.jeepforecast.models.domain.DailyData;
@@ -34,8 +35,9 @@ public class WeatherRepoImpl implements WeatherRepo {
   }
 
   @Override public DailyData getTodaysWeather() {
-    Long time = (Long) realm.where(DailyData.class).max("time");
-    return realm.where(DailyData.class).equalTo("time", time).findFirst();
+    Long start = Utils.getStartOfTodayInSeconds();
+    Long end = Utils.getEndOfTodayInSeconds();
+    return realm.where(DailyData.class).between("time", start, end).findFirst();
   }
 
   @Override public Currently getCurrentWeather() {

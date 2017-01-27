@@ -23,10 +23,6 @@ public class MainActivity extends BaseActivity {
     callWeather();
   }
 
-  private void callWeather() {
-    presenter.callWeather(37.554239, -77.658531);
-  }
-
   private void setupViews() {
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
@@ -34,6 +30,10 @@ public class MainActivity extends BaseActivity {
     TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
     viewPager.setAdapter(pagerAdapter);
     tabs.setupWithViewPager(viewPager);
+  }
+
+  private void callWeather() {
+    presenter.callWeather(37.554239, -77.658531);
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
