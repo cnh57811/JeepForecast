@@ -6,8 +6,7 @@ import io.realm.annotations.PrimaryKey;
 
 public class Weather extends RealmObject {
 
-  @PrimaryKey
-  private int id = 1;
+  @PrimaryKey private int id = 1;
   private Double latitude;
   private Double longitude;
   private String timezone;
@@ -17,6 +16,14 @@ public class Weather extends RealmObject {
   private Hourly hourly;
   private Daily daily;
   private RealmList<Alert> alerts = null;
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
 
   public Double getLatitude() {
     return latitude;

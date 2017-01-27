@@ -1,16 +1,12 @@
 package com.cgavlabs.jeepforecast.models.domain;
 
 import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 
-public class Currently extends RealmObject {
+public class HourlyData extends RealmObject {
 
-  @PrimaryKey private int id = 1;
   private Long time;
   private String summary;
   private String icon;
-  private Long nearestStormDistance;
-  private Long nearestStormBearing;
   private Long precipIntensity;
   private Long precipProbability;
   private Double temperature;
@@ -19,18 +15,10 @@ public class Currently extends RealmObject {
   private Double humidity;
   private Double windSpeed;
   private Long windBearing;
-  private Long visibility;
+  private Double visibility;
   private Double cloudCover;
   private Double pressure;
   private Double ozone;
-
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
-  }
 
   public Long getTime() {
     return time;
@@ -54,22 +42,6 @@ public class Currently extends RealmObject {
 
   public void setIcon(String icon) {
     this.icon = icon;
-  }
-
-  public Long getNearestStormDistance() {
-    return nearestStormDistance;
-  }
-
-  public void setNearestStormDistance(Long nearestStormDistance) {
-    this.nearestStormDistance = nearestStormDistance;
-  }
-
-  public Long getNearestStormBearing() {
-    return nearestStormBearing;
-  }
-
-  public void setNearestStormBearing(Long nearestStormBearing) {
-    this.nearestStormBearing = nearestStormBearing;
   }
 
   public Long getPrecipIntensity() {
@@ -136,11 +108,11 @@ public class Currently extends RealmObject {
     this.windBearing = windBearing;
   }
 
-  public Long getVisibility() {
+  public Double getVisibility() {
     return visibility;
   }
 
-  public void setVisibility(Long visibility) {
+  public void setVisibility(Double visibility) {
     this.visibility = visibility;
   }
 

@@ -2,7 +2,7 @@ package com.cgavlabs.jeepforecast.repos;
 
 import com.cgavlabs.jeepforecast.models.DataSavedEvent;
 import com.cgavlabs.jeepforecast.models.domain.Currently;
-import com.cgavlabs.jeepforecast.models.domain.Data;
+import com.cgavlabs.jeepforecast.models.domain.DailyData;
 import com.cgavlabs.jeepforecast.models.domain.Weather;
 import io.realm.Realm;
 import javax.inject.Inject;
@@ -33,9 +33,9 @@ public class WeatherRepoImpl implements WeatherRepo {
     });
   }
 
-  @Override public Data getTodaysWeather() {
-    Double time = (Double) realm.where(Data.class).max("time");
-    return realm.where(Data.class).equalTo("time", time).findFirst();
+  @Override public DailyData getTodaysWeather() {
+    Long time = (Long) realm.where(DailyData.class).max("time");
+    return realm.where(DailyData.class).equalTo("time", time).findFirst();
   }
 
   @Override public Currently getCurrentWeather() {

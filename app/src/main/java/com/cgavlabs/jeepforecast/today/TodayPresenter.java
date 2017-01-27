@@ -4,9 +4,10 @@ import android.support.v4.util.Pair;
 import com.cgavlabs.jeepforecast.Contract;
 import com.cgavlabs.jeepforecast.Utils;
 import com.cgavlabs.jeepforecast.models.domain.Currently;
-import com.cgavlabs.jeepforecast.models.domain.Data;
+import com.cgavlabs.jeepforecast.models.domain.DailyData;
 import com.cgavlabs.jeepforecast.models.view.Day;
 import javax.inject.Inject;
+import timber.log.Timber;
 
 public class TodayPresenter implements Contract.Today.Presenter {
 
@@ -19,18 +20,22 @@ public class TodayPresenter implements Contract.Today.Presenter {
   }
 
   @Override public void getTodaysWeather() {
-    Pair<Data, Currently> todaysWeather = interactor.getTodaysWeather();
+    Pair<DailyData, Currently> todaysWeather = interactor.getTodaysWeather();
     Day day = mapToDay(todaysWeather);
     view.updateTodaysWeather(day);
   }
 
-  private Day mapToDay(Pair<Data, Currently> todaysWeather) {
-    Data data = todaysWeather.first;
+  private Day mapToDay(Pair<DailyData, Currently> todaysWeather) {
+    DailyData data = todaysWeather.first;
     Currently curr = todaysWeather.second;
     Day day = new Day();
-    day.setActualTemp(Utils.roundDouble(curr.getTemperature()));
-    day.setHighTemp(Utils.roundDouble(data.getTemperatureMin()));
-    day.setLowTemp(Utils.roundDouble(data.getTemperatureMax()));
+    if(curr != null) {
+      day.setActualTemp(Utils.roundDouble(curr.getTemperature()));
+    }
+    if(data != null) {
+      day.setHighTemp(Utils.roundDouble(data.getTemperatureMax()));
+      day.setLowTemp(Utils.roundDouble(data.getTemperatureMin()));
+    }
     return day;
   }
 }

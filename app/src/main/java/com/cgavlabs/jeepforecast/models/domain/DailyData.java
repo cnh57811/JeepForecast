@@ -2,44 +2,41 @@ package com.cgavlabs.jeepforecast.models.domain;
 
 import io.realm.RealmObject;
 
-public class Data extends RealmObject {
+public class DailyData extends RealmObject {
 
-  private Double time;
+  private Long time;
   private String summary;
   private String icon;
-  private Double sunriseTime;
-  private Double sunsetTime;
+  private Long sunriseTime;
+  private Long sunsetTime;
   private Double moonPhase;
   private Double precipIntensity;
-  private Double precipIntensityError;
   private Double precipIntensityMax;
-  private Double precipIntensityMaxTime;
   private Double precipProbability;
-  private String precipType;
-  private Double temperature;
   private Double temperatureMin;
-  private Double temperatureMinTime;
+  private Long temperatureMinTime;
   private Double temperatureMax;
-  private Double temperatureMaxTime;
-  private Double apparentTemperature;
+  private Long temperatureMaxTime;
   private Double apparentTemperatureMin;
-  private Double apparentTemperatureMinTime;
+  private Long apparentTemperatureMinTime;
   private Double apparentTemperatureMax;
-  private Double apparentTemperatureMaxTime;
+  private Long apparentTemperatureMaxTime;
   private Double dewPoint;
   private Double humidity;
   private Double windSpeed;
-  private Double windBearing;
+  private Long windBearing;
   private Double visibility;
   private Double cloudCover;
   private Double pressure;
   private Double ozone;
+  private Long precipIntensityMaxTime;
+  private String precipType;
 
-  public Double getTime() {
+  public Long getTime() {
     return time;
   }
 
-  public void setTime(Double time) {
+  public void setTime(Long time) {
     this.time = time;
   }
 
@@ -59,19 +56,19 @@ public class Data extends RealmObject {
     this.icon = icon;
   }
 
-  public Double getSunriseTime() {
+  public Long getSunriseTime() {
     return sunriseTime;
   }
 
-  public void setSunriseTime(Double sunriseTime) {
+  public void setSunriseTime(Long sunriseTime) {
     this.sunriseTime = sunriseTime;
   }
 
-  public Double getSunsetTime() {
+  public Long getSunsetTime() {
     return sunsetTime;
   }
 
-  public void setSunsetTime(Double sunsetTime) {
+  public void setSunsetTime(Long sunsetTime) {
     this.sunsetTime = sunsetTime;
   }
 
@@ -99,28 +96,12 @@ public class Data extends RealmObject {
     this.precipIntensityMax = precipIntensityMax;
   }
 
-  public Double getPrecipIntensityMaxTime() {
-    return precipIntensityMaxTime;
-  }
-
-  public void setPrecipIntensityMaxTime(Double precipIntensityMaxTime) {
-    this.precipIntensityMaxTime = precipIntensityMaxTime;
-  }
-
   public Double getPrecipProbability() {
     return precipProbability;
   }
 
   public void setPrecipProbability(Double precipProbability) {
     this.precipProbability = precipProbability;
-  }
-
-  public String getPrecipType() {
-    return precipType;
-  }
-
-  public void setPrecipType(String precipType) {
-    this.precipType = precipType;
   }
 
   public Double getTemperatureMin() {
@@ -131,11 +112,11 @@ public class Data extends RealmObject {
     this.temperatureMin = temperatureMin;
   }
 
-  public Double getTemperatureMinTime() {
+  public Long getTemperatureMinTime() {
     return temperatureMinTime;
   }
 
-  public void setTemperatureMinTime(Double temperatureMinTime) {
+  public void setTemperatureMinTime(Long temperatureMinTime) {
     this.temperatureMinTime = temperatureMinTime;
   }
 
@@ -147,11 +128,11 @@ public class Data extends RealmObject {
     this.temperatureMax = temperatureMax;
   }
 
-  public Double getTemperatureMaxTime() {
+  public Long getTemperatureMaxTime() {
     return temperatureMaxTime;
   }
 
-  public void setTemperatureMaxTime(Double temperatureMaxTime) {
+  public void setTemperatureMaxTime(Long temperatureMaxTime) {
     this.temperatureMaxTime = temperatureMaxTime;
   }
 
@@ -163,11 +144,11 @@ public class Data extends RealmObject {
     this.apparentTemperatureMin = apparentTemperatureMin;
   }
 
-  public Double getApparentTemperatureMinTime() {
+  public Long getApparentTemperatureMinTime() {
     return apparentTemperatureMinTime;
   }
 
-  public void setApparentTemperatureMinTime(Double apparentTemperatureMinTime) {
+  public void setApparentTemperatureMinTime(Long apparentTemperatureMinTime) {
     this.apparentTemperatureMinTime = apparentTemperatureMinTime;
   }
 
@@ -179,11 +160,11 @@ public class Data extends RealmObject {
     this.apparentTemperatureMax = apparentTemperatureMax;
   }
 
-  public Double getApparentTemperatureMaxTime() {
+  public Long getApparentTemperatureMaxTime() {
     return apparentTemperatureMaxTime;
   }
 
-  public void setApparentTemperatureMaxTime(Double apparentTemperatureMaxTime) {
+  public void setApparentTemperatureMaxTime(Long apparentTemperatureMaxTime) {
     this.apparentTemperatureMaxTime = apparentTemperatureMaxTime;
   }
 
@@ -211,11 +192,11 @@ public class Data extends RealmObject {
     this.windSpeed = windSpeed;
   }
 
-  public Double getWindBearing() {
+  public Long getWindBearing() {
     return windBearing;
   }
 
-  public void setWindBearing(Double windBearing) {
+  public void setWindBearing(Long windBearing) {
     this.windBearing = windBearing;
   }
 
@@ -251,27 +232,19 @@ public class Data extends RealmObject {
     this.ozone = ozone;
   }
 
-  public Double getPrecipIntensityError() {
-    return precipIntensityError;
+  public Long getPrecipIntensityMaxTime() {
+    return precipIntensityMaxTime;
   }
 
-  public void setPrecipIntensityError(Double precipIntensityError) {
-    this.precipIntensityError = precipIntensityError;
+  public void setPrecipIntensityMaxTime(Long precipIntensityMaxTime) {
+    this.precipIntensityMaxTime = precipIntensityMaxTime;
   }
 
-  public Double getTemperature() {
-    return temperature;
+  public String getPrecipType() {
+    return precipType;
   }
 
-  public void setTemperature(Double temperature) {
-    this.temperature = temperature;
-  }
-
-  public Double getApparentTemperature() {
-    return apparentTemperature;
-  }
-
-  public void setApparentTemperature(Double apparentTemperature) {
-    this.apparentTemperature = apparentTemperature;
+  public void setPrecipType(String precipType) {
+    this.precipType = precipType;
   }
 }
