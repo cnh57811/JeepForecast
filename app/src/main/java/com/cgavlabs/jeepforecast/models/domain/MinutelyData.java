@@ -7,8 +7,8 @@ public class MinutelyData extends RealmObject {
 
   @PrimaryKey
   private Long time;
-  private Long precipIntensity;
-  private Long precipProbability;
+  private Double precipIntensity;
+  private Double precipProbability;
 
   public Long getTime() {
     return time;
@@ -18,19 +18,19 @@ public class MinutelyData extends RealmObject {
     this.time = time;
   }
 
-  public Long getPrecipIntensity() {
+  public Double getPrecipIntensity() {
     return precipIntensity;
   }
 
-  public void setPrecipIntensity(Long precipIntensity) {
+  public void setPrecipIntensity(Double precipIntensity) {
     this.precipIntensity = precipIntensity;
   }
 
-  public Long getPrecipProbability() {
+  public Double getPrecipProbability() {
     return precipProbability;
   }
 
-  public void setPrecipProbability(Long precipProbability) {
+  public void setPrecipProbability(Double precipProbability) {
     this.precipProbability = precipProbability;
   }
 }
