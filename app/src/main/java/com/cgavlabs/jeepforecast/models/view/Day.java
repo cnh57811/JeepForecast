@@ -1,16 +1,18 @@
 package com.cgavlabs.jeepforecast.models.view;
 
 public class Day {
-  private String actualTemp;
+  private String currentTemp;
+  private String currentTempTime;
   private String lowTemp;
+  private String lowTempTime;
   private String highTemp;
 
-  public String getActualTemp() {
-    return actualTemp;
+  public String getCurrentTemp() {
+    return currentTemp;
   }
 
-  public void setActualTemp(String actualTemp) {
-    this.actualTemp = actualTemp;
+  public void setCurrentTemp(String currentTemp) {
+    this.currentTemp = currentTemp;
   }
 
   public String getLowTemp() {
@@ -27,5 +29,21 @@ public class Day {
 
   public void setHighTemp(String highTemp) {
     this.highTemp = highTemp;
+  }
+
+  public String getCurrentTempTime() {
+    return currentTempTime;
+  }
+
+  public void setCurrentTempTime(String currentTempTime) {
+    this.currentTempTime = currentTempTime;
+  }
+
+  public String getLowTempTime() {
+    return lowTempTime;
+  }
+
+  public void setLowTempTime(String lowTempTime) {
+    this.lowTempTime = lowTempTime;
   }
 }

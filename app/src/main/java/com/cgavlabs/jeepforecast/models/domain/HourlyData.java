@@ -1,9 +1,11 @@
 package com.cgavlabs.jeepforecast.models.domain;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class HourlyData extends RealmObject {
 
+  @PrimaryKey
   private Long time;
   private String summary;
   private String icon;

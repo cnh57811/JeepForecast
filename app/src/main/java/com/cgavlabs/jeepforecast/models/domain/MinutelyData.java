@@ -1,9 +1,11 @@
 package com.cgavlabs.jeepforecast.models.domain;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class MinutelyData extends RealmObject {
 
+  @PrimaryKey
   private Long time;
   private Long precipIntensity;
   private Long precipProbability;
