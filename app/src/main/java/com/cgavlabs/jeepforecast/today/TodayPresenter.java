@@ -6,11 +6,14 @@ import com.cgavlabs.jeepforecast.Utils;
 import com.cgavlabs.jeepforecast.models.domain.Currently;
 import com.cgavlabs.jeepforecast.models.domain.DailyData;
 import com.cgavlabs.jeepforecast.models.view.Day;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.inject.Inject;
-import timber.log.Timber;
 
 public class TodayPresenter implements Contract.Today.Presenter {
 
+  private static final String DATE_FORMAT = "yyyy.MM.dd 'at' HH:mm:ss z";
+  private static final SimpleDateFormat SDF = new SimpleDateFormat(DATE_FORMAT);
   private final Contract.Today.View view;
   private final Contract.Today.Interactor interactor;
 
@@ -29,12 +32,18 @@ public class TodayPresenter implements Contract.Today.Presenter {
     DailyData data = todaysWeather.first;
     Currently curr = todaysWeather.second;
     Day day = new Day();
-    if(curr != null) {
-      day.setActualTemp(Utils.roundDouble(curr.getTemperature()));
+    if (curr != null) {
+      day.setCurrentTemp(Utils.roundDouble(curr.getTemperature()));
+      Date current = new Date(curr.getTime()*1000);
+      String formattedDate = SDF.format(current);
+      day.setCurrentTempTime(formattedDate + "\n" + current.getTime());
     }
-    if(data != null) {
+    if (data != null) {
       day.setHighTemp(Utils.roundDouble(data.getTemperatureMax()));
       day.setLowTemp(Utils.roundDouble(data.getTemperatureMin()));
+      Date dayTime = new Date(data.getTime()*1000);
+      String formattedDate = SDF.format(dayTime);
+      day.setLowTempTime(formattedDate + "\n" + dayTime.getTime());
     }
     return day;
   }

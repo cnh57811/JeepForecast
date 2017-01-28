@@ -22,6 +22,8 @@ public class TodayFragment extends BaseFragment implements Contract.Today.View {
   private TextView actualTemp;
   private TextView highTemp;
   private TextView lowTemp;
+  private TextView dayTempTime;
+  private TextView currentTempTime;
 
   public TodayFragment() {
   }
@@ -36,6 +38,8 @@ public class TodayFragment extends BaseFragment implements Contract.Today.View {
     actualTemp = (TextView) view.findViewById(R.id.temperature_actual);
     highTemp = (TextView) view.findViewById(R.id.temperature_high);
     lowTemp = (TextView) view.findViewById(R.id.temperature_low);
+    dayTempTime = (TextView) view.findViewById(R.id.day_temp_time);
+    currentTempTime = (TextView) view.findViewById(R.id.current_temp_time);
     return view;
   }
 
@@ -61,9 +65,11 @@ public class TodayFragment extends BaseFragment implements Contract.Today.View {
   }
 
   @Override public void updateTodaysWeather(Day day) {
-    actualTemp.setText(day.getActualTemp());
+    actualTemp.setText(day.getCurrentTemp());
     highTemp.setText(day.getHighTemp());
     lowTemp.setText(day.getLowTemp());
+    dayTempTime.setText(day.getLowTempTime());
+    currentTempTime.setText(day.getCurrentTempTime());
     Timber.d("UI fields on TODAY screen updated");
   }
 
