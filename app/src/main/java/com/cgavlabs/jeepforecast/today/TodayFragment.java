@@ -1,7 +1,6 @@
 package com.cgavlabs.jeepforecast.today;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +10,10 @@ import android.widget.TextView;
 import com.cgavlabs.jeepforecast.BaseFragment;
 import com.cgavlabs.jeepforecast.Contract;
 import com.cgavlabs.jeepforecast.R;
-import com.cgavlabs.jeepforecast.utils.Utils;
 import com.cgavlabs.jeepforecast.models.DataSavedEvent;
 import com.cgavlabs.jeepforecast.models.view.Day;
+import com.cgavlabs.jeepforecast.utils.ScaleRotateBitmapTask;
+import com.cgavlabs.jeepforecast.utils.Utils;
 import javax.inject.Inject;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -65,8 +65,8 @@ public class TodayFragment extends BaseFragment implements Contract.Today.View {
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (resultCode == RESULT_OK) {
       if (requestCode == SELECT_PICTURE) {
-        Bitmap scaledBmp = Utils.getScaledRotatedBitmap(getActivity(), data.getData());
-        backgroundImg.setImageBitmap(scaledBmp);
+        String imgPath = Utils.getImagePath(getActivity(), data.getData());
+        new ScaleRotateBitmapTask(getActivity(), imgPath, backgroundImg).execute(2048);
       }
     }
   }

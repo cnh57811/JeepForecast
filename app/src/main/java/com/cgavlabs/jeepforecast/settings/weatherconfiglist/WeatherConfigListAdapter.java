@@ -37,7 +37,7 @@ public class WeatherConfigListAdapter extends RecyclerView.Adapter {
     String imagePath = weatherConfigs.get(position).getImagePath();
     //Timber.d("end getImagePath()");
     Timber.d("scale and rotate image");
-    new ScaleRotateBitmapTask(activity, imagePath, configHolder.image).execute();
+    new ScaleRotateBitmapTask(activity, imagePath, configHolder.image).execute(256);
     //Bitmap bmp = Utils.getScaledRotatedBitmap(activity, imagePath);
     Timber.d("done ... scale and rotate image");
     //configHolder.image.setImageBitmap(bmp);

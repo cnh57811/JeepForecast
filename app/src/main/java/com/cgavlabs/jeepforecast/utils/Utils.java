@@ -16,8 +16,6 @@ import timber.log.Timber;
 
 public class Utils {
 
-  private static final int MAX_IMG_SIZE = 2048;
-
   public static String roundDouble(Double dbl) {
     return String.valueOf(Math.round(dbl));
   }
@@ -46,26 +44,26 @@ public class Utils {
     return c.getTimeInMillis() / 1000;
   }
 
-  public static Bitmap getScaledRotatedBitmap(Activity activity, Uri selectedImageUri) {
+  public static Bitmap getScaledRotatedBitmap(Activity activity, Uri selectedImageUri, int maxImgSize) {
     String imgPath = Utils.getImagePath(activity, selectedImageUri);
     Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-    return getScaledRotatedBitmap(activity, selectedImageUri, imgPath, bitmap);
+    return getScaledRotatedBitmap(activity, selectedImageUri, imgPath, bitmap, maxImgSize);
   }
 
-  public static Bitmap getScaledRotatedBitmap(Activity activity, String imgPath) {
+  public static Bitmap getScaledRotatedBitmap(Activity activity, String imgPath, int maxImgSize) {
     Timber.d("IN getScaledRotatedBitmap");
     Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
     Timber.d("Image path decoded");
-    Bitmap bmp = getScaledRotatedBitmap(activity, null, imgPath, bitmap);
+    Bitmap bmp = getScaledRotatedBitmap(activity, null, imgPath, bitmap, maxImgSize);
     Timber.d("OUT getScaledRotatedBitmap");
     return bmp;
   }
 
   private static Bitmap getScaledRotatedBitmap(Activity activity, Uri selectedImageUri,
-      String imgPath, Bitmap bitmap) {
+      String imgPath, Bitmap bitmap, int maxImgSize) {
     Timber.d("IN private getScaledRotatedBitmap()");
-    int height = (int) (bitmap.getHeight() * (Double.valueOf(MAX_IMG_SIZE) / bitmap.getWidth()));
-    bitmap = Bitmap.createScaledBitmap(bitmap, MAX_IMG_SIZE, height, false);
+    int height = (int) (bitmap.getHeight() * (Double.valueOf(maxImgSize) / bitmap.getWidth()));
+    bitmap = Bitmap.createScaledBitmap(bitmap, maxImgSize, height, false);
     int rotate = Utils.getCameraPhotoOrientation(activity, selectedImageUri, imgPath);
     if (rotate != 0) {
       Matrix m = new Matrix();

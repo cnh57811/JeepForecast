@@ -4,10 +4,9 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.widget.ImageView;
-import com.cgavlabs.jeepforecast.utils.Utils;
 import java.lang.ref.WeakReference;
 
-public class ScaleRotateBitmapTask extends AsyncTask<Void, Void, Bitmap> {
+public class ScaleRotateBitmapTask extends AsyncTask<Integer, Void, Bitmap> {
   private final Activity activity;
   private final String imagePath;
   private final WeakReference<ImageView> imageRef;
@@ -18,12 +17,12 @@ public class ScaleRotateBitmapTask extends AsyncTask<Void, Void, Bitmap> {
     this.imageRef = new WeakReference<>(imageView);
   }
 
-  @Override protected Bitmap doInBackground(Void... voids) {
-    return Utils.getScaledRotatedBitmap(activity, imagePath);
+  @Override protected Bitmap doInBackground(Integer... maxImgSize) {
+    return Utils.getScaledRotatedBitmap(activity, imagePath, maxImgSize[0]);
   }
 
   @Override protected void onPostExecute(Bitmap bitmap) {
-    if (imageRef != null && bitmap != null) {
+    if (bitmap != null) {
       ImageView iv = imageRef.get();
       if (iv != null) {
         iv.setBackground(null);

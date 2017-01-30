@@ -11,8 +11,8 @@ public class Currently extends RealmObject {
   private String icon;
   private Long nearestStormDistance;
   private Long nearestStormBearing;
-  private Long precipIntensity;
-  private Long precipProbability;
+  private Double precipIntensity;
+  private Double precipProbability;
   private Double temperature;
   private Double apparentTemperature;
   private Double dewPoint;
@@ -72,19 +72,19 @@ public class Currently extends RealmObject {
     this.nearestStormBearing = nearestStormBearing;
   }
 
-  public Long getPrecipIntensity() {
+  public Double getPrecipIntensity() {
     return precipIntensity;
   }
 
-  public void setPrecipIntensity(Long precipIntensity) {
+  public void setPrecipIntensity(Double precipIntensity) {
     this.precipIntensity = precipIntensity;
   }
 
-  public Long getPrecipProbability() {
+  public Double getPrecipProbability() {
     return precipProbability;
   }
 
-  public void setPrecipProbability(Long precipProbability) {
+  public void setPrecipProbability(Double precipProbability) {
     this.precipProbability = precipProbability;
   }
 
