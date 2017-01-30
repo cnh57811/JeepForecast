@@ -2,7 +2,7 @@ package com.cgavlabs.jeepforecast.today;
 
 import android.support.v4.util.Pair;
 import com.cgavlabs.jeepforecast.Contract;
-import com.cgavlabs.jeepforecast.Utils;
+import com.cgavlabs.jeepforecast.utils.Utils;
 import com.cgavlabs.jeepforecast.models.domain.Currently;
 import com.cgavlabs.jeepforecast.models.domain.DailyData;
 import com.cgavlabs.jeepforecast.models.view.Day;

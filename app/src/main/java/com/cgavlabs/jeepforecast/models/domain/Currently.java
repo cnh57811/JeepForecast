@@ -19,7 +19,7 @@ public class Currently extends RealmObject {
   private Double humidity;
   private Double windSpeed;
   private Long windBearing;
-  private Long visibility;
+  private Double visibility;
   private Double cloudCover;
   private Double pressure;
   private Double ozone;
@@ -136,11 +136,11 @@ public class Currently extends RealmObject {
     this.windBearing = windBearing;
   }
 
-  public Long getVisibility() {
+  public Double getVisibility() {
     return visibility;
   }
 
-  public void setVisibility(Long visibility) {
+  public void setVisibility(Double visibility) {
     this.visibility = visibility;
   }
 

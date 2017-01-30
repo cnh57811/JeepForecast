@@ -15,6 +15,7 @@ import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity {
 
+  private static final int SELECT_PICTURE = 1;
   @Inject MainPagerAdapter pagerAdapter;
   @Inject Contract.Main.Presenter presenter;
 

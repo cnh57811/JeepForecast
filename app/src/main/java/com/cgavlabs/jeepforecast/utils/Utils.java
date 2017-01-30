@@ -1,4 +1,4 @@
-package com.cgavlabs.jeepforecast;
+package com.cgavlabs.jeepforecast.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -49,6 +49,21 @@ public class Utils {
   public static Bitmap getScaledRotatedBitmap(Activity activity, Uri selectedImageUri) {
     String imgPath = Utils.getImagePath(activity, selectedImageUri);
     Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
+    return getScaledRotatedBitmap(activity, selectedImageUri, imgPath, bitmap);
+  }
+
+  public static Bitmap getScaledRotatedBitmap(Activity activity, String imgPath) {
+    Timber.d("IN getScaledRotatedBitmap");
+    Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
+    Timber.d("Image path decoded");
+    Bitmap bmp = getScaledRotatedBitmap(activity, null, imgPath, bitmap);
+    Timber.d("OUT getScaledRotatedBitmap");
+    return bmp;
+  }
+
+  private static Bitmap getScaledRotatedBitmap(Activity activity, Uri selectedImageUri,
+      String imgPath, Bitmap bitmap) {
+    Timber.d("IN private getScaledRotatedBitmap()");
     int height = (int) (bitmap.getHeight() * (Double.valueOf(MAX_IMG_SIZE) / bitmap.getWidth()));
     bitmap = Bitmap.createScaledBitmap(bitmap, MAX_IMG_SIZE, height, false);
     int rotate = Utils.getCameraPhotoOrientation(activity, selectedImageUri, imgPath);
@@ -57,13 +72,16 @@ public class Utils {
       m.setRotate(rotate);
       bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), m, false);
     }
+    Timber.d("OUT private getScaledRotatedBitmap()");
     return bitmap;
   }
 
   public static int getCameraPhotoOrientation(Context context, Uri imageUri, String imagePath) {
     int rotate = 0;
     try {
-      context.getContentResolver().notifyChange(imageUri, null);
+      if(imageUri != null) {
+        context.getContentResolver().notifyChange(imageUri, null);
+      }
       File imageFile = new File(imagePath);
 
       ExifInterface exif = new ExifInterface(imageFile.getAbsolutePath());

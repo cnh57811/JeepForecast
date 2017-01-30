@@ -3,21 +3,22 @@ package com.cgavlabs.jeepforecast.settings.weatherconfiglist;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import com.cgavlabs.jeepforecast.BaseActivity;
+import com.cgavlabs.jeepforecast.Contract;
 import com.cgavlabs.jeepforecast.R;
-import com.cgavlabs.jeepforecast.models.view.WeatherConfig;
 import com.cgavlabs.jeepforecast.settings.newweatherconfig.NewWeatherConfigActivity;
-import java.util.ArrayList;
-import java.util.List;
+import javax.inject.Inject;
 
-public class WeatherConfigListActivity extends AppCompatActivity {
+public class WeatherConfigListActivity extends BaseActivity {
 
+  @Inject Contract.Config.Presenter presenter;
   private RecyclerView recyclerView;
   private FloatingActionButton fab;
+  private WeatherConfigListAdapter adapter;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -34,7 +35,8 @@ public class WeatherConfigListActivity extends AppCompatActivity {
     }
     recyclerView = (RecyclerView) findViewById(R.id.weather_config_list);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    recyclerView.setAdapter(new WeatherConfigListAdapter(setupMockWeatherConfigs()));
+    adapter = new WeatherConfigListAdapter(this, presenter.getWeatherConfigs());
+    recyclerView.setAdapter(adapter);
     fab = (FloatingActionButton) findViewById(R.id.fab_add_weather_config);
     fab.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
@@ -43,13 +45,7 @@ public class WeatherConfigListActivity extends AppCompatActivity {
     });
   }
 
-  private List<WeatherConfig> setupMockWeatherConfigs() {
-    List<WeatherConfig> weatherConfigs = new ArrayList<>();
-    weatherConfigs.add(new WeatherConfig());
-    weatherConfigs.add(new WeatherConfig());
-    weatherConfigs.add(new WeatherConfig());
-    weatherConfigs.add(new WeatherConfig());
-    weatherConfigs.add(new WeatherConfig());
-    return weatherConfigs;
+  @Override public void inject() {
+    DaggerWeatherConfigComponent.create().inject(this);
   }
 }

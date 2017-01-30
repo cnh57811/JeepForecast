@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.cgavlabs.jeepforecast.BaseFragment;
 import com.cgavlabs.jeepforecast.Contract;
 import com.cgavlabs.jeepforecast.R;
-import com.cgavlabs.jeepforecast.Utils;
+import com.cgavlabs.jeepforecast.utils.Utils;
 import com.cgavlabs.jeepforecast.models.DataSavedEvent;
 import com.cgavlabs.jeepforecast.models.view.Day;
 import javax.inject.Inject;
@@ -49,7 +49,6 @@ public class TodayFragment extends BaseFragment implements Contract.Today.View {
     dayTempTime = (TextView) view.findViewById(R.id.day_temp_time);
     currentTempTime = (TextView) view.findViewById(R.id.current_temp_time);
     backgroundImg = (ImageView) view.findViewById(R.id.image);
-    backgroundImg.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
     view.findViewById(R.id.btn_choose_photo).setOnClickListener(new View.OnClickListener() {
       public void onClick(View arg0) {
