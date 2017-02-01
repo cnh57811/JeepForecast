@@ -25,6 +25,7 @@ import static android.app.Activity.RESULT_OK;
 public class TodayFragment extends BaseFragment implements Contract.Today.View {
 
   private static final int SELECT_PICTURE = 1;
+  private static final int MAX_IMG_SIZE = 2048;
   @Inject Contract.Today.Presenter presenter;
   @Inject BitmapService bitmapSvc;
   private TextView actualTemp;
@@ -66,9 +67,7 @@ public class TodayFragment extends BaseFragment implements Contract.Today.View {
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (resultCode == RESULT_OK) {
       if (requestCode == SELECT_PICTURE) {
-        bitmapSvc.scaleAndRotateBitmap(data.getData(), 2048, backgroundImg);
-        //String imgPath = getImagePath(getActivity(), data.getData());
-        //new ScaleRotateBitmapTask(getActivity(), imgPath, backgroundImg, maxImgSize1).execute(2048);
+        bitmapSvc.scaleAndRotateBitmap(data.getData(), MAX_IMG_SIZE, backgroundImg);
       }
     }
   }

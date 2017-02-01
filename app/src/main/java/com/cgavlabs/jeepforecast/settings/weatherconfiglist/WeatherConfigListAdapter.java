@@ -15,6 +15,7 @@ import timber.log.Timber;
 
 public class WeatherConfigListAdapter extends RecyclerView.Adapter {
 
+  private static final int MAX_IMG_SIZE = 256;
   private final List<WeatherConfig> weatherConfigs;
   private final BitmapService bitmapSvc;
 
@@ -34,7 +35,7 @@ public class WeatherConfigListAdapter extends RecyclerView.Adapter {
     configHolder.name.setText(weatherConfigs.get(position).getName());
     String imagePath = weatherConfigs.get(position).getImagePath();
     Timber.d("scale and rotate image");
-    bitmapSvc.scaleAndRotateBitmap(imagePath, 256, configHolder.image);
+    bitmapSvc.scaleAndRotateBitmap(imagePath, MAX_IMG_SIZE, configHolder.image);
     Timber.d("done ... scale and rotate image");
   }
 
