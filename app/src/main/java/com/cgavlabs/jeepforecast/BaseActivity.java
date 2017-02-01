@@ -11,5 +11,5 @@ public abstract class BaseActivity extends AppCompatActivity {
     inject();
   }
 
-  public abstract void inject();
+  protected abstract void inject();
 }

@@ -13,13 +13,13 @@ import com.cgavlabs.jeepforecast.services.BitmapService;
 import java.util.List;
 import timber.log.Timber;
 
-public class WeatherConfigListAdapter extends RecyclerView.Adapter {
+class WeatherConfigListAdapter extends RecyclerView.Adapter {
 
   private static final int MAX_IMG_SIZE = 256;
   private final List<WeatherConfig> weatherConfigs;
   private final BitmapService bitmapSvc;
 
-  public WeatherConfigListAdapter(BitmapService bitmapSvc, List<WeatherConfig> weatherConfigs) {
+  WeatherConfigListAdapter(BitmapService bitmapSvc, List<WeatherConfig> weatherConfigs) {
     this.weatherConfigs = weatherConfigs;
     this.bitmapSvc = bitmapSvc;
   }
@@ -54,11 +54,8 @@ public class WeatherConfigListAdapter extends RecyclerView.Adapter {
       hidden = (LinearLayout) itemView.findViewById(R.id.ll_can_be_hidden);
       name = (TextView) itemView.findViewById(R.id.tv_not_hidden_1);
       image = (ImageView) itemView.findViewById(R.id.weather_config_list_item_image);
-      itemView.setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View view) {
-          hidden.setVisibility(hidden.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-        }
-      });
+      itemView.setOnClickListener(view -> hidden.setVisibility(
+          hidden.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE));
     }
   }
 }

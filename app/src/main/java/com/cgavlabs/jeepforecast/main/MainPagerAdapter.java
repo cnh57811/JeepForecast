@@ -7,7 +7,7 @@ import com.cgavlabs.jeepforecast.today.TodayFragment;
 
 public class MainPagerAdapter extends FragmentPagerAdapter {
 
-  public static final int NUM_FRAGMENTS = 3;
+  private static final int NUM_FRAGMENTS = 3;
 
   public MainPagerAdapter(FragmentManager fm) {
     super(fm);

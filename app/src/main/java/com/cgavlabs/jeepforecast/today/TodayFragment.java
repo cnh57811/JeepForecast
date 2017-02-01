@@ -51,13 +51,11 @@ public class TodayFragment extends BaseFragment implements TodayContract.View {
     currentTempTime = (TextView) view.findViewById(R.id.current_temp_time);
     backgroundImg = (ImageView) view.findViewById(R.id.image);
 
-    view.findViewById(R.id.btn_choose_photo).setOnClickListener(new View.OnClickListener() {
-      public void onClick(View arg0) {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
-      }
+    view.findViewById(R.id.btn_choose_photo).setOnClickListener(arg0 -> {
+      Intent intent = new Intent();
+      intent.setType("image/*");
+      intent.setAction(Intent.ACTION_GET_CONTENT);
+      startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
     });
 
     return view;
@@ -87,7 +85,8 @@ public class TodayFragment extends BaseFragment implements TodayContract.View {
     EventBus.getDefault().unregister(this);
   }
 
-  @Subscribe(threadMode = ThreadMode.MAIN) public void onWeatherDataUpdated(DataSavedEvent e) {
+  @Subscribe(threadMode = ThreadMode.MAIN) public void onWeatherDataUpdated(
+      @SuppressWarnings("UnusedParameters") DataSavedEvent e) {
     Timber.d("Event bus initiated weather update");
     presenter.getTodaysWeather();
   }

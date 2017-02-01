@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import java.io.File;
 import javax.inject.Inject;
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
@@ -27,70 +26,35 @@ public class BitmapServiceImpl implements BitmapService {
 
   @Override public void scaleAndRotateBitmap(final String imgPath, final int maxImgSize,
       final ImageView imgView) {
-    Observable.create(new Observable.OnSubscribe<Bitmap>() {
-      @Override public void call(Subscriber<? super Bitmap> subscriber) {
-        subscriber.onNext(getScaledRotatedBitmap(imgPath, maxImgSize));
-      }
-    })
+    Observable.just(getScaledRotatedBitmap(imgPath, maxImgSize))
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Subscriber<Bitmap>() {
-          @Override public void onCompleted() {
-            Timber.d("onCompleted scaleAndRotateBitmap()");
-          }
-
-          @Override public void onError(Throwable e) {
-            Timber.e(e);
-          }
-
-          @Override public void onNext(Bitmap bitmap) {
-            imgView.setImageBitmap(bitmap);
-          }
-        });
+        .subscribe(bitmap -> imgView.setImageBitmap(bitmap), e -> Timber.e(e),
+            () -> Timber.d("onCompleted scaleAndRotateBitmap()"));
   }
 
   @Override public void scaleAndRotateBitmap(final Uri imgUri, final int maxImgSize,
       final ImageView imgView) {
-    Observable.create(new Observable.OnSubscribe<Bitmap>() {
-      @Override public void call(Subscriber<? super Bitmap> subscriber) {
-        subscriber.onNext(getScaledRotatedBitmap(imgUri, maxImgSize));
-      }
-    })
+    Observable.just(getScaledRotatedBitmap(imgUri, maxImgSize))
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Subscriber<Bitmap>() {
-          @Override public void onCompleted() {
-            Timber.d("onCompleted scaleAndRotateBitmap()");
-          }
-
-          @Override public void onError(Throwable e) {
-            Timber.e(e);
-          }
-
-          @Override public void onNext(Bitmap bitmap) {
-            imgView.setImageBitmap(bitmap);
-          }
-        });
+        .subscribe(bitmap -> imgView.setImageBitmap(bitmap), e -> Timber.e(e),
+            () -> Timber.d("onCompleted scaleAndRotateBitmap()"));
   }
 
-  public Bitmap getScaledRotatedBitmap(Uri selectedImageUri, int maxImgSize) {
+  private Bitmap getScaledRotatedBitmap(Uri selectedImageUri, int maxImgSize) {
     String imgPath = getImagePath(selectedImageUri);
     Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
     return getScaledRotatedBitmap(selectedImageUri, imgPath, bitmap, maxImgSize);
   }
 
-  public Bitmap getScaledRotatedBitmap(String imgPath, int maxImgSize) {
-    Timber.d("IN getScaledRotatedBitmap");
+  private Bitmap getScaledRotatedBitmap(String imgPath, int maxImgSize) {
     Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-    Timber.d("Image path decoded");
-    Bitmap bmp = getScaledRotatedBitmap(null, imgPath, bitmap, maxImgSize);
-    Timber.d("OUT getScaledRotatedBitmap");
-    return bmp;
+    return getScaledRotatedBitmap(null, imgPath, bitmap, maxImgSize);
   }
 
   private Bitmap getScaledRotatedBitmap(Uri selectedImageUri, String imgPath, Bitmap bitmap,
       int maxImgSize) {
-    Timber.d("IN private getScaledRotatedBitmap()");
     int height = (int) (bitmap.getHeight() * ((double) maxImgSize / bitmap.getWidth()));
     bitmap = Bitmap.createScaledBitmap(bitmap, maxImgSize, height, false);
     int rotate = getCameraPhotoOrientation(selectedImageUri, imgPath);
@@ -99,11 +63,10 @@ public class BitmapServiceImpl implements BitmapService {
       m.setRotate(rotate);
       bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), m, false);
     }
-    Timber.d("OUT private getScaledRotatedBitmap()");
     return bitmap;
   }
 
-  public int getCameraPhotoOrientation(Uri imageUri, String imagePath) {
+  private int getCameraPhotoOrientation(Uri imageUri, String imagePath) {
     int rotate = 0;
     try {
       if (imageUri != null) {

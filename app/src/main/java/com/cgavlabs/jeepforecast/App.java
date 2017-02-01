@@ -10,7 +10,7 @@ import timber.log.Timber;
 
 public class App extends Application {
 
-  AppComponent appComponent;
+  private AppComponent appComponent;
 
   @Override public void onCreate() {
     super.onCreate();

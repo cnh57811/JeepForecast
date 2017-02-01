@@ -18,9 +18,6 @@ public class WeatherConfigListActivity extends BaseActivity {
 
   @Inject WeatherConfigContract.Presenter presenter;
   @Inject BitmapService bitmapSvc;
-  private RecyclerView recyclerView;
-  private FloatingActionButton fab;
-  private WeatherConfigListAdapter adapter;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -35,11 +32,12 @@ public class WeatherConfigListActivity extends BaseActivity {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
       getSupportActionBar().setTitle("Weather Configurations");
     }
-    recyclerView = (RecyclerView) findViewById(R.id.weather_config_list);
+    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.weather_config_list);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    adapter = new WeatherConfigListAdapter(bitmapSvc, presenter.getWeatherConfigs());
+    WeatherConfigListAdapter adapter =
+        new WeatherConfigListAdapter(bitmapSvc, presenter.getWeatherConfigs());
     recyclerView.setAdapter(adapter);
-    fab = (FloatingActionButton) findViewById(R.id.fab_add_weather_config);
+    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add_weather_config);
     fab.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
         startActivity(new Intent(WeatherConfigListActivity.this, NewWeatherConfigActivity.class));
