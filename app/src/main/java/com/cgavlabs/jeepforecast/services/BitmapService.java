@@ -7,4 +7,6 @@ public interface BitmapService {
   void scaleAndRotateBitmap(String imgPath, int maxImgSize, ImageView imgView);
 
   void scaleAndRotateBitmap(Uri imgUri, int maxImgSize, ImageView imgView);
+
+  String getImagePath(Uri uri);
 }
