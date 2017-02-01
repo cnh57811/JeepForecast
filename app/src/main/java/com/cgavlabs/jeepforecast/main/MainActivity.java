@@ -10,14 +10,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import com.cgavlabs.jeepforecast.App;
 import com.cgavlabs.jeepforecast.BaseActivity;
-import com.cgavlabs.jeepforecast.Contract;
 import com.cgavlabs.jeepforecast.R;
 import com.cgavlabs.jeepforecast.settings.weatherconfiglist.WeatherConfigListActivity;
 import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity {
 
-  @Inject Contract.Main.Presenter presenter;
+  @Inject MainContract.Presenter presenter;
   @Inject MainPagerAdapter pagerAdapter;
   @Inject SharedPreferences sharedPrefs;
 

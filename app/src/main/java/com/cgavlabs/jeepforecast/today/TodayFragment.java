@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.cgavlabs.jeepforecast.App;
 import com.cgavlabs.jeepforecast.BaseFragment;
-import com.cgavlabs.jeepforecast.Contract;
 import com.cgavlabs.jeepforecast.R;
 import com.cgavlabs.jeepforecast.events.DataSavedEvent;
 import com.cgavlabs.jeepforecast.models.view.Day;
@@ -22,11 +21,11 @@ import timber.log.Timber;
 
 import static android.app.Activity.RESULT_OK;
 
-public class TodayFragment extends BaseFragment implements Contract.Today.View {
+public class TodayFragment extends BaseFragment implements TodayContract.View {
 
   private static final int SELECT_PICTURE = 1;
   private static final int MAX_IMG_SIZE = 2048;
-  @Inject Contract.Today.Presenter presenter;
+  @Inject TodayContract.Presenter presenter;
   @Inject BitmapService bitmapSvc;
   private TextView actualTemp;
   private TextView highTemp;

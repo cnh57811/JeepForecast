@@ -1,13 +1,12 @@
 package com.cgavlabs.jeepforecast.today;
 
 import android.support.v4.util.Pair;
-import com.cgavlabs.jeepforecast.Contract;
 import com.cgavlabs.jeepforecast.models.domain.Currently;
 import com.cgavlabs.jeepforecast.models.domain.DailyData;
 import com.cgavlabs.jeepforecast.repos.WeatherRepo;
 import javax.inject.Inject;
 
-public class TodayInteractor implements Contract.Today.Interactor {
+public class TodayInteractor implements TodayContract.Interactor {
 
   private final WeatherRepo weatherRepo;
 

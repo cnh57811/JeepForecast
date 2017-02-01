@@ -1,15 +1,13 @@
 package com.cgavlabs.jeepforecast.settings.weatherconfiglist;
 
-import com.cgavlabs.jeepforecast.Contract;
 import com.cgavlabs.jeepforecast.models.view.WeatherConfig;
 import java.util.List;
 import javax.inject.Inject;
 
-public class WeatherConfigPresenter implements Contract.Config.Presenter {
-  private final Contract.Config.Interactor interactor;
+public class WeatherConfigPresenter implements WeatherConfigContract.Presenter {
+  private final WeatherConfigContract.Interactor interactor;
 
-  @Inject
-  public WeatherConfigPresenter(Contract.Config.Interactor interactor) {
+  @Inject public WeatherConfigPresenter(WeatherConfigContract.Interactor interactor) {
     this.interactor = interactor;
   }
 

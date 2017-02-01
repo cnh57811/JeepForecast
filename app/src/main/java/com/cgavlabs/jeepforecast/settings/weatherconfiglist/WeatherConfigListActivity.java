@@ -9,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import com.cgavlabs.jeepforecast.App;
 import com.cgavlabs.jeepforecast.BaseActivity;
-import com.cgavlabs.jeepforecast.Contract;
 import com.cgavlabs.jeepforecast.R;
 import com.cgavlabs.jeepforecast.services.BitmapService;
 import com.cgavlabs.jeepforecast.settings.newweatherconfig.NewWeatherConfigActivity;
@@ -17,7 +16,7 @@ import javax.inject.Inject;
 
 public class WeatherConfigListActivity extends BaseActivity {
 
-  @Inject Contract.Config.Presenter presenter;
+  @Inject WeatherConfigContract.Presenter presenter;
   @Inject BitmapService bitmapSvc;
   private RecyclerView recyclerView;
   private FloatingActionButton fab;
