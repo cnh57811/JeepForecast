@@ -1,6 +1,5 @@
 package com.cgavlabs.jeepforecast.settings.weatherconfiglist;
 
-import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,19 +8,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.cgavlabs.jeepforecast.R;
-import com.cgavlabs.jeepforecast.utils.ScaleRotateBitmapTask;
 import com.cgavlabs.jeepforecast.models.view.WeatherConfig;
+import com.cgavlabs.jeepforecast.services.BitmapService;
 import java.util.List;
 import timber.log.Timber;
 
 public class WeatherConfigListAdapter extends RecyclerView.Adapter {
 
   private final List<WeatherConfig> weatherConfigs;
-  private final Activity activity;
+  private final BitmapService bitmapSvc;
 
-  public WeatherConfigListAdapter(Activity activity, List<WeatherConfig> weatherConfigs) {
+  public WeatherConfigListAdapter(BitmapService bitmapSvc, List<WeatherConfig> weatherConfigs) {
     this.weatherConfigs = weatherConfigs;
-    this.activity = activity;
+    this.bitmapSvc = bitmapSvc;
   }
 
   @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -33,14 +32,10 @@ public class WeatherConfigListAdapter extends RecyclerView.Adapter {
   @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
     ViewHolder configHolder = (ViewHolder) holder;
     configHolder.name.setText(weatherConfigs.get(position).getName());
-    //Timber.d("Start getImagePath()");
     String imagePath = weatherConfigs.get(position).getImagePath();
-    //Timber.d("end getImagePath()");
     Timber.d("scale and rotate image");
-    new ScaleRotateBitmapTask(activity, imagePath, configHolder.image).execute(256);
-    //Bitmap bmp = Utils.getScaledRotatedBitmap(activity, imagePath);
+    bitmapSvc.scaleAndRotateBitmap(imagePath, 256, configHolder.image);
     Timber.d("done ... scale and rotate image");
-    //configHolder.image.setImageBitmap(bmp);
   }
 
   @Override public int getItemCount() {

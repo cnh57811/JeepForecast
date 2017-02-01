@@ -1,11 +1,11 @@
 package com.cgavlabs.jeepforecast.today;
 
-import com.cgavlabs.jeepforecast.di.RealmModule;
-import com.cgavlabs.jeepforecast.di.WeatherRepoModule;
+import com.cgavlabs.jeepforecast.di.AppComponent;
+import com.cgavlabs.jeepforecast.main.UserScope;
 import dagger.Component;
-import javax.inject.Singleton;
 
-@Singleton @Component(modules = { TodayModule.class, WeatherRepoModule.class, RealmModule.class })
-interface TodayComponent {
+@UserScope @Component(dependencies = { AppComponent.class }, modules = {
+    TodayModule.class
+}) interface TodayComponent {
   void inject(TodayFragment todayFragment);
 }

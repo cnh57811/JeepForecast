@@ -16,7 +16,7 @@ import javax.inject.Singleton;
     this.fm = fm;
   }
 
-  @Provides @Singleton public MainPagerAdapter providesPagerAdapter() {
+  @Provides public MainPagerAdapter providesPagerAdapter() {
     return new MainPagerAdapter(fm);
   }
 

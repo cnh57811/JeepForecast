@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.cgavlabs.jeepforecast.App;
 import com.cgavlabs.jeepforecast.BaseFragment;
 import com.cgavlabs.jeepforecast.Contract;
 import com.cgavlabs.jeepforecast.R;
 import com.cgavlabs.jeepforecast.models.DataSavedEvent;
 import com.cgavlabs.jeepforecast.models.view.Day;
-import com.cgavlabs.jeepforecast.utils.ScaleRotateBitmapTask;
-import com.cgavlabs.jeepforecast.utils.Utils;
+import com.cgavlabs.jeepforecast.services.BitmapService;
 import javax.inject.Inject;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -26,6 +26,7 @@ public class TodayFragment extends BaseFragment implements Contract.Today.View {
 
   private static final int SELECT_PICTURE = 1;
   @Inject Contract.Today.Presenter presenter;
+  @Inject BitmapService bitmapSvc;
   private TextView actualTemp;
   private TextView highTemp;
   private TextView lowTemp;
@@ -65,8 +66,9 @@ public class TodayFragment extends BaseFragment implements Contract.Today.View {
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (resultCode == RESULT_OK) {
       if (requestCode == SELECT_PICTURE) {
-        String imgPath = Utils.getImagePath(getActivity(), data.getData());
-        new ScaleRotateBitmapTask(getActivity(), imgPath, backgroundImg).execute(2048);
+        bitmapSvc.scaleAndRotateBitmap(data.getData(), 2048, backgroundImg);
+        //String imgPath = getImagePath(getActivity(), data.getData());
+        //new ScaleRotateBitmapTask(getActivity(), imgPath, backgroundImg, maxImgSize1).execute(2048);
       }
     }
   }
@@ -102,6 +104,10 @@ public class TodayFragment extends BaseFragment implements Contract.Today.View {
   }
 
   @Override public void inject() {
-    DaggerTodayComponent.builder().todayModule(new TodayModule(this)).build().inject(this);
+    DaggerTodayComponent.builder()
+        .appComponent(((App) getActivity().getApplication()).getAppComponent())
+        .todayModule(new TodayModule(this))
+        .build()
+        .inject(this);
   }
 }
