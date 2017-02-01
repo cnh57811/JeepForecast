@@ -9,5 +9,5 @@ public abstract class BaseFragment extends Fragment {
     inject();
   }
 
-  public abstract void inject();
+  protected abstract void inject();
 }

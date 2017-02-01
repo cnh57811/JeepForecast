@@ -31,8 +31,8 @@ public class MainActivity extends BaseActivity {
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
     ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-    TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
     viewPager.setAdapter(pagerAdapter);
+    TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
     tabs.setupWithViewPager(viewPager);
   }
 
