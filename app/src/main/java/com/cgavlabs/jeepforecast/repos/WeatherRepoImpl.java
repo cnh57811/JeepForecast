@@ -1,7 +1,7 @@
 package com.cgavlabs.jeepforecast.repos;
 
 import com.cgavlabs.jeepforecast.utils.Utils;
-import com.cgavlabs.jeepforecast.models.DataSavedEvent;
+import com.cgavlabs.jeepforecast.events.DataSavedEvent;
 import com.cgavlabs.jeepforecast.models.domain.Currently;
 import com.cgavlabs.jeepforecast.models.domain.DailyData;
 import com.cgavlabs.jeepforecast.models.domain.Weather;

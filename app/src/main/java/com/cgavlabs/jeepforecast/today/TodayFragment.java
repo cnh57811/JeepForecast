@@ -11,7 +11,7 @@ import com.cgavlabs.jeepforecast.App;
 import com.cgavlabs.jeepforecast.BaseFragment;
 import com.cgavlabs.jeepforecast.Contract;
 import com.cgavlabs.jeepforecast.R;
-import com.cgavlabs.jeepforecast.models.DataSavedEvent;
+import com.cgavlabs.jeepforecast.events.DataSavedEvent;
 import com.cgavlabs.jeepforecast.models.view.Day;
 import com.cgavlabs.jeepforecast.services.BitmapService;
 import javax.inject.Inject;

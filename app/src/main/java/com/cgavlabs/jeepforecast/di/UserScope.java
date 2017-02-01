@@ -1,4 +1,4 @@
-package com.cgavlabs.jeepforecast.main;
+package com.cgavlabs.jeepforecast.di;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
