@@ -1,5 +1,6 @@
 package com.cgavlabs.jeepforecast;
 
+import com.cgavlabs.jeepforecast.utils.Utils;
 import org.junit.Ignore;
 import org.junit.Test;
 

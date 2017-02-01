@@ -5,13 +5,9 @@ import dagger.Provides;
 import io.realm.Realm;
 import javax.inject.Singleton;
 
-@Module
-public class RealmModule {
+@Module public class RealmModule {
 
-  @Provides
-  @Singleton
-  public Realm provideRealm() {
+  @Provides @Singleton public Realm provideRealm() {
     return Realm.getDefaultInstance();
   }
-
 }

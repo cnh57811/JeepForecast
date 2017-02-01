@@ -1,23 +1,22 @@
 package com.cgavlabs.jeepforecast.today;
 
-import com.cgavlabs.jeepforecast.Contract;
 import com.cgavlabs.jeepforecast.repos.WeatherRepo;
 import dagger.Module;
 import dagger.Provides;
 
 @Module public class TodayModule {
 
-  private final Contract.Today.View view;
+  private final TodayContract.View view;
 
-  public TodayModule(Contract.Today.View view) {
+  public TodayModule(TodayContract.View view) {
     this.view = view;
   }
 
-  @Provides public Contract.Today.Presenter providePresenter(Contract.Today.Interactor interactor) {
+  @Provides public TodayContract.Presenter providePresenter(TodayContract.Interactor interactor) {
     return new TodayPresenter(view, interactor);
   }
 
-  @Provides public Contract.Today.Interactor provideInteractor(WeatherRepo weatherRepo) {
+  @Provides public TodayContract.Interactor provideInteractor(WeatherRepo weatherRepo) {
     return new TodayInteractor(weatherRepo);
   }
 }

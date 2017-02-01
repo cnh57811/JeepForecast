@@ -1,13 +1,12 @@
 package com.cgavlabs.jeepforecast.main;
 
-import com.cgavlabs.jeepforecast.Contract;
 import javax.inject.Inject;
 
-public class MainPresenter implements Contract.Main.Presenter {
+public class MainPresenter implements MainContract.Presenter {
 
-  private final Contract.Main.Interactor interactor;
+  private final MainContract.Interactor interactor;
 
-  @Inject public MainPresenter(Contract.Main.Interactor interactor) {
+  @Inject public MainPresenter(MainContract.Interactor interactor) {
     this.interactor = interactor;
   }
 

@@ -1,6 +1,5 @@
 package com.cgavlabs.jeepforecast.main;
 
-import com.cgavlabs.jeepforecast.Contract;
 import com.cgavlabs.jeepforecast.models.domain.Weather;
 import com.cgavlabs.jeepforecast.repos.WeatherRepo;
 import com.cgavlabs.jeepforecast.services.WeatherService;
@@ -10,7 +9,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
-public class MainInteractor implements Contract.Main.Interactor {
+public class MainInteractor implements MainContract.Interactor {
 
   static {
     System.loadLibrary("keys");

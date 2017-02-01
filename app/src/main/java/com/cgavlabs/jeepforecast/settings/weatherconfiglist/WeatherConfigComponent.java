@@ -1,11 +1,11 @@
-package com.cgavlabs.jeepforecast.today;
+package com.cgavlabs.jeepforecast.settings.weatherconfiglist;
 
 import com.cgavlabs.jeepforecast.di.AppComponent;
 import com.cgavlabs.jeepforecast.di.UserScope;
 import dagger.Component;
 
 @UserScope @Component(dependencies = { AppComponent.class }, modules = {
-    TodayModule.class
-}) interface TodayComponent {
-  void inject(TodayFragment todayFragment);
+    WeatherConfigModule.class
+}) public interface WeatherConfigComponent {
+  void inject(WeatherConfigListActivity activity);
 }

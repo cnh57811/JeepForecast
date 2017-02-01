@@ -1,20 +1,24 @@
 package com.cgavlabs.jeepforecast.main;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.cgavlabs.jeepforecast.App;
 import com.cgavlabs.jeepforecast.BaseActivity;
-import com.cgavlabs.jeepforecast.Contract;
 import com.cgavlabs.jeepforecast.R;
+import com.cgavlabs.jeepforecast.settings.weatherconfiglist.WeatherConfigListActivity;
 import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity {
 
+  @Inject MainContract.Presenter presenter;
   @Inject MainPagerAdapter pagerAdapter;
-  @Inject Contract.Main.Presenter presenter;
+  @Inject SharedPreferences sharedPrefs;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -43,11 +47,15 @@ public class MainActivity extends BaseActivity {
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
     int id = item.getItemId();
-    return id == R.id.action_settings || super.onOptionsItemSelected(item);
+    if (id == R.id.action_weather_config) {
+      startActivity(new Intent(this, WeatherConfigListActivity.class));
+    }
+    return true;
   }
 
   @Override public void inject() {
     DaggerMainComponent.builder()
+        .appComponent(((App) getApplication()).getAppComponent())
         .mainModule(new MainModule(getSupportFragmentManager()))
         .build()
         .inject(this);

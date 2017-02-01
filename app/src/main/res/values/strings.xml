@@ -8,4 +8,5 @@
   <string name="degrees_farenheight">℉</string>
   <string name="temp_high_default">87</string>
   <string name="temp_low_default">12</string>
+  <string name="weather_configurations">Weather Configurations</string>
 </resources>

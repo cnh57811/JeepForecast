@@ -1,11 +1,13 @@
 package com.cgavlabs.jeepforecast.repos;
 
-import com.cgavlabs.jeepforecast.Utils;
-import com.cgavlabs.jeepforecast.models.DataSavedEvent;
+import com.cgavlabs.jeepforecast.utils.Utils;
+import com.cgavlabs.jeepforecast.events.DataSavedEvent;
 import com.cgavlabs.jeepforecast.models.domain.Currently;
 import com.cgavlabs.jeepforecast.models.domain.DailyData;
 import com.cgavlabs.jeepforecast.models.domain.Weather;
+import com.cgavlabs.jeepforecast.models.view.WeatherConfig;
 import io.realm.Realm;
+import java.util.List;
 import javax.inject.Inject;
 import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
@@ -42,5 +44,9 @@ public class WeatherRepoImpl implements WeatherRepo {
 
   @Override public Currently getCurrentWeather() {
     return realm.where(Currently.class).findFirst();
+  }
+
+  @Override public List<WeatherConfig> getWeatherConfigs() {
+    return realm.where(WeatherConfig.class).findAll();
   }
 }

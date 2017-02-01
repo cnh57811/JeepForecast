@@ -1,19 +1,18 @@
 package com.cgavlabs.jeepforecast.today;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.cgavlabs.jeepforecast.App;
 import com.cgavlabs.jeepforecast.BaseFragment;
-import com.cgavlabs.jeepforecast.Contract;
 import com.cgavlabs.jeepforecast.R;
-import com.cgavlabs.jeepforecast.Utils;
-import com.cgavlabs.jeepforecast.models.DataSavedEvent;
+import com.cgavlabs.jeepforecast.events.DataSavedEvent;
 import com.cgavlabs.jeepforecast.models.view.Day;
+import com.cgavlabs.jeepforecast.services.BitmapService;
 import javax.inject.Inject;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -22,10 +21,12 @@ import timber.log.Timber;
 
 import static android.app.Activity.RESULT_OK;
 
-public class TodayFragment extends BaseFragment implements Contract.Today.View {
+public class TodayFragment extends BaseFragment implements TodayContract.View {
 
   private static final int SELECT_PICTURE = 1;
-  @Inject Contract.Today.Presenter presenter;
+  private static final int MAX_IMG_SIZE = 2048;
+  @Inject TodayContract.Presenter presenter;
+  @Inject BitmapService bitmapSvc;
   private TextView actualTemp;
   private TextView highTemp;
   private TextView lowTemp;
@@ -49,7 +50,6 @@ public class TodayFragment extends BaseFragment implements Contract.Today.View {
     dayTempTime = (TextView) view.findViewById(R.id.day_temp_time);
     currentTempTime = (TextView) view.findViewById(R.id.current_temp_time);
     backgroundImg = (ImageView) view.findViewById(R.id.image);
-    backgroundImg.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
     view.findViewById(R.id.btn_choose_photo).setOnClickListener(new View.OnClickListener() {
       public void onClick(View arg0) {
@@ -66,8 +66,7 @@ public class TodayFragment extends BaseFragment implements Contract.Today.View {
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (resultCode == RESULT_OK) {
       if (requestCode == SELECT_PICTURE) {
-        Bitmap scaledBmp = Utils.getScaledRotatedBitmap(getActivity(), data.getData());
-        backgroundImg.setImageBitmap(scaledBmp);
+        bitmapSvc.scaleAndRotateBitmap(data.getData(), MAX_IMG_SIZE, backgroundImg);
       }
     }
   }
@@ -103,6 +102,10 @@ public class TodayFragment extends BaseFragment implements Contract.Today.View {
   }
 
   @Override public void inject() {
-    DaggerTodayComponent.builder().todayModule(new TodayModule(this)).build().inject(this);
+    DaggerTodayComponent.builder()
+        .appComponent(((App) getActivity().getApplication()).getAppComponent())
+        .todayModule(new TodayModule(this))
+        .build()
+        .inject(this);
   }
 }
