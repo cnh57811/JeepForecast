@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.cgavlabs.jeepforecast.R;
 import com.cgavlabs.jeepforecast.models.view.WeatherConfig;
 import com.cgavlabs.jeepforecast.services.BitmapService;
@@ -43,19 +45,19 @@ class WeatherConfigListAdapter extends RecyclerView.Adapter {
     return weatherConfigs.size();
   }
 
-  private static class ViewHolder extends RecyclerView.ViewHolder {
+  static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    final LinearLayout hidden;
-    final TextView name;
-    final ImageView image;
+    @BindView(R.id.ll_can_be_hidden) LinearLayout hidden;
+    @BindView(R.id.tv_not_hidden_1) TextView name;
+    @BindView(R.id.weather_config_list_item_image) ImageView image;
 
     ViewHolder(final View itemView) {
       super(itemView);
-      hidden = (LinearLayout) itemView.findViewById(R.id.ll_can_be_hidden);
-      name = (TextView) itemView.findViewById(R.id.tv_not_hidden_1);
-      image = (ImageView) itemView.findViewById(R.id.weather_config_list_item_image);
-      itemView.setOnClickListener(view -> hidden.setVisibility(
-          hidden.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE));
+      ButterKnife.bind(this, itemView);
+    }
+
+    @Override public void onClick(View view) {
+      hidden.setVisibility(hidden.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
     }
   }
 }
