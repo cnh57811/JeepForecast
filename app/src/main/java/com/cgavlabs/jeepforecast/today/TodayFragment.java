@@ -98,7 +98,6 @@ public class TodayFragment extends BaseFragment implements TodayContract.View {
     lowTemp.setText(day.getLowTemp());
     dayTempTime.setText(day.getLowTempTime());
     currentTempTime.setText(day.getCurrentTempTime());
-    Timber.d("UI fields on TODAY screen updated");
   }
 
   @Override public void inject() {

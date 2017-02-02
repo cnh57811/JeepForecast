@@ -4,13 +4,12 @@ import android.graphics.Bitmap;
 import javax.inject.Inject;
 import rx.Observable;
 
-public class WeatherConfigListAdapterPresenter
-    implements WeatherConfigListAdapterContract.Presenter {
+class WeatherConfigListAdapterPresenter implements WeatherConfigListAdapterContract.Presenter {
 
   private WeatherConfigListAdapterContract.Interactor interactor;
 
-  @Inject
-  public WeatherConfigListAdapterPresenter(WeatherConfigListAdapterContract.Interactor interactor) {
+  @Inject WeatherConfigListAdapterPresenter(
+      WeatherConfigListAdapterContract.Interactor interactor) {
     this.interactor = interactor;
   }
 

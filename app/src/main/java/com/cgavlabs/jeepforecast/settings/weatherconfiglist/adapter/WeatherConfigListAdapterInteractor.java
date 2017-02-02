@@ -5,12 +5,11 @@ import com.cgavlabs.jeepforecast.services.BitmapService;
 import javax.inject.Inject;
 import rx.Observable;
 
-public class WeatherConfigListAdapterInteractor
-    implements WeatherConfigListAdapterContract.Interactor {
+class WeatherConfigListAdapterInteractor implements WeatherConfigListAdapterContract.Interactor {
 
   private BitmapService bitmapService;
 
-  @Inject public WeatherConfigListAdapterInteractor(BitmapService bitmapService) {
+  @Inject WeatherConfigListAdapterInteractor(BitmapService bitmapService) {
     this.bitmapService = bitmapService;
   }
 

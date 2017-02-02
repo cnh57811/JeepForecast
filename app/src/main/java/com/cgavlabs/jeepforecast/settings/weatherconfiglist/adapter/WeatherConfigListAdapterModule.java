@@ -6,12 +6,12 @@ import dagger.Provides;
 
 @Module public class WeatherConfigListAdapterModule {
 
-  @Provides public WeatherConfigListAdapterContract.Presenter providePresenter(
+  @Provides WeatherConfigListAdapterContract.Presenter providePresenter(
       WeatherConfigListAdapterContract.Interactor interactor) {
     return new WeatherConfigListAdapterPresenter(interactor);
   }
 
-  @Provides public WeatherConfigListAdapterContract.Interactor provideInteractor(
+  @Provides WeatherConfigListAdapterContract.Interactor provideInteractor(
       BitmapService bitmapService) {
     return new WeatherConfigListAdapterInteractor(bitmapService);
   }

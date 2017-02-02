@@ -59,6 +59,7 @@ public class WeatherConfigListAdapter extends RecyclerView.Adapter {
     ViewHolder(final View itemView) {
       super(itemView);
       ButterKnife.bind(this, itemView);
+      itemView.setOnClickListener(this);
     }
 
     @Override public void onClick(View view) {
