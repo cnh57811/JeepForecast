@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import java.io.File;
 import javax.inject.Inject;
 import rx.Observable;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
@@ -24,22 +25,30 @@ public class BitmapServiceImpl implements BitmapService {
     this.context = context;
   }
 
-  @Override public void scaleAndRotateBitmap(final String imgPath, final int maxImgSize,
-      final ImageView imgView) {
-    Observable.just(getScaledRotatedBitmap(imgPath, maxImgSize))
+  @Override
+  public void scaleAndRotateBitmap(final String imgPath, final int maxImgSize, ImageView imgView) {
+    Observable.create(new Observable.OnSubscribe<Bitmap>() {
+      @Override public void call(Subscriber<? super Bitmap> subscriber) {
+        subscriber.onNext(getScaledRotatedBitmap(imgPath, maxImgSize));
+      }
+    })
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(bitmap -> imgView.setImageBitmap(bitmap), e -> Timber.e(e),
-            () -> Timber.d("onCompleted scaleAndRotateBitmap()"));
+            () -> Timber.d("onCompleted scaleAndRotateBitmap(imgPath)"));
   }
 
   @Override public void scaleAndRotateBitmap(final Uri imgUri, final int maxImgSize,
       final ImageView imgView) {
-    Observable.just(getScaledRotatedBitmap(imgUri, maxImgSize))
+    Observable.create(new Observable.OnSubscribe<Bitmap>() {
+      @Override public void call(Subscriber<? super Bitmap> subscriber) {
+        subscriber.onNext(getScaledRotatedBitmap(imgUri, maxImgSize));
+      }
+    })
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(bitmap -> imgView.setImageBitmap(bitmap), e -> Timber.e(e),
-            () -> Timber.d("onCompleted scaleAndRotateBitmap()"));
+            () -> Timber.d("onCompleted scaleAndRotateBitmap(uri)"));
   }
 
   private Bitmap getScaledRotatedBitmap(Uri selectedImageUri, int maxImgSize) {
@@ -98,7 +107,7 @@ public class BitmapServiceImpl implements BitmapService {
     return rotate;
   }
 
-  public String getImagePath(Uri uri) {
+  private String getImagePath(Uri uri) {
     // just some safety built in
     if (uri == null) {
       // TODO perform some logging or show user feedback
