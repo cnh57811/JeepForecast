@@ -8,7 +8,6 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.widget.ImageView;
 import java.io.File;
 import javax.inject.Inject;
 import rx.Observable;
@@ -26,29 +25,20 @@ public class BitmapServiceImpl implements BitmapService {
   }
 
   @Override
-  public void scaleAndRotateBitmap(final String imgPath, final int maxImgSize, ImageView imgView) {
-    Observable.create(new Observable.OnSubscribe<Bitmap>() {
+  public Observable<Bitmap> scaleAndRotateBitmap(final String imgPath, final int maxImgSize) {
+    return Observable.create(new Observable.OnSubscribe<Bitmap>() {
       @Override public void call(Subscriber<? super Bitmap> subscriber) {
         subscriber.onNext(getScaledRotatedBitmap(imgPath, maxImgSize));
       }
-    })
-        .subscribeOn(Schedulers.computation())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(bitmap -> imgView.setImageBitmap(bitmap), e -> Timber.e(e),
-            () -> Timber.d("onCompleted scaleAndRotateBitmap(imgPath)"));
+    }).subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread());
   }
 
-  @Override public void scaleAndRotateBitmap(final Uri imgUri, final int maxImgSize,
-      final ImageView imgView) {
-    Observable.create(new Observable.OnSubscribe<Bitmap>() {
+  @Override public Observable<Bitmap> scaleAndRotateBitmap(final Uri imgUri, final int maxImgSize) {
+    return Observable.create(new Observable.OnSubscribe<Bitmap>() {
       @Override public void call(Subscriber<? super Bitmap> subscriber) {
         subscriber.onNext(getScaledRotatedBitmap(imgUri, maxImgSize));
       }
-    })
-        .subscribeOn(Schedulers.computation())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(bitmap -> imgView.setImageBitmap(bitmap), e -> Timber.e(e),
-            () -> Timber.d("onCompleted scaleAndRotateBitmap(uri)"));
+    }).subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread());
   }
 
   private Bitmap getScaledRotatedBitmap(Uri selectedImageUri, int maxImgSize) {
@@ -82,11 +72,9 @@ public class BitmapServiceImpl implements BitmapService {
         context.getContentResolver().notifyChange(imageUri, null);
       }
       File imageFile = new File(imagePath);
-
       ExifInterface exif = new ExifInterface(imageFile.getAbsolutePath());
       int orientation =
           exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-
       switch (orientation) {
         case ExifInterface.ORIENTATION_ROTATE_270:
           rotate = 270;
@@ -98,9 +86,6 @@ public class BitmapServiceImpl implements BitmapService {
           rotate = 90;
           break;
       }
-
-      Timber.i("RotateImage Exif orientation: " + orientation);
-      Timber.i("RotateImage Rotate value: " + rotate);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -108,21 +93,13 @@ public class BitmapServiceImpl implements BitmapService {
   }
 
   private String getImagePath(Uri uri) {
-    // just some safety built in
-    if (uri == null) {
-      // TODO perform some logging or show user feedback
-      return null;
-    }
-    // try to retrieve the image from the media store first
-    // this will only work for images selected from gallery
     String[] projection = { MediaStore.Images.Media.DATA };
-    //Cursor cursor = activity.managedQuery(uri, projection, null, null, null);
     Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
     if (cursor != null) {
       int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
       cursor.moveToFirst();
       String path = cursor.getString(column_index);
-      //cursor.close();
+      cursor.close();
       Timber.d("**** image path ****" + path);
       return path;
     }

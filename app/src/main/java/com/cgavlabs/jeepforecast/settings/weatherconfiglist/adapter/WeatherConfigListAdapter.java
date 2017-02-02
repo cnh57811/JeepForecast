@@ -1,5 +1,6 @@
-package com.cgavlabs.jeepforecast.settings.weatherconfiglist;
+package com.cgavlabs.jeepforecast.settings.weatherconfiglist.adapter;
 
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,19 +12,23 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.cgavlabs.jeepforecast.R;
 import com.cgavlabs.jeepforecast.models.view.WeatherConfig;
-import com.cgavlabs.jeepforecast.services.BitmapService;
 import java.util.List;
+import javax.inject.Inject;
+import rx.Observable;
 import timber.log.Timber;
 
-class WeatherConfigListAdapter extends RecyclerView.Adapter {
+public class WeatherConfigListAdapter extends RecyclerView.Adapter {
 
   private static final int MAX_IMG_SIZE = 256;
-  private final List<WeatherConfig> weatherConfigs;
-  private final BitmapService bitmapSvc;
+  private List<WeatherConfig> weatherConfigs;
+  private WeatherConfigListAdapterContract.Presenter presenter;
 
-  WeatherConfigListAdapter(BitmapService bitmapSvc, List<WeatherConfig> weatherConfigs) {
+  @Inject public WeatherConfigListAdapter(WeatherConfigListAdapterContract.Presenter presenter) {
+    this.presenter = presenter;
+  }
+
+  public void setWeatherConfigs(List<WeatherConfig> weatherConfigs) {
     this.weatherConfigs = weatherConfigs;
-    this.bitmapSvc = bitmapSvc;
   }
 
   @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -36,9 +41,9 @@ class WeatherConfigListAdapter extends RecyclerView.Adapter {
     ViewHolder configHolder = (ViewHolder) holder;
     configHolder.name.setText(weatherConfigs.get(position).getName());
     String imagePath = weatherConfigs.get(position).getImagePath();
-    Timber.d("scale and rotate image");
-    bitmapSvc.scaleAndRotateBitmap(imagePath, MAX_IMG_SIZE, configHolder.image);
-    Timber.d("done ... scale and rotate image");
+    Observable<Bitmap> bitmapObservable = presenter.getThumbnailImage(imagePath, MAX_IMG_SIZE);
+    bitmapObservable.subscribe(bitmap -> configHolder.image.setImageBitmap(bitmap),
+        throwable -> Timber.e(throwable), () -> Timber.d("onCompleted"));
   }
 
   @Override public int getItemCount() {

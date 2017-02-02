@@ -1,6 +1,7 @@
 package com.cgavlabs.jeepforecast.today;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import javax.inject.Inject;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import rx.Observable;
 import timber.log.Timber;
 
 import static android.app.Activity.RESULT_OK;
@@ -61,7 +63,9 @@ public class TodayFragment extends BaseFragment implements TodayContract.View {
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (resultCode == RESULT_OK) {
       if (requestCode == SELECT_PICTURE) {
-        bitmapSvc.scaleAndRotateBitmap(data.getData(), MAX_IMG_SIZE, backgroundImg);
+        Observable<Bitmap> bitmapObs = presenter.getBackgroundImage(data.getData(), MAX_IMG_SIZE);
+        bitmapObs.subscribe(bitmap -> backgroundImg.setImageBitmap(bitmap),
+            throwable -> Timber.e(throwable), () -> Timber.d("onCompleted()"));
       }
     }
   }

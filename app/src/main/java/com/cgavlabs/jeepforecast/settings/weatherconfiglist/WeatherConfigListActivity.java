@@ -13,13 +13,13 @@ import butterknife.OnClick;
 import com.cgavlabs.jeepforecast.App;
 import com.cgavlabs.jeepforecast.BaseActivity;
 import com.cgavlabs.jeepforecast.R;
-import com.cgavlabs.jeepforecast.services.BitmapService;
+import com.cgavlabs.jeepforecast.settings.weatherconfiglist.adapter.WeatherConfigListAdapter;
 import javax.inject.Inject;
 
 public class WeatherConfigListActivity extends BaseActivity {
 
   @Inject WeatherConfigContract.Presenter presenter;
-  @Inject BitmapService bitmapSvc;
+  @Inject WeatherConfigListAdapter adapter;
   @BindView(R.id.weather_config_toolbar) Toolbar toolbar;
   @BindView(R.id.weather_config_list) RecyclerView recyclerView;
   @BindView(R.id.fab_add_weather_config) FloatingActionButton fab;
@@ -39,8 +39,7 @@ public class WeatherConfigListActivity extends BaseActivity {
       getSupportActionBar().setTitle("Weather Configurations");
     }
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    WeatherConfigListAdapter adapter =
-        new WeatherConfigListAdapter(bitmapSvc, presenter.getWeatherConfigs());
+    adapter.setWeatherConfigs(presenter.getWeatherConfigs());
     recyclerView.setAdapter(adapter);
     fabAnim = AnimatorInflater.loadAnimator(this, R.animator.rotate_fwd);
     fabAnim.setTarget(fab);
