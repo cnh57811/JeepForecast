@@ -8,7 +8,7 @@ import com.cgavlabs.jeepforecast.models.domain.DailyData;
 import com.cgavlabs.jeepforecast.repos.WeatherRepo;
 import com.cgavlabs.jeepforecast.services.BitmapService;
 import javax.inject.Inject;
-import rx.Observable;
+import rx.Single;
 
 public class TodayInteractor implements TodayContract.Interactor {
 
@@ -26,7 +26,7 @@ public class TodayInteractor implements TodayContract.Interactor {
     return Pair.create(todaysWeather, currentWeather);
   }
 
-  @Override public Observable<Bitmap> getBackgroundImage(Uri uri, int maxImgSize) {
+  @Override public Single<Bitmap> getBackgroundImage(Uri uri, int maxImgSize) {
     return bitmapSvc.scaleAndRotateBitmap(uri, maxImgSize);
   }
 }

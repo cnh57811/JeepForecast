@@ -10,7 +10,7 @@ import com.cgavlabs.jeepforecast.utils.Utils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.inject.Inject;
-import rx.Observable;
+import rx.Single;
 
 public class TodayPresenter implements TodayContract.Presenter {
 
@@ -29,7 +29,7 @@ public class TodayPresenter implements TodayContract.Presenter {
     view.updateTodaysWeather(day);
   }
 
-  @Override public Observable<Bitmap> getBackgroundImage(Uri uri, int maxImgSize) {
+  @Override public Single<Bitmap> getBackgroundImage(Uri uri, int maxImgSize) {
     return interactor.getBackgroundImage(uri, maxImgSize);
   }
 

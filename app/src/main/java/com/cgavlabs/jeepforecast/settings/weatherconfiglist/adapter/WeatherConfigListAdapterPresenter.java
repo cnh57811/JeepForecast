@@ -2,7 +2,7 @@ package com.cgavlabs.jeepforecast.settings.weatherconfiglist.adapter;
 
 import android.graphics.Bitmap;
 import javax.inject.Inject;
-import rx.Observable;
+import rx.Single;
 
 class WeatherConfigListAdapterPresenter implements WeatherConfigListAdapterContract.Presenter {
 
@@ -13,7 +13,7 @@ class WeatherConfigListAdapterPresenter implements WeatherConfigListAdapterContr
     this.interactor = interactor;
   }
 
-  @Override public Observable<Bitmap> getThumbnailImage(String imagePath, int maxImgSize) {
+  @Override public Single<Bitmap> getThumbnailImage(String imagePath, int maxImgSize) {
     return interactor.getThumbnailImage(imagePath, maxImgSize);
   }
 }

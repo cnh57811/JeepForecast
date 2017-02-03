@@ -10,8 +10,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import java.io.File;
 import javax.inject.Inject;
-import rx.Observable;
-import rx.Subscriber;
+import rx.Single;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
@@ -24,32 +23,19 @@ public class BitmapServiceImpl implements BitmapService {
     this.context = context;
   }
 
-  @Override
-  public Observable<Bitmap> scaleAndRotateBitmap(final String imgPath, final int maxImgSize) {
-    return Observable.create(new Observable.OnSubscribe<Bitmap>() {
-      @Override public void call(Subscriber<? super Bitmap> subscriber) {
-        subscriber.onNext(getScaledRotatedBitmap(imgPath, maxImgSize));
-      }
+  @Override public Single<Bitmap> scaleAndRotateBitmap(final String imgPath, final int maxImgSize) {
+    return Single.fromCallable(() -> {
+      Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
+      return getScaledRotatedBitmap(null, imgPath, bitmap, maxImgSize);
     }).subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread());
   }
 
-  @Override public Observable<Bitmap> scaleAndRotateBitmap(final Uri imgUri, final int maxImgSize) {
-    return Observable.create(new Observable.OnSubscribe<Bitmap>() {
-      @Override public void call(Subscriber<? super Bitmap> subscriber) {
-        subscriber.onNext(getScaledRotatedBitmap(imgUri, maxImgSize));
-      }
+  @Override public Single<Bitmap> scaleAndRotateBitmap(final Uri imgUri, final int maxImgSize) {
+    return Single.fromCallable(() -> {
+      String imgPath = getImagePath(imgUri);
+      Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
+      return getScaledRotatedBitmap(imgUri, imgPath, bitmap, maxImgSize);
     }).subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread());
-  }
-
-  private Bitmap getScaledRotatedBitmap(Uri selectedImageUri, int maxImgSize) {
-    String imgPath = getImagePath(selectedImageUri);
-    Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-    return getScaledRotatedBitmap(selectedImageUri, imgPath, bitmap, maxImgSize);
-  }
-
-  private Bitmap getScaledRotatedBitmap(String imgPath, int maxImgSize) {
-    Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-    return getScaledRotatedBitmap(null, imgPath, bitmap, maxImgSize);
   }
 
   private Bitmap getScaledRotatedBitmap(Uri selectedImageUri, String imgPath, Bitmap bitmap,

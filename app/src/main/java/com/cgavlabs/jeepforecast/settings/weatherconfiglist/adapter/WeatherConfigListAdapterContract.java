@@ -1,14 +1,14 @@
 package com.cgavlabs.jeepforecast.settings.weatherconfiglist.adapter;
 
 import android.graphics.Bitmap;
-import rx.Observable;
+import rx.Single;
 
 public interface WeatherConfigListAdapterContract {
   interface Presenter {
-    Observable<Bitmap> getThumbnailImage(String imagePath, int maxImgSize);
+    Single<Bitmap> getThumbnailImage(String imagePath, int maxImgSize);
   }
 
   interface Interactor {
-    Observable<Bitmap> getThumbnailImage(String imagePath, int maxImgSize);
+    Single<Bitmap> getThumbnailImage(String imagePath, int maxImgSize);
   }
 }

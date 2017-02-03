@@ -6,7 +6,7 @@ import android.support.v4.util.Pair;
 import com.cgavlabs.jeepforecast.models.domain.Currently;
 import com.cgavlabs.jeepforecast.models.domain.DailyData;
 import com.cgavlabs.jeepforecast.models.view.Day;
-import rx.Observable;
+import rx.Single;
 
 public interface TodayContract {
   interface View {
@@ -16,12 +16,12 @@ public interface TodayContract {
   interface Presenter {
     void getTodaysWeather();
 
-    Observable<Bitmap> getBackgroundImage(Uri uri, int maxImgSize);
+    Single<Bitmap> getBackgroundImage(Uri uri, int maxImgSize);
   }
 
   interface Interactor {
     Pair<DailyData, Currently> getTodaysWeather();
 
-    Observable<Bitmap> getBackgroundImage(Uri uri, int maxImgSize);
+    Single<Bitmap> getBackgroundImage(Uri uri, int maxImgSize);
   }
 }

@@ -1,6 +1,5 @@
 package com.cgavlabs.jeepforecast.settings.weatherconfiglist.adapter;
 
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,23 +11,25 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.cgavlabs.jeepforecast.R;
 import com.cgavlabs.jeepforecast.models.view.WeatherConfig;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
-import rx.Observable;
 import timber.log.Timber;
 
 public class WeatherConfigListAdapter extends RecyclerView.Adapter {
 
   private static final int MAX_IMG_SIZE = 256;
-  private List<WeatherConfig> weatherConfigs;
+  private List<WeatherConfig> weatherConfigs = new ArrayList<>();
   private WeatherConfigListAdapterContract.Presenter presenter;
 
   @Inject public WeatherConfigListAdapter(WeatherConfigListAdapterContract.Presenter presenter) {
     this.presenter = presenter;
   }
 
-  public void setWeatherConfigs(List<WeatherConfig> weatherConfigs) {
-    this.weatherConfigs = weatherConfigs;
+  public void setWeatherConfigs(List<WeatherConfig> newWeatherConfigs) {
+    weatherConfigs.clear();
+    weatherConfigs.addAll(newWeatherConfigs);
+    notifyDataSetChanged();
   }
 
   @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -41,9 +42,9 @@ public class WeatherConfigListAdapter extends RecyclerView.Adapter {
     ViewHolder configHolder = (ViewHolder) holder;
     configHolder.name.setText(weatherConfigs.get(position).getName());
     String imagePath = weatherConfigs.get(position).getImagePath();
-    Observable<Bitmap> bitmapObservable = presenter.getThumbnailImage(imagePath, MAX_IMG_SIZE);
-    bitmapObservable.subscribe(bitmap -> configHolder.image.setImageBitmap(bitmap),
-        throwable -> Timber.e(throwable), () -> Timber.d("onCompleted"));
+    presenter.getThumbnailImage(imagePath, MAX_IMG_SIZE)
+        .subscribe(bitmap -> configHolder.image.setImageBitmap(bitmap),
+            throwable -> Timber.e(throwable));
   }
 
   @Override public int getItemCount() {
