@@ -1,11 +1,11 @@
 package com.cgavlabs.jeepforecast.repos;
 
-import com.cgavlabs.jeepforecast.utils.Utils;
 import com.cgavlabs.jeepforecast.events.DataSavedEvent;
 import com.cgavlabs.jeepforecast.models.domain.Currently;
 import com.cgavlabs.jeepforecast.models.domain.DailyData;
 import com.cgavlabs.jeepforecast.models.domain.Weather;
 import com.cgavlabs.jeepforecast.models.view.WeatherConfig;
+import com.cgavlabs.jeepforecast.utils.Utils;
 import io.realm.Realm;
 import java.util.List;
 import javax.inject.Inject;

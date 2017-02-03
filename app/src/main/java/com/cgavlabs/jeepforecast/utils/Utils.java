@@ -1,5 +1,6 @@
 package com.cgavlabs.jeepforecast.utils;
 
+import android.view.View;
 import java.util.Calendar;
 import java.util.Date;
 import timber.log.Timber;
@@ -32,5 +33,9 @@ public class Utils {
     c.set(Calendar.MILLISECOND, c.getActualMaximum(Calendar.MILLISECOND));
     Timber.d(c.getTime().toString());
     return c.getTimeInMillis() / 1000;
+  }
+
+  public static void invertViewVisibility(View view) {
+    view.setVisibility(view.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
   }
 }

@@ -11,6 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.cgavlabs.jeepforecast.R;
 import com.cgavlabs.jeepforecast.models.view.WeatherConfig;
+import com.cgavlabs.jeepforecast.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -64,7 +65,7 @@ public class WeatherConfigListAdapter extends RecyclerView.Adapter {
     }
 
     @Override public void onClick(View view) {
-      hidden.setVisibility(hidden.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+      Utils.invertViewVisibility(hidden);
     }
   }
 }
