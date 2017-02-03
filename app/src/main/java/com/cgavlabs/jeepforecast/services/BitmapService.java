@@ -1,10 +1,11 @@
 package com.cgavlabs.jeepforecast.services;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
-import android.widget.ImageView;
+import rx.Single;
 
 public interface BitmapService {
-  void scaleAndRotateBitmap(String imgPath, int maxImgSize, ImageView imgView);
+  Single<Bitmap> scaleAndRotateBitmap(String imgPath, int maxImgSize);
 
-  void scaleAndRotateBitmap(Uri imgUri, int maxImgSize, ImageView imgView);
+  Single<Bitmap> scaleAndRotateBitmap(Uri imgUri, int maxImgSize);
 }

@@ -1,11 +1,11 @@
 package com.cgavlabs.jeepforecast.repos;
 
-import com.cgavlabs.jeepforecast.utils.Utils;
 import com.cgavlabs.jeepforecast.events.DataSavedEvent;
 import com.cgavlabs.jeepforecast.models.domain.Currently;
 import com.cgavlabs.jeepforecast.models.domain.DailyData;
 import com.cgavlabs.jeepforecast.models.domain.Weather;
 import com.cgavlabs.jeepforecast.models.view.WeatherConfig;
+import com.cgavlabs.jeepforecast.utils.Utils;
 import io.realm.Realm;
 import java.util.List;
 import javax.inject.Inject;
@@ -26,7 +26,7 @@ public class WeatherRepoImpl implements WeatherRepo {
       }
     }, new Realm.Transaction.OnSuccess() {
       @Override public void onSuccess() {
-        Timber.d("Weather successfully persisted to db");
+        Timber.d("new weather successfully persisted to db");
         EventBus.getDefault().post(new DataSavedEvent());
       }
     }, new Realm.Transaction.OnError() {

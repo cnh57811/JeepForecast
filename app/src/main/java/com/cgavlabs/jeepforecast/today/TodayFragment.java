@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.cgavlabs.jeepforecast.App;
 import com.cgavlabs.jeepforecast.BaseFragment;
 import com.cgavlabs.jeepforecast.R;
@@ -27,12 +30,12 @@ public class TodayFragment extends BaseFragment implements TodayContract.View {
   private static final int MAX_IMG_SIZE = 2048;
   @Inject TodayContract.Presenter presenter;
   @Inject BitmapService bitmapSvc;
-  private TextView actualTemp;
-  private TextView highTemp;
-  private TextView lowTemp;
-  private TextView dayTempTime;
-  private TextView currentTempTime;
-  private ImageView backgroundImg;
+  @BindView(R.id.temperature_actual) TextView actualTemp;
+  @BindView(R.id.temperature_high) TextView highTemp;
+  @BindView(R.id.temperature_low) TextView lowTemp;
+  @BindView(R.id.day_temp_time) TextView dayTempTime;
+  @BindView(R.id.current_temp_time) TextView currentTempTime;
+  @BindView(R.id.image) ImageView backgroundImg;
 
   public TodayFragment() {
   }
@@ -44,27 +47,23 @@ public class TodayFragment extends BaseFragment implements TodayContract.View {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_single_day, container, false);
-    actualTemp = (TextView) view.findViewById(R.id.temperature_actual);
-    highTemp = (TextView) view.findViewById(R.id.temperature_high);
-    lowTemp = (TextView) view.findViewById(R.id.temperature_low);
-    dayTempTime = (TextView) view.findViewById(R.id.day_temp_time);
-    currentTempTime = (TextView) view.findViewById(R.id.current_temp_time);
-    backgroundImg = (ImageView) view.findViewById(R.id.image);
-
-    view.findViewById(R.id.btn_choose_photo).setOnClickListener(arg0 -> {
-      Intent intent = new Intent();
-      intent.setType("image/*");
-      intent.setAction(Intent.ACTION_GET_CONTENT);
-      startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
-    });
-
+    ButterKnife.bind(this, view);
     return view;
+  }
+
+  @OnClick(R.id.btn_choose_photo) public void getPhoto() {
+    Intent intent = new Intent();
+    intent.setType("image/*");
+    intent.setAction(Intent.ACTION_GET_CONTENT);
+    startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (resultCode == RESULT_OK) {
       if (requestCode == SELECT_PICTURE) {
-        bitmapSvc.scaleAndRotateBitmap(data.getData(), MAX_IMG_SIZE, backgroundImg);
+        presenter.getBackgroundImage(data.getData(), MAX_IMG_SIZE)
+            .subscribe(bitmap -> backgroundImg.setImageBitmap(bitmap),
+                throwable -> Timber.e(throwable));
       }
     }
   }
@@ -85,8 +84,8 @@ public class TodayFragment extends BaseFragment implements TodayContract.View {
     EventBus.getDefault().unregister(this);
   }
 
-  @Subscribe(threadMode = ThreadMode.MAIN) public void onWeatherDataUpdated(
-      @SuppressWarnings("UnusedParameters") DataSavedEvent e) {
+  @Subscribe(threadMode = ThreadMode.MAIN)
+  public void onWeatherDataUpdated(@SuppressWarnings("UnusedParameters") DataSavedEvent e) {
     Timber.d("Event bus initiated weather update");
     presenter.getTodaysWeather();
   }
@@ -97,7 +96,6 @@ public class TodayFragment extends BaseFragment implements TodayContract.View {
     lowTemp.setText(day.getLowTemp());
     dayTempTime.setText(day.getLowTempTime());
     currentTempTime.setText(day.getCurrentTempTime());
-    Timber.d("UI fields on TODAY screen updated");
   }
 
   @Override public void inject() {

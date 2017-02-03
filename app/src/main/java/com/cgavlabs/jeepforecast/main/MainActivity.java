@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.cgavlabs.jeepforecast.App;
 import com.cgavlabs.jeepforecast.BaseActivity;
 import com.cgavlabs.jeepforecast.R;
@@ -19,20 +21,21 @@ public class MainActivity extends BaseActivity {
   @Inject MainContract.Presenter presenter;
   @Inject MainPagerAdapter pagerAdapter;
   @Inject SharedPreferences sharedPrefs;
+  @BindView(R.id.toolbar) Toolbar toolbar;
+  @BindView(R.id.viewPager) ViewPager viewPager;
+  @BindView(R.id.tabs) TabLayout tabs;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    ButterKnife.bind(this);
     setupViews();
     callWeather();
   }
 
   private void setupViews() {
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
-    ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
     viewPager.setAdapter(pagerAdapter);
-    TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
     tabs.setupWithViewPager(viewPager);
   }
 
