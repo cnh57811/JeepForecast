@@ -26,7 +26,7 @@ public class WeatherRepoImpl implements WeatherRepo {
       }
     }, new Realm.Transaction.OnSuccess() {
       @Override public void onSuccess() {
-        Timber.d("Weather successfully persisted to db");
+        Timber.d("new weather successfully persisted to db");
         EventBus.getDefault().post(new DataSavedEvent());
       }
     }, new Realm.Transaction.OnError() {
