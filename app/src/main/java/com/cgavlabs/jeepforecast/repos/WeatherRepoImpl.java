@@ -5,7 +5,6 @@ import com.cgavlabs.jeepforecast.models.domain.Currently;
 import com.cgavlabs.jeepforecast.models.domain.DailyData;
 import com.cgavlabs.jeepforecast.models.domain.Weather;
 import com.cgavlabs.jeepforecast.models.view.WeatherConfig;
-import com.cgavlabs.jeepforecast.utils.Utils;
 import io.realm.Realm;
 import java.util.List;
 import javax.inject.Inject;
@@ -36,10 +35,19 @@ public class WeatherRepoImpl implements WeatherRepo {
     });
   }
 
-  @Override public DailyData getTodaysWeather() {
-    Long start = Utils.getStartOfTodayInSeconds();
-    Long end = Utils.getEndOfTodayInSeconds();
-    return realm.where(DailyData.class).between("time", start, end).findFirst();
+  @Override public DailyData getLatestDailyData() {
+    int latestTime = realm.where(DailyData.class).max("time").intValue();
+    return realm.where(DailyData.class).equalTo("time", latestTime).findFirst();
+  }
+
+  @Override public Weather getLatestWeather(Double latitude, Double longitude) {
+    int latestTime = realm.where(Currently.class).max("time").intValue();
+    Timber.d("getLatestWeather: Lat:%s Lng:%s", latitude, longitude);
+    return realm.where(Weather.class)
+        .equalTo("latitude", latitude)
+        .equalTo("longitude", longitude)
+        .equalTo("currently.time", latestTime)
+        .findFirst();
   }
 
   @Override public Currently getCurrentWeather() {

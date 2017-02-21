@@ -1,6 +1,7 @@
 package com.cgavlabs.jeepforecast.main;
 
 import javax.inject.Inject;
+import timber.log.Timber;
 
 public class MainPresenter implements MainContract.Presenter {
 

@@ -1,11 +1,29 @@
 package com.cgavlabs.jeepforecast.models.view;
 
 public class Day {
+  private Double latitude;
+  private Double longitude;
   private String currentTemp;
   private String currentTempTime;
   private String lowTemp;
   private String lowTempTime;
   private String highTemp;
+
+  public Double getLatitude() {
+    return latitude;
+  }
+
+  public void setLatitude(Double latitude) {
+    this.latitude = latitude;
+  }
+
+  public Double getLongitude() {
+    return longitude;
+  }
+
+  public void setLongitude(Double longitude) {
+    this.longitude = longitude;
+  }
 
   public String getCurrentTemp() {
     return currentTemp;

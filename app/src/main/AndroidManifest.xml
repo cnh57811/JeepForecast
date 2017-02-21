@@ -3,6 +3,7 @@
     package="com.cgavlabs.jeepforecast">
 
   <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
   <application
@@ -15,19 +16,35 @@
     <activity
         android:name=".main.MainActivity"
         android:screenOrientation="portrait">
+      <meta-data
+          android:name="android.app.default_searchable"
+          android:value=".searchresults.SearchResultsActivity"/>
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
+
     <activity
         android:name=".settings.weatherconfiglist.WeatherConfigListActivity"
         android:parentActivityName=".main.MainActivity"
         android:screenOrientation="portrait">
     </activity>
+
     <activity
         android:name=".settings.newweatherconfig.NewWeatherConfigActivity"
         android:screenOrientation="portrait">
+    </activity>
+
+    <activity
+        android:name=".searchresults.SearchResultsActivity"
+        android:theme="@style/Theme.AppCompat.DayNight.Dialog">
+      <meta-data
+          android:name="android.app.searchable"
+          android:resource="@xml/searchable"/>
+      <intent-filter>
+        <action android:name="android.intent.action.SEARCH"/>
+      </intent-filter>
     </activity>
   </application>
 
