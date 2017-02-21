@@ -4,6 +4,7 @@ import android.app.Application;
 import com.cgavlabs.jeepforecast.di.AppComponent;
 import com.cgavlabs.jeepforecast.di.AppModule;
 import com.cgavlabs.jeepforecast.di.DaggerAppComponent;
+import com.squareup.leakcanary.LeakCanary;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import timber.log.Timber;
@@ -14,6 +15,11 @@ public class App extends Application {
 
   @Override public void onCreate() {
     super.onCreate();
+
+    if (LeakCanary.isInAnalyzerProcess(this)) {
+      return;
+    }
+    LeakCanary.install(this);
 
     appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
 
