@@ -9,7 +9,9 @@ import java.util.List;
 public interface WeatherRepo {
   void insertOrUpdate(Weather weather);
 
-  DailyData getTodaysWeather();
+  DailyData getLatestDailyData();
+
+  Weather getLatestWeather(Double latitude, Double longitude);
 
   Currently getCurrentWeather();
 

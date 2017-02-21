@@ -2,9 +2,7 @@ package com.cgavlabs.jeepforecast.today;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.support.v4.util.Pair;
-import com.cgavlabs.jeepforecast.models.domain.Currently;
-import com.cgavlabs.jeepforecast.models.domain.DailyData;
+import com.cgavlabs.jeepforecast.models.domain.Weather;
 import com.cgavlabs.jeepforecast.repos.WeatherRepo;
 import com.cgavlabs.jeepforecast.services.BitmapService;
 import javax.inject.Inject;
@@ -20,10 +18,8 @@ public class TodayInteractor implements TodayContract.Interactor {
     this.weatherRepo = weatherRepo;
   }
 
-  @Override public Pair<DailyData, Currently> getTodaysWeather() {
-    DailyData todaysWeather = weatherRepo.getTodaysWeather();
-    Currently currentWeather = weatherRepo.getCurrentWeather();
-    return Pair.create(todaysWeather, currentWeather);
+  @Override public Weather getTodaysWeather(Double latitude, Double longitude) {
+    return weatherRepo.getLatestWeather(latitude, longitude);
   }
 
   @Override public Single<Bitmap> getBackgroundImage(Uri uri, int maxImgSize) {

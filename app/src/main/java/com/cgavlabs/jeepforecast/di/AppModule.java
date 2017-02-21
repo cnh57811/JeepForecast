@@ -2,8 +2,8 @@ package com.cgavlabs.jeepforecast.di;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import com.cgavlabs.jeepforecast.utils.SharedPrefs;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
@@ -24,7 +24,7 @@ import javax.inject.Singleton;
     return application;
   }
 
-  @Provides @Singleton public SharedPreferences provideSharedPreferences(Application application) {
-    return PreferenceManager.getDefaultSharedPreferences(application);
+  @Provides @Singleton public SharedPrefs provideSharedPreferences(Application application) {
+    return new SharedPrefs(PreferenceManager.getDefaultSharedPreferences(application));
   }
 }

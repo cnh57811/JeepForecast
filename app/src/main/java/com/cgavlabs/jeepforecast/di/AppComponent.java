@@ -1,10 +1,12 @@
 package com.cgavlabs.jeepforecast.di;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import com.cgavlabs.jeepforecast.repos.WeatherRepo;
 import com.cgavlabs.jeepforecast.services.BitmapService;
 import com.cgavlabs.jeepforecast.services.WeatherService;
+import com.cgavlabs.jeepforecast.utils.SharedPrefs;
 import dagger.Component;
 import javax.inject.Singleton;
 import retrofit2.Retrofit;
@@ -15,9 +17,9 @@ import retrofit2.Retrofit;
 }) public interface AppComponent {
   Application app();
 
-  SharedPreferences sharedPreferences();
+  Context context();
 
-  Retrofit retrofit();
+  SharedPrefs sharedPrefs();
 
   WeatherService weatherService();
 

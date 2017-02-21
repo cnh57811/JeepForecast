@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.cgavlabs.jeepforecast.today.TodayFragment;
+import com.cgavlabs.jeepforecast.tomorrow.TomorrowFragment;
 
 public class MainPagerAdapter extends FragmentPagerAdapter {
 
@@ -17,16 +18,16 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     Fragment f;
     switch (position) {
       case 0:
-        f = new TodayFragment();
+        f = TodayFragment.newInstance();
         break;
       case 1:
-        f = new TodayFragment();
+        f = new TomorrowFragment();
         break;
       case 2:
-        f = new TodayFragment();
+        f = new TomorrowFragment();
         break;
       default:
-        f = new TodayFragment();
+        f = new TomorrowFragment();
     }
     return f;
   }

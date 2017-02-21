@@ -2,9 +2,7 @@ package com.cgavlabs.jeepforecast.today;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.support.v4.util.Pair;
-import com.cgavlabs.jeepforecast.models.domain.Currently;
-import com.cgavlabs.jeepforecast.models.domain.DailyData;
+import com.cgavlabs.jeepforecast.models.domain.Weather;
 import com.cgavlabs.jeepforecast.models.view.Day;
 import rx.Single;
 
@@ -14,13 +12,13 @@ public interface TodayContract {
   }
 
   interface Presenter {
-    void getTodaysWeather();
+    void getTodaysWeather(Double latitude, Double longitude);
 
     Single<Bitmap> getBackgroundImage(Uri uri, int maxImgSize);
   }
 
   interface Interactor {
-    Pair<DailyData, Currently> getTodaysWeather();
+    Weather getTodaysWeather(Double latitude, Double longitude);
 
     Single<Bitmap> getBackgroundImage(Uri uri, int maxImgSize);
   }

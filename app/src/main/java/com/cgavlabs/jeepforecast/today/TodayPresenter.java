@@ -2,9 +2,9 @@ package com.cgavlabs.jeepforecast.today;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.support.v4.util.Pair;
 import com.cgavlabs.jeepforecast.models.domain.Currently;
 import com.cgavlabs.jeepforecast.models.domain.DailyData;
+import com.cgavlabs.jeepforecast.models.domain.Weather;
 import com.cgavlabs.jeepforecast.models.view.Day;
 import com.cgavlabs.jeepforecast.utils.Utils;
 import java.text.SimpleDateFormat;
@@ -23,8 +23,8 @@ public class TodayPresenter implements TodayContract.Presenter {
     this.interactor = interactor;
   }
 
-  @Override public void getTodaysWeather() {
-    Pair<DailyData, Currently> todaysWeather = interactor.getTodaysWeather();
+  @Override public void getTodaysWeather(Double latitude, Double longitude) {
+    Weather todaysWeather = interactor.getTodaysWeather(latitude, longitude);
     Day day = mapToDay(todaysWeather);
     view.updateTodaysWeather(day);
   }
@@ -33,22 +33,31 @@ public class TodayPresenter implements TodayContract.Presenter {
     return interactor.getBackgroundImage(uri, maxImgSize);
   }
 
-  private Day mapToDay(Pair<DailyData, Currently> todaysWeather) {
-    DailyData data = todaysWeather.first;
-    Currently curr = todaysWeather.second;
+  private Day mapToDay(Weather todaysWeather) {
     Day day = new Day();
-    if (curr != null) {
-      day.setCurrentTemp(Utils.roundDouble(curr.getTemperature()));
-      Date current = new Date(curr.getTime() * 1000);
-      String formattedDate = SDF.format(current);
-      day.setCurrentTempTime(formattedDate + "\n" + current.getTime());
-    }
-    if (data != null) {
-      day.setHighTemp(Utils.roundDouble(data.getTemperatureMax()));
-      day.setLowTemp(Utils.roundDouble(data.getTemperatureMin()));
-      Date dayTime = new Date(data.getTime() * 1000);
-      String formattedDate = SDF.format(dayTime);
-      day.setLowTempTime(formattedDate + "\n" + dayTime.getTime());
+    if (todaysWeather != null) {
+      DailyData data = null;
+      if (todaysWeather.getDaily() != null && todaysWeather.getDaily().getData() != null) {
+        data = todaysWeather.getDaily().getData().first();
+      }
+
+      day.setLatitude(todaysWeather.getLatitude());
+      day.setLongitude(todaysWeather.getLongitude());
+
+      Currently curr = todaysWeather.getCurrently();
+      if (curr != null) {
+        day.setCurrentTemp(Utils.roundDouble(curr.getTemperature()));
+        Date current = new Date(curr.getTime() * 1000);
+        String formattedDate = SDF.format(current);
+        day.setCurrentTempTime(formattedDate + "\n" + current.getTime());
+      }
+      if (data != null) {
+        day.setHighTemp(Utils.roundDouble(data.getTemperatureMax()));
+        day.setLowTemp(Utils.roundDouble(data.getTemperatureMin()));
+        Date dayTime = new Date(data.getTime() * 1000);
+        String formattedDate = SDF.format(dayTime);
+        day.setLowTempTime(formattedDate + "\n" + dayTime.getTime());
+      }
     }
     return day;
   }
