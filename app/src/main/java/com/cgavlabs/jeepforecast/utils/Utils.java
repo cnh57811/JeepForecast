@@ -19,7 +19,6 @@ public class Utils {
     c.set(Calendar.MINUTE, 0);
     c.set(Calendar.SECOND, 0);
     c.set(Calendar.MILLISECOND, 0);
-    Timber.d(c.getTime().toString());
     return c.getTimeInMillis() / 1000;
   }
 
@@ -31,7 +30,6 @@ public class Utils {
     c.set(Calendar.MINUTE, c.getActualMaximum(Calendar.MINUTE));
     c.set(Calendar.SECOND, c.getActualMaximum(Calendar.SECOND));
     c.set(Calendar.MILLISECOND, c.getActualMaximum(Calendar.MILLISECOND));
-    Timber.d(c.getTime().toString());
     return c.getTimeInMillis() / 1000;
   }
 
