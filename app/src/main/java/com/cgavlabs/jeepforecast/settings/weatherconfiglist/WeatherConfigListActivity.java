@@ -13,6 +13,7 @@ import butterknife.OnClick;
 import com.cgavlabs.jeepforecast.App;
 import com.cgavlabs.jeepforecast.BaseActivity;
 import com.cgavlabs.jeepforecast.R;
+import com.cgavlabs.jeepforecast.models.view.WeatherConfig;
 import com.cgavlabs.jeepforecast.settings.weatherconfiglist.adapter.WeatherConfigListAdapter;
 import javax.inject.Inject;
 
@@ -47,6 +48,8 @@ public class WeatherConfigListActivity extends BaseActivity {
 
   @OnClick(R.id.fab_add_weather_config) public void onClick() {
     fabAnim.start();
+    WeatherConfig wc = new WeatherConfig();
+    adapter.addWeatherConfig(wc);
   }
 
   @Override public void inject() {

@@ -40,6 +40,9 @@ public class BitmapServiceImpl implements BitmapService {
 
   private Bitmap getScaledRotatedBitmap(Uri selectedImageUri, String imgPath, Bitmap bitmap,
       int maxImgSize) {
+    if (bitmap == null) {
+      return null;
+    }
     int height = (int) (bitmap.getHeight() * ((double) maxImgSize / bitmap.getWidth()));
     bitmap = Bitmap.createScaledBitmap(bitmap, maxImgSize, height, false);
     int rotate = getCameraPhotoOrientation(selectedImageUri, imgPath);

@@ -52,6 +52,11 @@ public class WeatherConfigListAdapter extends RecyclerView.Adapter {
     return weatherConfigs.size();
   }
 
+  public void addWeatherConfig(WeatherConfig weatherConfig) {
+    weatherConfigs.add(weatherConfig);
+    notifyDataSetChanged();
+  }
+
   static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     @BindView(R.id.ll_can_be_hidden) LinearLayout hidden;
