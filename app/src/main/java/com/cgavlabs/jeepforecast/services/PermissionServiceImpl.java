@@ -45,6 +45,19 @@ public class PermissionServiceImpl implements PermissionService {
     return false;
   }
 
+  @Override public boolean hasStoragePermissions() {
+    boolean hasStoragePermissions =
+        ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
+            == PackageManager.PERMISSION_GRANTED;
+    return !requiresRuntimePermissionCheck() || hasStoragePermissions;
+  }
+
+  @Override public void requestStoragePermissions(Activity activity) {
+    ActivityCompat.requestPermissions(activity,
+        new String[] { Manifest.permission.READ_EXTERNAL_STORAGE },
+        PERMISSION_ACCESS_STORAGE);
+  }
+
   private boolean requiresRuntimePermissionCheck() {
     return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
   }
