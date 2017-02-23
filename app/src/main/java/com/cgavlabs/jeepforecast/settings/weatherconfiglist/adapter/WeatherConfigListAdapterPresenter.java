@@ -1,6 +1,8 @@
 package com.cgavlabs.jeepforecast.settings.weatherconfiglist.adapter;
 
 import android.graphics.Bitmap;
+import com.cgavlabs.jeepforecast.models.view.WeatherConfig;
+import java.util.List;
 import javax.inject.Inject;
 import rx.Single;
 
@@ -15,5 +17,9 @@ class WeatherConfigListAdapterPresenter implements WeatherConfigListAdapterContr
 
   @Override public Single<Bitmap> getThumbnailImage(String imagePath, int maxImgSize) {
     return interactor.getThumbnailImage(imagePath, maxImgSize);
+  }
+
+  @Override public List<WeatherConfig> getAllWeatherConfigs() {
+    return interactor.getAllWeatherConfigs();
   }
 }

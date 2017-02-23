@@ -14,4 +14,8 @@ public class WeatherConfigPresenter implements WeatherConfigContract.Presenter {
   @Override public List<WeatherConfig> getWeatherConfigs() {
     return interactor.getWeatherConfigs();
   }
+
+  @Override public void addWeatherConfig(WeatherConfig weatherConfig) {
+    interactor.addWeatherconfig(weatherConfig);
+  }
 }

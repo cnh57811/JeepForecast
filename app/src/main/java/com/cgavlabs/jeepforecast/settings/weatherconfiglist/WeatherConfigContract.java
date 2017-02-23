@@ -10,9 +10,13 @@ public interface WeatherConfigContract {
 
   interface Presenter {
     List<WeatherConfig> getWeatherConfigs();
+
+    void addWeatherConfig(WeatherConfig weatherConfig);
   }
 
   interface Interactor {
     List<WeatherConfig> getWeatherConfigs();
+
+    void addWeatherconfig(WeatherConfig weatherConfig);
   }
 }

@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,11 +60,40 @@ public class WeatherConfigListActivity extends BaseActivity {
     fabAnim.start();
 
     View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_weather_config, null);
+    EditText nameET = (EditText) dialogView.findViewById(R.id.config_name);
+    EditText lowTempET = (EditText) dialogView.findViewById(R.id.config_temp_low);
+    EditText highTempET = (EditText) dialogView.findViewById(R.id.config_temp_high);
+    EditText precipET = (EditText) dialogView.findViewById(R.id.config_precip_threshold);
+
+    Observable<Boolean> nameObservable = RxHelper.getTextWatcherObservable(nameET)
+        .observeOn(AndroidSchedulers.mainThread())
+        .map(s -> true);
+
+    Observable<Boolean> lowTempObservable = RxHelper.getTextWatcherObservable(lowTempET)
+        .debounce(500, TimeUnit.MILLISECONDS)
+        .observeOn(AndroidSchedulers.mainThread())
+        .map(s -> s.trim().matches(REGEX_IS_NUMBER));
+
+    Observable<Boolean> highTempObservable = RxHelper.getTextWatcherObservable(highTempET)
+        .debounce(500, TimeUnit.MILLISECONDS)
+        .observeOn(AndroidSchedulers.mainThread())
+        .map(s -> s.trim().matches(REGEX_IS_NUMBER));
+
+    Observable<Boolean> precipThreshObservable = RxHelper.getTextWatcherObservable(precipET)
+        .debounce(500, TimeUnit.MILLISECONDS)
+        .observeOn(AndroidSchedulers.mainThread())
+        .map(s -> s.trim().matches(REGEX_IS_NUMBER));
+
     AlertDialog.Builder builder = new AlertDialog.Builder(this);
     builder.setView(dialogView);
     builder.setPositiveButton("ADD", (dialogInterface, i) -> {
-      //WeatherConfig wc = new WeatherConfig();
-      //adapter.addWeatherConfig(wc);
+      String name = nameET.getText().toString();
+      Integer lowTemp = Integer.valueOf(lowTempET.getText().toString());
+      Integer highTemp = Integer.valueOf(highTempET.getText().toString());
+      Integer precipThresh = Integer.valueOf(precipET.getText().toString());
+      WeatherConfig wc = new WeatherConfig(name, highTemp, lowTemp, precipThresh);
+      presenter.addWeatherConfig(wc);
+      adapter.refreshWeatherConfigList();
     });
     builder.setNegativeButton("CANCEL", (dialog, i) -> dialog.cancel());
     AlertDialog dialog = builder.create();
@@ -75,29 +103,6 @@ public class WeatherConfigListActivity extends BaseActivity {
       }
     });
     dialog.show();
-
-    EditText nameET = (EditText) dialogView.findViewById(R.id.config_name);
-    Observable<Boolean> nameObservable = RxHelper.getTextWatcherObservable(nameET)
-        .observeOn(AndroidSchedulers.mainThread())
-        .map(s -> s.contains("Chris"));
-
-    EditText lowTempET = (EditText) dialogView.findViewById(R.id.config_temp_low);
-    Observable<Boolean> lowTempObservable = RxHelper.getTextWatcherObservable(lowTempET)
-        .debounce(500, TimeUnit.MILLISECONDS)
-        .observeOn(AndroidSchedulers.mainThread())
-        .map(s -> s.trim().matches(REGEX_IS_NUMBER));
-
-    EditText highTempET = (EditText) dialogView.findViewById(R.id.config_temp_high);
-    Observable<Boolean> highTempObservable = RxHelper.getTextWatcherObservable(highTempET)
-        .debounce(500, TimeUnit.MILLISECONDS)
-        .observeOn(AndroidSchedulers.mainThread())
-        .map(s -> s.trim().matches(REGEX_IS_NUMBER));
-
-    EditText precipET = (EditText) dialogView.findViewById(R.id.config_precip_threshold);
-    Observable<Boolean> precipThreshObservable = RxHelper.getTextWatcherObservable(precipET)
-        .debounce(500, TimeUnit.MILLISECONDS)
-        .observeOn(AndroidSchedulers.mainThread())
-        .map(s -> s.trim().matches(REGEX_IS_NUMBER));
 
     Observable.combineLatest(nameObservable, lowTempObservable, highTempObservable,
         precipThreshObservable, (validName, validLowTemp, validHighTemp, validPrecipThresh) ->

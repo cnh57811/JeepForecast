@@ -15,4 +15,8 @@ public class WeatherConfigInteractor implements WeatherConfigContract.Interactor
   @Override public List<WeatherConfig> getWeatherConfigs() {
     return weatherRepo.getWeatherConfigs();
   }
+
+  @Override public void addWeatherconfig(WeatherConfig weatherConfig) {
+    weatherRepo.insert(weatherConfig);
+  }
 }

@@ -41,12 +41,10 @@ public class WeatherRepoImpl implements WeatherRepo {
   }
 
   @Override public Weather getLatestWeather(Double latitude, Double longitude) {
-    int latestTime = realm.where(Currently.class).max("time").intValue();
+    //int latestTime = realm.where(Currently.class).max("time").intValue();
     Timber.d("getLatestWeather: Lat:%s Lng:%s", latitude, longitude);
-    return realm.where(Weather.class)
-        .equalTo("latitude", latitude)
-        .equalTo("longitude", longitude)
-        .equalTo("currently.time", latestTime)
+    return realm.where(Weather.class).equalTo("latitude", latitude).equalTo("longitude", longitude)
+        //.equalTo("currently.time", latestTime)
         .findFirst();
   }
 
@@ -55,6 +53,14 @@ public class WeatherRepoImpl implements WeatherRepo {
   }
 
   @Override public List<WeatherConfig> getWeatherConfigs() {
+    return realm.where(WeatherConfig.class).findAll();
+  }
+
+  @Override public void insert(WeatherConfig weatherConfig) {
+    realm.executeTransaction(realm1 -> realm1.insert(weatherConfig));
+  }
+
+  @Override public List<WeatherConfig> getAllWeatherConfigs() {
     return realm.where(WeatherConfig.class).findAll();
   }
 }
