@@ -18,7 +18,7 @@
         android:layout_width="@dimen/weather_config_item_image_width"
         android:layout_height="@dimen/weather_config_item_image_height"
         android:layout_margin="@dimen/weather_config_item_image_margin"
-        android:background="@drawable/jeep"
+        android:background="@drawable/jeep_logo"
         android:scaleType="centerCrop"
         />
     <TextView
