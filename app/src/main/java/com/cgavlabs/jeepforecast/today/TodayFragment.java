@@ -107,8 +107,10 @@ public class TodayFragment extends BaseFragment implements TodayContract.View {
       } catch (IOException e) {
         e.printStackTrace();
       }
-      Timber.d("Address on view: " + addresses.get(0).getAddressLine(1));
-      location.setText(addresses.get(0).getAddressLine(1));
+      if (addresses.size() > 0) {
+        Timber.d("Address on view: " + addresses.get(0).getAddressLine(1));
+        location.setText(addresses.get(0).getAddressLine(1));
+      }
     } else {
       Timber.d("Latitude or Longitude was null can't update the view");
     }

@@ -75,7 +75,9 @@ public class MainActivity extends BaseActivity
   @Override protected void onPause() {
     Timber.d("onPause");
     super.onPause();
-    stopLocationUpdates();
+    if (googleApiClient.isConnected()) {
+      stopLocationUpdates();
+    }
   }
 
   @Override protected void onStop() {
@@ -147,7 +149,9 @@ public class MainActivity extends BaseActivity
 
   @SuppressWarnings("MissingPermission") private void startLocationUpdates() {
     Timber.d("startLocationUpdates");
-    if (sharedPrefs.isUsingCurrentLocation() && permissionSvc.hasLocationPermissions()) {
+    if (sharedPrefs.isUsingCurrentLocation()
+        && permissionSvc.hasLocationPermissions()
+        && googleApiClient.isConnected()) {
       LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest,
           this);
       requestingLocationUpdates = true;

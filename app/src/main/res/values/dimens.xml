@@ -15,7 +15,7 @@
   <dimen name="weather_config_item_image_margin">8dp</dimen>
 
   <!-- weather config add dialog -->
-  <dimen name="weather_config_add_image_width">150dp</dimen>
-  <dimen name="weather_config_add_image_height">150dp</dimen>
+  <dimen name="weather_config_add_image_width">100dp</dimen>
+  <dimen name="weather_config_add_image_height">100dp</dimen>
   <dimen name="weather_config_add_image_margin">8dp</dimen>
 </resources>
