@@ -12,6 +12,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.bumptech.glide.Glide;
 import com.cgavlabs.jeepforecast.App;
 import com.cgavlabs.jeepforecast.BaseFragment;
 import com.cgavlabs.jeepforecast.R;
@@ -27,11 +28,10 @@ import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
 
 import static android.app.Activity.RESULT_OK;
+import static com.cgavlabs.jeepforecast.Constants.SELECT_PICTURE;
 
 public class TodayFragment extends BaseFragment implements TodayContract.View {
 
-  private static final int SELECT_PICTURE = 1;
-  private static final int MAX_IMG_SIZE = 2048;
   @Inject TodayContract.Presenter presenter;
   @Inject SharedPrefs sharedPrefs;
   @BindView(R.id.degree_type) TextView degreeType;
@@ -85,9 +85,7 @@ public class TodayFragment extends BaseFragment implements TodayContract.View {
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (resultCode == RESULT_OK) {
       if (requestCode == SELECT_PICTURE) {
-        presenter.getBackgroundImage(data.getData(), MAX_IMG_SIZE)
-            .subscribe(bitmap -> backgroundImg.setImageBitmap(bitmap),
-                throwable -> Timber.e(throwable));
+        Glide.with(this).load(data.getData()).centerCrop().into(backgroundImg);
       }
     }
   }
@@ -107,7 +105,7 @@ public class TodayFragment extends BaseFragment implements TodayContract.View {
       } catch (IOException e) {
         e.printStackTrace();
       }
-      if (addresses.size() > 0) {
+      if (addresses != null && addresses.size() > 0) {
         Timber.d("Address on view: " + addresses.get(0).getAddressLine(1));
         location.setText(addresses.get(0).getAddressLine(1));
       }

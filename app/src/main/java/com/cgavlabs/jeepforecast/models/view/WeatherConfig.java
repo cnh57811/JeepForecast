@@ -14,11 +14,13 @@ public class WeatherConfig extends RealmObject {
   public WeatherConfig() {
   }
 
-  public WeatherConfig(String name, Integer highTemp, Integer lowTemp, Integer precipThresh) {
+  public WeatherConfig(String name, Integer highTemp, Integer lowTemp, Integer precipThresh,
+      String imagePath) {
     this.name = name;
     this.highTemp = highTemp;
     this.lowTemp = lowTemp;
     this.precipThresh = precipThresh;
+    this.imagePath = imagePath;
   }
 
   public Integer getHighTemp() {

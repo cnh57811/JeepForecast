@@ -1,6 +1,7 @@
 package com.cgavlabs.jeepforecast.settings.weatherconfiglist.adapter;
 
 import android.graphics.Bitmap;
+import android.widget.ImageView;
 import com.cgavlabs.jeepforecast.models.view.WeatherConfig;
 import com.cgavlabs.jeepforecast.repos.WeatherRepo;
 import com.cgavlabs.jeepforecast.services.BitmapService;
@@ -24,5 +25,9 @@ class WeatherConfigListAdapterInteractor implements WeatherConfigListAdapterCont
 
   @Override public List<WeatherConfig> getAllWeatherConfigs() {
     return weatherRepo.getAllWeatherConfigs();
+  }
+
+  @Override public void setThumbnailImage(String imagePath, ImageView imageView) {
+    bitmapService.setThumbnailImage(imagePath, imageView);
   }
 }
