@@ -31,6 +31,9 @@ import com.google.android.gms.location.LocationServices;
 import javax.inject.Inject;
 import timber.log.Timber;
 
+import static com.cgavlabs.jeepforecast.Constants.INTENT_EXTRA_LATITUDE;
+import static com.cgavlabs.jeepforecast.Constants.INTENT_EXTRA_LONGITUDE;
+
 public class MainActivity extends BaseActivity
     implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
     LocationListener {
@@ -64,20 +67,13 @@ public class MainActivity extends BaseActivity
   @Override protected void onResume() {
     Timber.d("onResume");
     super.onResume();
-    if (googleApiClient.isConnected() && !requestingLocationUpdates) {
-      Timber.d("isConnected && !requestingLocationUpdates");
-      startLocationUpdates();
-    } else {
-      Timber.d("is NOT connected");
-    }
+    startLocationUpdates();
   }
 
   @Override protected void onPause() {
     Timber.d("onPause");
     super.onPause();
-    if (googleApiClient.isConnected()) {
-      stopLocationUpdates();
-    }
+    stopLocationUpdates();
   }
 
   @Override protected void onStop() {
@@ -95,17 +91,16 @@ public class MainActivity extends BaseActivity
   private void handleIntent() {
     Timber.d("handleIntent");
     Intent i = getIntent();
-    if (i != null) {
-      if (i.hasExtra("latitude") && i.hasExtra("longitude")) {
-        Double latitude = i.getDoubleExtra("latitude", sharedPrefs.getLatitude());
-        Double longitude = i.getDoubleExtra("longitude", sharedPrefs.getLongitude());
-        Timber.d("Lat:%s put into shared prefs", latitude);
-        Timber.d("Lng:%s put into shared prefs", longitude);
-        sharedPrefs.putLatitude(latitude);
-        sharedPrefs.putLongitude(longitude);
-        presenter.callWeather(latitude, longitude);
-        sharedPrefs.putIsUsingCurrentLocation(false);
-      }
+    if (i != null && i.hasExtra(INTENT_EXTRA_LATITUDE) && i.hasExtra(INTENT_EXTRA_LONGITUDE)) {
+      // lat and long were passed from the search bar
+      Double latitude = i.getDoubleExtra(INTENT_EXTRA_LATITUDE, sharedPrefs.getLatitude());
+      Double longitude = i.getDoubleExtra(INTENT_EXTRA_LONGITUDE, sharedPrefs.getLongitude());
+      Timber.d("Lat:%s put into shared prefs", latitude);
+      Timber.d("Lng:%s put into shared prefs", longitude);
+      sharedPrefs.putLatitude(latitude);
+      sharedPrefs.putLongitude(longitude);
+      presenter.callWeather(latitude, longitude);
+      sharedPrefs.putIsUsingCurrentLocation(false);
     }
   }
 
@@ -160,7 +155,9 @@ public class MainActivity extends BaseActivity
 
   @SuppressWarnings("MissingPermission") private void stopLocationUpdates() {
     Timber.d("stopLocationUpdates");
-    if (permissionSvc.hasLocationPermissions()) {
+    if (permissionSvc.hasLocationPermissions()
+        && googleApiClient.isConnected()
+        && requestingLocationUpdates) {
       LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
       requestingLocationUpdates = false;
     }

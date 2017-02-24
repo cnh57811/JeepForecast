@@ -26,9 +26,10 @@ public class PermissionServiceImpl implements PermissionService {
   }
 
   @Override public void requestLocationPermissions(Activity activity) {
-    ActivityCompat.requestPermissions(activity,
-        new String[] { android.Manifest.permission.ACCESS_FINE_LOCATION },
-        PERMISSION_ACCESS_LOCATION);
+    if (!hasLocationPermissions()) {
+      ActivityCompat.requestPermissions(activity,
+          new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, PERMISSION_ACCESS_LOCATION);
+    }
   }
 
   @Override public boolean hasLocationPermissions(String[] permissions, int[] grantResults) {
@@ -54,8 +55,7 @@ public class PermissionServiceImpl implements PermissionService {
 
   @Override public void requestStoragePermissions(Activity activity) {
     ActivityCompat.requestPermissions(activity,
-        new String[] { Manifest.permission.READ_EXTERNAL_STORAGE },
-        PERMISSION_ACCESS_STORAGE);
+        new String[] { Manifest.permission.READ_EXTERNAL_STORAGE }, PERMISSION_ACCESS_STORAGE);
   }
 
   private boolean requiresRuntimePermissionCheck() {
