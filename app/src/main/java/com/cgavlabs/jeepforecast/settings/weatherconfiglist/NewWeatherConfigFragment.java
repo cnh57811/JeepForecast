@@ -98,6 +98,7 @@ public class NewWeatherConfigFragment extends DialogFragment {
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
     if (resultCode == RESULT_OK) {
       if (requestCode == SELECT_PICTURE) {
         Timber.d("image selected " + data.getData());

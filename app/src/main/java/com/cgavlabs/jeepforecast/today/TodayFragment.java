@@ -59,20 +59,20 @@ public class TodayFragment extends BaseFragment implements TodayContract.View {
   }
 
   @Override public void onStart() {
-    Timber.d("onStart()");
     super.onStart();
+    Timber.d("onStart()");
     EventBus.getDefault().register(this);
   }
 
   @Override public void onResume() {
-    Timber.d("onResume()");
     super.onResume();
+    Timber.d("onResume()");
     presenter.getTodaysWeather(sharedPrefs.getLatitude(), sharedPrefs.getLongitude());
   }
 
   @Override public void onStop() {
-    super.onStop();
     EventBus.getDefault().unregister(this);
+    super.onStop();
   }
 
   @OnClick(R.id.btn_choose_photo) public void getPhoto() {
@@ -83,6 +83,7 @@ public class TodayFragment extends BaseFragment implements TodayContract.View {
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
     if (resultCode == RESULT_OK) {
       if (requestCode == SELECT_PICTURE) {
         Glide.with(this).load(data.getData()).centerCrop().into(backgroundImg);

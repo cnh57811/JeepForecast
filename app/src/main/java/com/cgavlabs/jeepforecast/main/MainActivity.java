@@ -31,6 +31,8 @@ import com.google.android.gms.location.LocationServices;
 import javax.inject.Inject;
 import timber.log.Timber;
 
+import static com.cgavlabs.jeepforecast.Constants.DEFAULT_LAT;
+import static com.cgavlabs.jeepforecast.Constants.DEFAULT_LONG;
 import static com.cgavlabs.jeepforecast.Constants.INTENT_EXTRA_LATITUDE;
 import static com.cgavlabs.jeepforecast.Constants.INTENT_EXTRA_LONGITUDE;
 
@@ -59,27 +61,27 @@ public class MainActivity extends BaseActivity
   }
 
   @Override protected void onStart() {
-    Timber.d("onStart");
     super.onStart();
+    Timber.d("onStart");
     googleApiClient.connect();
   }
 
   @Override protected void onResume() {
-    Timber.d("onResume");
     super.onResume();
+    Timber.d("onResume");
     startLocationUpdates();
   }
 
   @Override protected void onPause() {
     Timber.d("onPause");
-    super.onPause();
     stopLocationUpdates();
+    super.onPause();
   }
 
   @Override protected void onStop() {
     Timber.d("onStop");
-    super.onStop();
     googleApiClient.disconnect();
+    super.onStop();
   }
 
   private void setupViews() {
@@ -173,6 +175,8 @@ public class MainActivity extends BaseActivity
     if (locationPermissionGranted) {
       getWeatherForLastLocation();
       startLocationUpdates();
+    } else {
+      presenter.callWeather(DEFAULT_LAT, DEFAULT_LONG);
     }
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
   }
@@ -202,7 +206,7 @@ public class MainActivity extends BaseActivity
     SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
     SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
     searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-    return true;
+    return super.onCreateOptionsMenu(menu);
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
@@ -210,7 +214,7 @@ public class MainActivity extends BaseActivity
     if (id == R.id.action_weather_config) {
       startActivity(new Intent(this, WeatherConfigListActivity.class));
     }
-    return true;
+    return super.onOptionsItemSelected(item);
   }
 
   @Override public void inject() {
