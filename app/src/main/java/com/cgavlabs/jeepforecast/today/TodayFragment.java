@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -34,7 +35,8 @@ public class TodayFragment extends BaseFragment implements TodayContract.View {
 
   @Inject TodayContract.Presenter presenter;
   @Inject SharedPrefs sharedPrefs;
-  @BindView(R.id.degree_type) TextView degreeType;
+  @BindString(R.string.degrees_farenheight) String degreeType;
+  @BindView(R.id.degree_type) TextView degreeTypeTv;
   @BindView(R.id.temperature_actual) TextView actualTemp;
   @BindView(R.id.temperature_high) TextView highTemp;
   @BindView(R.id.temperature_low) TextView lowTemp;
@@ -110,15 +112,15 @@ public class TodayFragment extends BaseFragment implements TodayContract.View {
         Timber.d("Address on view: " + addresses.get(0).getAddressLine(1));
         location.setText(addresses.get(0).getAddressLine(1));
       }
+      degreeTypeTv.setText(degreeType);
+      actualTemp.setText(day.getCurrentTemp());
+      highTemp.setText(day.getHighTemp());
+      lowTemp.setText(day.getLowTemp());
+      dayTempTime.setText(day.getLowTempTime());
+      currentTempTime.setText(day.getCurrentTempTime());
     } else {
       Timber.d("Latitude or Longitude was null can't update the view");
     }
-    degreeType.setVisibility(View.VISIBLE);
-    actualTemp.setText(day.getCurrentTemp());
-    highTemp.setText(day.getHighTemp());
-    lowTemp.setText(day.getLowTemp());
-    dayTempTime.setText(day.getLowTempTime());
-    currentTempTime.setText(day.getCurrentTempTime());
   }
 
   @Override public void inject() {
