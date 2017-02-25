@@ -118,6 +118,7 @@ public class TodayFragment extends BaseFragment implements TodayContract.View {
       lowTemp.setText(day.getLowTemp());
       dayTempTime.setText(day.getLowTempTime());
       currentTempTime.setText(day.getCurrentTempTime());
+      Glide.with(this).load(day.getImageUri()).into(backgroundImg);
     } else {
       Timber.d("Latitude or Longitude was null can't update the view");
     }

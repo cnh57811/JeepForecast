@@ -8,6 +8,7 @@ public class Day {
   private String lowTemp;
   private String lowTempTime;
   private String highTemp;
+  private String imageUri;
 
   public Double getLatitude() {
     return latitude;
@@ -63,5 +64,13 @@ public class Day {
 
   public void setLowTempTime(String lowTempTime) {
     this.lowTempTime = lowTempTime;
+  }
+
+  public String getImageUri() {
+    return imageUri;
+  }
+
+  public void setImageUri(String imageUri) {
+    this.imageUri = imageUri;
   }
 }
