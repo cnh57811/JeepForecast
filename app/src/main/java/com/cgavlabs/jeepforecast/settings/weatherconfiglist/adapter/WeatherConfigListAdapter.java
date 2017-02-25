@@ -15,11 +15,9 @@ import com.cgavlabs.jeepforecast.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
-import timber.log.Timber;
 
 public class WeatherConfigListAdapter extends RecyclerView.Adapter {
 
-  private static final int MAX_IMG_SIZE = 256;
   private List<WeatherConfig> weatherConfigs = new ArrayList<>();
   private WeatherConfigListAdapterContract.Presenter presenter;
 
@@ -33,6 +31,11 @@ public class WeatherConfigListAdapter extends RecyclerView.Adapter {
     notifyDataSetChanged();
   }
 
+  public void refreshWeatherConfigList() {
+    List<WeatherConfig> wcs = presenter.getAllWeatherConfigs();
+    setWeatherConfigs(wcs);
+  }
+
   @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View v = LayoutInflater.from(parent.getContext())
         .inflate(R.layout.weather_config_list_item, parent, false);
@@ -43,13 +46,16 @@ public class WeatherConfigListAdapter extends RecyclerView.Adapter {
     ViewHolder configHolder = (ViewHolder) holder;
     configHolder.name.setText(weatherConfigs.get(position).getName());
     String imagePath = weatherConfigs.get(position).getImagePath();
-    presenter.getThumbnailImage(imagePath, MAX_IMG_SIZE)
-        .subscribe(bitmap -> configHolder.image.setImageBitmap(bitmap),
-            throwable -> Timber.e(throwable));
+    presenter.setThumbnailImage(imagePath, configHolder.image);
   }
 
   @Override public int getItemCount() {
     return weatherConfigs.size();
+  }
+
+  public void addWeatherConfig(WeatherConfig weatherConfig) {
+    weatherConfigs.add(weatherConfig);
+    notifyDataSetChanged();
   }
 
   static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

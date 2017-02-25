@@ -31,6 +31,11 @@ import com.google.android.gms.location.LocationServices;
 import javax.inject.Inject;
 import timber.log.Timber;
 
+import static com.cgavlabs.jeepforecast.Constants.DEFAULT_LAT;
+import static com.cgavlabs.jeepforecast.Constants.DEFAULT_LONG;
+import static com.cgavlabs.jeepforecast.Constants.INTENT_EXTRA_LATITUDE;
+import static com.cgavlabs.jeepforecast.Constants.INTENT_EXTRA_LONGITUDE;
+
 public class MainActivity extends BaseActivity
     implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
     LocationListener {
@@ -56,32 +61,27 @@ public class MainActivity extends BaseActivity
   }
 
   @Override protected void onStart() {
-    Timber.d("onStart");
     super.onStart();
+    Timber.d("onStart");
     googleApiClient.connect();
   }
 
   @Override protected void onResume() {
-    Timber.d("onResume");
     super.onResume();
-    if (googleApiClient.isConnected() && !requestingLocationUpdates) {
-      Timber.d("isConnected && !requestingLocationUpdates");
-      startLocationUpdates();
-    } else {
-      Timber.d("is NOT connected");
-    }
+    Timber.d("onResume");
+    startLocationUpdates();
   }
 
   @Override protected void onPause() {
     Timber.d("onPause");
-    super.onPause();
     stopLocationUpdates();
+    super.onPause();
   }
 
   @Override protected void onStop() {
     Timber.d("onStop");
-    super.onStop();
     googleApiClient.disconnect();
+    super.onStop();
   }
 
   private void setupViews() {
@@ -93,17 +93,16 @@ public class MainActivity extends BaseActivity
   private void handleIntent() {
     Timber.d("handleIntent");
     Intent i = getIntent();
-    if (i != null) {
-      if (i.hasExtra("latitude") && i.hasExtra("longitude")) {
-        Double latitude = i.getDoubleExtra("latitude", sharedPrefs.getLatitude());
-        Double longitude = i.getDoubleExtra("longitude", sharedPrefs.getLongitude());
-        Timber.d("Lat:%s put into shared prefs", latitude);
-        Timber.d("Lng:%s put into shared prefs", longitude);
-        sharedPrefs.putLatitude(latitude);
-        sharedPrefs.putLongitude(longitude);
-        presenter.callWeather(latitude, longitude);
-        sharedPrefs.putIsUsingCurrentLocation(false);
-      }
+    if (i != null && i.hasExtra(INTENT_EXTRA_LATITUDE) && i.hasExtra(INTENT_EXTRA_LONGITUDE)) {
+      // lat and long were passed from the search bar
+      Double latitude = i.getDoubleExtra(INTENT_EXTRA_LATITUDE, sharedPrefs.getLatitude());
+      Double longitude = i.getDoubleExtra(INTENT_EXTRA_LONGITUDE, sharedPrefs.getLongitude());
+      Timber.d("Lat:%s put into shared prefs", latitude);
+      Timber.d("Lng:%s put into shared prefs", longitude);
+      sharedPrefs.putLatitude(latitude);
+      sharedPrefs.putLongitude(longitude);
+      presenter.callWeather(latitude, longitude);
+      sharedPrefs.putIsUsingCurrentLocation(false);
     }
   }
 
@@ -147,7 +146,9 @@ public class MainActivity extends BaseActivity
 
   @SuppressWarnings("MissingPermission") private void startLocationUpdates() {
     Timber.d("startLocationUpdates");
-    if (sharedPrefs.isUsingCurrentLocation() && permissionSvc.hasLocationPermissions()) {
+    if (sharedPrefs.isUsingCurrentLocation()
+        && permissionSvc.hasLocationPermissions()
+        && googleApiClient.isConnected()) {
       LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest,
           this);
       requestingLocationUpdates = true;
@@ -156,7 +157,9 @@ public class MainActivity extends BaseActivity
 
   @SuppressWarnings("MissingPermission") private void stopLocationUpdates() {
     Timber.d("stopLocationUpdates");
-    if (permissionSvc.hasLocationPermissions()) {
+    if (permissionSvc.hasLocationPermissions()
+        && googleApiClient.isConnected()
+        && requestingLocationUpdates) {
       LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
       requestingLocationUpdates = false;
     }
@@ -172,6 +175,8 @@ public class MainActivity extends BaseActivity
     if (locationPermissionGranted) {
       getWeatherForLastLocation();
       startLocationUpdates();
+    } else {
+      presenter.callWeather(DEFAULT_LAT, DEFAULT_LONG);
     }
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
   }
@@ -201,7 +206,7 @@ public class MainActivity extends BaseActivity
     SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
     SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
     searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-    return true;
+    return super.onCreateOptionsMenu(menu);
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {
@@ -209,7 +214,7 @@ public class MainActivity extends BaseActivity
     if (id == R.id.action_weather_config) {
       startActivity(new Intent(this, WeatherConfigListActivity.class));
     }
-    return true;
+    return super.onOptionsItemSelected(item);
   }
 
   @Override public void inject() {

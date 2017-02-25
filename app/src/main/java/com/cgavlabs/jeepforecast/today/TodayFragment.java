@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.bumptech.glide.Glide;
 import com.cgavlabs.jeepforecast.App;
 import com.cgavlabs.jeepforecast.BaseFragment;
 import com.cgavlabs.jeepforecast.R;
@@ -27,14 +29,14 @@ import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
 
 import static android.app.Activity.RESULT_OK;
+import static com.cgavlabs.jeepforecast.Constants.SELECT_PICTURE;
 
 public class TodayFragment extends BaseFragment implements TodayContract.View {
 
-  private static final int SELECT_PICTURE = 1;
-  private static final int MAX_IMG_SIZE = 2048;
   @Inject TodayContract.Presenter presenter;
   @Inject SharedPrefs sharedPrefs;
-  @BindView(R.id.degree_type) TextView degreeType;
+  @BindString(R.string.degrees_farenheight) String degreeType;
+  @BindView(R.id.degree_type) TextView degreeTypeTv;
   @BindView(R.id.temperature_actual) TextView actualTemp;
   @BindView(R.id.temperature_high) TextView highTemp;
   @BindView(R.id.temperature_low) TextView lowTemp;
@@ -59,20 +61,20 @@ public class TodayFragment extends BaseFragment implements TodayContract.View {
   }
 
   @Override public void onStart() {
-    Timber.d("onStart()");
     super.onStart();
+    Timber.d("onStart()");
     EventBus.getDefault().register(this);
   }
 
   @Override public void onResume() {
-    Timber.d("onResume()");
     super.onResume();
+    Timber.d("onResume()");
     presenter.getTodaysWeather(sharedPrefs.getLatitude(), sharedPrefs.getLongitude());
   }
 
   @Override public void onStop() {
-    super.onStop();
     EventBus.getDefault().unregister(this);
+    super.onStop();
   }
 
   @OnClick(R.id.btn_choose_photo) public void getPhoto() {
@@ -83,11 +85,10 @@ public class TodayFragment extends BaseFragment implements TodayContract.View {
   }
 
   @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
     if (resultCode == RESULT_OK) {
       if (requestCode == SELECT_PICTURE) {
-        presenter.getBackgroundImage(data.getData(), MAX_IMG_SIZE)
-            .subscribe(bitmap -> backgroundImg.setImageBitmap(bitmap),
-                throwable -> Timber.e(throwable));
+        Glide.with(this).load(data.getData()).centerCrop().into(backgroundImg);
       }
     }
   }
@@ -107,17 +108,19 @@ public class TodayFragment extends BaseFragment implements TodayContract.View {
       } catch (IOException e) {
         e.printStackTrace();
       }
-      Timber.d("Address on view: " + addresses.get(0).getAddressLine(1));
-      location.setText(addresses.get(0).getAddressLine(1));
+      if (addresses != null && addresses.size() > 0) {
+        Timber.d("Address on view: " + addresses.get(0).getAddressLine(1));
+        location.setText(addresses.get(0).getAddressLine(1));
+      }
+      degreeTypeTv.setText(degreeType);
+      actualTemp.setText(day.getCurrentTemp());
+      highTemp.setText(day.getHighTemp());
+      lowTemp.setText(day.getLowTemp());
+      dayTempTime.setText(day.getLowTempTime());
+      currentTempTime.setText(day.getCurrentTempTime());
     } else {
       Timber.d("Latitude or Longitude was null can't update the view");
     }
-    degreeType.setVisibility(View.VISIBLE);
-    actualTemp.setText(day.getCurrentTemp());
-    highTemp.setText(day.getHighTemp());
-    lowTemp.setText(day.getLowTemp());
-    dayTempTime.setText(day.getLowTempTime());
-    currentTempTime.setText(day.getCurrentTempTime());
   }
 
   @Override public void inject() {

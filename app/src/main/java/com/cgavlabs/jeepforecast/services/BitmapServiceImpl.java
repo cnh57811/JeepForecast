@@ -8,6 +8,8 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.widget.ImageView;
+import com.bumptech.glide.Glide;
 import java.io.File;
 import javax.inject.Inject;
 import rx.Single;
@@ -38,8 +40,15 @@ public class BitmapServiceImpl implements BitmapService {
     }).subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread());
   }
 
+  @Override public void setThumbnailImage(String imagePath, ImageView imageView) {
+    Glide.with(context).load(imagePath).into(imageView);
+  }
+
   private Bitmap getScaledRotatedBitmap(Uri selectedImageUri, String imgPath, Bitmap bitmap,
       int maxImgSize) {
+    if (bitmap == null) {
+      return null;
+    }
     int height = (int) (bitmap.getHeight() * ((double) maxImgSize / bitmap.getWidth()));
     bitmap = Bitmap.createScaledBitmap(bitmap, maxImgSize, height, false);
     int rotate = getCameraPhotoOrientation(selectedImageUri, imgPath);

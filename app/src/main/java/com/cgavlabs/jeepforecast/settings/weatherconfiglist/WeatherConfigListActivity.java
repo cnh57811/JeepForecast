@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,11 +14,14 @@ import butterknife.OnClick;
 import com.cgavlabs.jeepforecast.App;
 import com.cgavlabs.jeepforecast.BaseActivity;
 import com.cgavlabs.jeepforecast.R;
+import com.cgavlabs.jeepforecast.models.view.WeatherConfig;
 import com.cgavlabs.jeepforecast.settings.weatherconfiglist.adapter.WeatherConfigListAdapter;
 import javax.inject.Inject;
 
-public class WeatherConfigListActivity extends BaseActivity {
+public class WeatherConfigListActivity extends BaseActivity
+    implements NewWeatherConfigFragment.NewWeatherConfigDialogListener {
 
+  public static final String NEW_WEATHER_CONFIG = "NewWeatherConfig";
   @Inject WeatherConfigContract.Presenter presenter;
   @Inject WeatherConfigListAdapter adapter;
   @BindView(R.id.weather_config_toolbar) Toolbar toolbar;
@@ -47,6 +51,14 @@ public class WeatherConfigListActivity extends BaseActivity {
 
   @OnClick(R.id.fab_add_weather_config) public void onClick() {
     fabAnim.start();
+    FragmentManager fm = getSupportFragmentManager();
+    NewWeatherConfigFragment dialog = new NewWeatherConfigFragment();
+    dialog.show(fm, NEW_WEATHER_CONFIG);
+  }
+
+  @Override public void onAddNewWeatherConfig(WeatherConfig wc) {
+    presenter.addWeatherConfig(wc);
+    adapter.refreshWeatherConfigList();
   }
 
   @Override public void inject() {

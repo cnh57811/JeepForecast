@@ -16,4 +16,8 @@ public interface WeatherRepo {
   Currently getCurrentWeather();
 
   List<WeatherConfig> getWeatherConfigs();
+
+  void insert(WeatherConfig weatherConfig);
+
+  List<WeatherConfig> getAllWeatherConfigs();
 }
