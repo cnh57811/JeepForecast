@@ -25,16 +25,20 @@ public class TodayPresenter implements TodayContract.Presenter {
 
   @Override public void getTodaysWeather(Double latitude, Double longitude) {
     Weather todaysWeather = interactor.getTodaysWeather(latitude, longitude);
-    Day day = mapToDay(todaysWeather);
-    view.updateTodaysWeather(day);
+    if (todaysWeather != null) {
+      String imageUri = interactor.getWeatherBasedImage(todaysWeather);
+      Day day = mapToDay(todaysWeather, imageUri);
+      view.updateTodaysWeather(day);
+    }
   }
 
   @Override public Single<Bitmap> getBackgroundImage(Uri uri, int maxImgSize) {
     return interactor.getBackgroundImage(uri, maxImgSize);
   }
 
-  private Day mapToDay(Weather todaysWeather) {
+  private Day mapToDay(Weather todaysWeather, String imageUri) {
     Day day = new Day();
+    day.setImageUri(imageUri);
     if (todaysWeather != null) {
       DailyData data = null;
       if (todaysWeather.getDaily() != null && todaysWeather.getDaily().getData() != null) {
