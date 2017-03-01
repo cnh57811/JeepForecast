@@ -21,5 +21,7 @@ public interface TodayContract {
     Weather getTodaysWeather(Double latitude, Double longitude);
 
     Single<Bitmap> getBackgroundImage(Uri uri, int maxImgSize);
+
+    String getWeatherBasedImage(Weather weather);
   }
 }
