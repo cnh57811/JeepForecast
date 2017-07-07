@@ -16,6 +16,7 @@ import com.cgavlabs.jeepforecast.BaseActivity;
 import com.cgavlabs.jeepforecast.R;
 import com.cgavlabs.jeepforecast.models.view.WeatherConfig;
 import com.cgavlabs.jeepforecast.settings.weatherconfiglist.adapter.WeatherConfigListAdapter;
+import com.cgavlabs.jeepforecast.settings.weatherconfiglist.newweatherconfig.NewWeatherConfigFragment;
 import javax.inject.Inject;
 
 public class WeatherConfigListActivity extends BaseActivity

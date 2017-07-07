@@ -1,25 +1,24 @@
 package com.cgavlabs.jeepforecast.models.view;
 
 import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 
 public class WeatherConfig extends RealmObject {
 
-  @PrimaryKey private String name;
-  private String imagePath;
-  private Integer highTemp;
   private Integer lowTemp;
-  private Integer precipThresh;
+  private Integer highTemp;
+  private Integer lowPrecip;
+  private Integer highPrecip;
+  private String imagePath;
 
   public WeatherConfig() {
   }
 
-  public WeatherConfig(String name, Integer highTemp, Integer lowTemp, Integer precipThresh,
+  public WeatherConfig(Integer lowTemp, Integer highTemp, Integer lowPrecip, Integer highPrecip,
       String imagePath) {
-    this.name = name;
-    this.highTemp = highTemp;
     this.lowTemp = lowTemp;
-    this.precipThresh = precipThresh;
+    this.highTemp = highTemp;
+    this.lowPrecip = lowPrecip;
+    this.highPrecip = highPrecip;
     this.imagePath = imagePath;
   }
 
@@ -31,20 +30,20 @@ public class WeatherConfig extends RealmObject {
     this.highTemp = highTemp;
   }
 
-  public Integer getPrecipThresh() {
-    return precipThresh;
+  public Integer getHighPrecip() {
+    return highPrecip;
   }
 
-  public void setPrecipThresh(Integer precipThresh) {
-    this.precipThresh = precipThresh;
+  public void setHighPrecip(Integer highPrecip) {
+    this.highPrecip = highPrecip;
   }
 
-  public String getName() {
-    return name;
+  public Integer getLowPrecip() {
+    return lowPrecip;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setLowPrecip(Integer lowPrecip) {
+    this.lowPrecip = lowPrecip;
   }
 
   public Integer getLowTemp() {

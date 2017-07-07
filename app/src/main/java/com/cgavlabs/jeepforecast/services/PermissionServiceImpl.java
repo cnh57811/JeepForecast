@@ -7,29 +7,21 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import javax.inject.Inject;
 import timber.log.Timber;
 
 public class PermissionServiceImpl implements PermissionService {
 
-  private Context context;
-
-  @Inject public PermissionServiceImpl(Context context) {
-    this.context = context;
-  }
-
-  @Override public boolean hasLocationPermissions() {
-    boolean hasFineLocationPermissions =
-        ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED;
-    return !requiresRuntimePermissionCheck() || hasFineLocationPermissions;
+  @Override public boolean hasLocationPermissions(Context context) {
+    if (!requiresRuntimePermissionCheck()) {
+      return true;
+    }
+    return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+        == PackageManager.PERMISSION_GRANTED;
   }
 
   @Override public void requestLocationPermissions(Activity activity) {
-    if (!hasLocationPermissions()) {
-      ActivityCompat.requestPermissions(activity,
-          new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, PERMISSION_ACCESS_LOCATION);
-    }
+    ActivityCompat.requestPermissions(activity,
+        new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, PERMISSION_ACCESS_LOCATION);
   }
 
   @Override public boolean hasLocationPermissions(String[] permissions, int[] grantResults) {
@@ -46,11 +38,12 @@ public class PermissionServiceImpl implements PermissionService {
     return false;
   }
 
-  @Override public boolean hasStoragePermissions() {
-    boolean hasStoragePermissions =
-        ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
-            == PackageManager.PERMISSION_GRANTED;
-    return !requiresRuntimePermissionCheck() || hasStoragePermissions;
+  @Override public boolean hasStoragePermissions(Context context) {
+    if (!requiresRuntimePermissionCheck()) {
+      return true;
+    }
+    return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
+        == PackageManager.PERMISSION_GRANTED;
   }
 
   @Override public void requestStoragePermissions(Activity activity) {

@@ -44,7 +44,7 @@ public class WeatherConfigListAdapter extends RecyclerView.Adapter {
 
   @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
     ViewHolder configHolder = (ViewHolder) holder;
-    configHolder.name.setText(weatherConfigs.get(position).getName());
+    configHolder.name.setText(weatherConfigs.get(position).getLowPrecip().toString());
     String imagePath = weatherConfigs.get(position).getImagePath();
     presenter.setThumbnailImage(imagePath, configHolder.image);
   }

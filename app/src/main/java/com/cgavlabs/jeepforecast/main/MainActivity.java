@@ -109,7 +109,7 @@ public class MainActivity extends BaseActivity
   @SuppressWarnings("MissingPermission") @Override
   public void onConnected(@Nullable Bundle bundle) {
     Timber.d("onConnected");
-    if (permissionSvc.hasLocationPermissions()) {
+    if (permissionSvc.hasLocationPermissions(this.getApplicationContext())) {
       startLocationUpdates();
     } else {
       permissionSvc.requestLocationPermissions(this);
@@ -127,7 +127,8 @@ public class MainActivity extends BaseActivity
   @SuppressWarnings("MissingPermission") private void getWeatherForLastLocation() {
     Timber.d("getWeatherForLastLocation()");
     Location lastLocation = null;
-    if (sharedPrefs.isUsingCurrentLocation() && permissionSvc.hasLocationPermissions()) {
+    if (sharedPrefs.isUsingCurrentLocation() && permissionSvc.hasLocationPermissions(
+        this.getApplicationContext())) {
       lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
     }
     double latitude;
@@ -146,9 +147,8 @@ public class MainActivity extends BaseActivity
 
   @SuppressWarnings("MissingPermission") private void startLocationUpdates() {
     Timber.d("startLocationUpdates");
-    if (sharedPrefs.isUsingCurrentLocation()
-        && permissionSvc.hasLocationPermissions()
-        && googleApiClient.isConnected()) {
+    if (sharedPrefs.isUsingCurrentLocation() && permissionSvc.hasLocationPermissions(
+        this.getApplicationContext()) && googleApiClient.isConnected()) {
       LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest,
           this);
       requestingLocationUpdates = true;
@@ -157,7 +157,7 @@ public class MainActivity extends BaseActivity
 
   @SuppressWarnings("MissingPermission") private void stopLocationUpdates() {
     Timber.d("stopLocationUpdates");
-    if (permissionSvc.hasLocationPermissions()
+    if (permissionSvc.hasLocationPermissions(this.getApplicationContext())
         && googleApiClient.isConnected()
         && requestingLocationUpdates) {
       LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);

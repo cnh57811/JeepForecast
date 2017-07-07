@@ -1,55 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     >
 
   <ImageView
       android:id="@+id/config_add_image"
       android:layout_width="@dimen/weather_config_add_image_width"
       android:layout_height="@dimen/weather_config_add_image_height"
+      android:layout_gravity="center_horizontal"
       android:layout_margin="@dimen/weather_config_add_image_margin"
       android:background="@drawable/jeep_logo"
       android:clickable="true"
-      android:scaleType="centerCrop"
+      android:contentDescription="@string/content_desc_weather_config_image"
+      android:scaleType="fitCenter"
       />
 
   <LinearLayout
-      android:layout_width="wrap_content"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="vertical"
+      android:orientation="horizontal"
       >
-    <EditText
-        android:id="@+id/config_name"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_marginStart="8dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Config Name"
+        android:layout_weight="1"
+        android:text="Low Temp"
         />
-
     <EditText
         android:id="@+id/config_temp_low"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Low Temp Threshold"
-        android:inputType="number"
-        />
-
-    <EditText
-        android:id="@+id/config_temp_high"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="High Temp Threshold"
-        android:inputType="number"
-        />
-
-    <EditText
-        android:id="@+id/config_precip_threshold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Precip Threshold"
+        android:layout_weight="2"
+        android:hint="@string/low_temp_threshold"
         android:inputType="number"
         />
   </LinearLayout>
 
+  <EditText
+      android:id="@+id/config_temp_high"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="@string/high_temp_threshold"
+      android:inputType="number"
+      />
+
+  <EditText
+      android:id="@+id/config_precip_low"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="@string/low_precip_threshold"
+      android:inputType="number"
+      />
+
+  <EditText
+      android:id="@+id/config_precip_high"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="@string/high_precip_threshold"
+      android:inputType="number"
+      />
 </LinearLayout>
