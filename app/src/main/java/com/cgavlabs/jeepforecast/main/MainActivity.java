@@ -43,6 +43,7 @@ public class MainActivity extends BaseActivity
   @Inject MainContract.Presenter presenter;
   @Inject MainPagerAdapter pagerAdapter;
   @Inject GoogleApiClient googleApiClient;
+  @Inject WeakLocationListener weakLocationListener;
   @Inject LocationRequest locationRequest;
   @Inject PermissionService permissionSvc;
   @Inject SharedPrefs sharedPrefs;
@@ -109,7 +110,7 @@ public class MainActivity extends BaseActivity
   @SuppressWarnings("MissingPermission") @Override
   public void onConnected(@Nullable Bundle bundle) {
     Timber.d("onConnected");
-    if (permissionSvc.hasLocationPermissions()) {
+    if (permissionSvc.hasLocationPermissions(this.getApplicationContext())) {
       startLocationUpdates();
     } else {
       permissionSvc.requestLocationPermissions(this);
@@ -127,7 +128,8 @@ public class MainActivity extends BaseActivity
   @SuppressWarnings("MissingPermission") private void getWeatherForLastLocation() {
     Timber.d("getWeatherForLastLocation()");
     Location lastLocation = null;
-    if (sharedPrefs.isUsingCurrentLocation() && permissionSvc.hasLocationPermissions()) {
+    if (sharedPrefs.isUsingCurrentLocation() && permissionSvc.hasLocationPermissions(
+        this.getApplicationContext())) {
       lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
     }
     double latitude;
@@ -145,22 +147,24 @@ public class MainActivity extends BaseActivity
   }
 
   @SuppressWarnings("MissingPermission") private void startLocationUpdates() {
-    Timber.d("startLocationUpdates");
     if (sharedPrefs.isUsingCurrentLocation()
-        && permissionSvc.hasLocationPermissions()
-        && googleApiClient.isConnected()) {
+        && permissionSvc.hasLocationPermissions(this.getApplicationContext())
+        && googleApiClient.isConnected()
+        && !requestingLocationUpdates) {
+      Timber.d("start LocationUpdates");
       LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest,
-          this);
+          weakLocationListener);
       requestingLocationUpdates = true;
     }
   }
 
   @SuppressWarnings("MissingPermission") private void stopLocationUpdates() {
-    Timber.d("stopLocationUpdates");
-    if (permissionSvc.hasLocationPermissions()
+    if (permissionSvc.hasLocationPermissions(this.getApplicationContext())
         && googleApiClient.isConnected()
         && requestingLocationUpdates) {
-      LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
+      Timber.d("stop LocationUpdates");
+      LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,
+          weakLocationListener);
       requestingLocationUpdates = false;
     }
   }

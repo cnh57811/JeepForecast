@@ -9,6 +9,17 @@
   <string name="search_title">Location</string>
   <string name="search_hint">Search city or zip code</string>
 
-  <!-- TODO: Remove or change this placeholder text -->
   <string name="hello_blank_fragment">Hello blank fragment</string>
+  <string name="content_desc_weather_config_image">Preview of image for this weather configuration</string>
+  <string name="low_temp_threshold">Low Temp Threshold</string>
+  <string name="high_temp_threshold">High Temp Threshold</string>
+  <string name="low_precip_threshold">Low Precip Threshold</string>
+  <string name="high_precip_threshold">High Precip Threshold</string>
+  <string name="high_temp">High Temp</string>
+  <string name="low_temp">Low Temp</string>
+  <string name="high_precip">High Precip</string>
+  <string name="low_precip">Low Precip</string>
+  <string name="precipitation_icon_for_config_list_item">Precipitation icon for config list item</string>
+  <string name="temp_icon_for_config_list_item">Temp icon for config list item</string>
+  <string name="image_to_use_for_config_list_item">Image to use for config list item</string>
 </resources>

@@ -104,7 +104,9 @@ public class TodayFragment extends BaseFragment implements TodayContract.View {
     if (day.getLatitude() != null && day.getLongitude() != null) {
       List<Address> addresses = null;
       try {
+        Timber.d("Start gc.getFromLocation()");
         addresses = gc.getFromLocation(day.getLatitude(), day.getLongitude(), 1);
+        Timber.d("End gc.getFromLocation()");
       } catch (IOException e) {
         e.printStackTrace();
       }

@@ -1,69 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/weather_config_item_margin_top"
+    android:layout_marginBottom="@dimen/weather_config_item_margin_bottom"
     android:layout_marginEnd="@dimen/weather_config_item_margin_end"
     android:layout_marginStart="@dimen/weather_config_item_margin_start"
-    android:layout_marginBottom="@dimen/weather_config_item_margin_bottom"
+    android:layout_marginTop="@dimen/weather_config_item_margin_top"
     >
 
-  <RelativeLayout
+  <android.support.constraint.ConstraintLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
+      android:layout_height="wrap_content"
       >
 
     <ImageView
         android:id="@+id/weather_config_list_item_image"
-        android:layout_width="@dimen/weather_config_item_image_width"
-        android:layout_height="@dimen/weather_config_item_image_height"
-        android:layout_margin="@dimen/weather_config_item_image_margin"
+        android:contentDescription="@string/image_to_use_for_config_list_item"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/jeep_logo"
         android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1"
         />
-    <TextView
-        android:id="@+id/tv_not_hidden_2"
+    <ImageView
+        android:id="@+id/weather_config_list_item_temp_icon"
+        android:contentDescription="@string/temp_icon_for_config_list_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/weather_config_list_item_image"
-        android:layout_toEndOf="@+id/weather_config_list_item_image"
-        android:text="won't be hidden either"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/weather_config_list_item_image"
+        app:layout_constraintLeft_toLeftOf="@+id/weather_config_list_item_guideline_one_third"
+        app:layout_constraintRight_toLeftOf="@+id/weather_config_list_item_guideline_two_thirds"
+        app:layout_constraintTop_toTopOf="@+id/weather_config_list_item_image"
+        app:srcCompat="@drawable/ic_thermometer_75"
         />
-    <LinearLayout
-        android:id="@+id/ll_can_be_hidden"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/weather_config_list_item_image"
-        android:layout_margin="8dp"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        >
-      <TextView
-          android:id="@+id/tv_can_be_hidden_1"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:text="Some text can be hidden"
-          />
-      <TextView
-          android:id="@+id/tv_can_be_hidden_2"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:text="All of this can be hidden"
-          android:textAlignment="textEnd"
-          />
-    </LinearLayout>
     <TextView
-        android:id="@+id/tv_not_hidden_1"
+        android:id="@+id/weather_config_list_item_high_temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/weather_config_list_item_image"
-        android:layout_toEndOf="@+id/weather_config_list_item_image"
-        android:text="This should never be hidden"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@string/high_temp"
+        app:layout_constraintBottom_toTopOf="@+id/weather_config_list_item_temp_icon"
+        app:layout_constraintLeft_toLeftOf="@+id/weather_config_list_item_temp_icon"
+        app:layout_constraintRight_toRightOf="@+id/weather_config_list_item_temp_icon"
+        tools:text="100"
+        />
+    <TextView
+        android:id="@+id/weather_config_list_item_low_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/low_temp"
+        app:layout_constraintLeft_toLeftOf="@+id/weather_config_list_item_temp_icon"
+        app:layout_constraintRight_toRightOf="@+id/weather_config_list_item_temp_icon"
+        app:layout_constraintTop_toBottomOf="@+id/weather_config_list_item_temp_icon"
+        tools:text="32"
+        />
+    <ImageView
+        android:id="@+id/weather_config_list_item_precip_icon"
+        android:contentDescription="@string/precipitation_icon_for_config_list_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="0dp"
+        android:adjustViewBounds="true"
+        app:layout_constraintBottom_toBottomOf="@+id/weather_config_list_item_temp_icon"
+        app:layout_constraintLeft_toLeftOf="@+id/weather_config_list_item_guideline_two_thirds"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/weather_config_list_item_temp_icon"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_cloud_drizzle"
+        />
+    <TextView
+        android:id="@+id/weather_config_list_item_high_precip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@string/high_precip"
+        app:layout_constraintBottom_toTopOf="@+id/weather_config_list_item_precip_icon"
+        app:layout_constraintLeft_toLeftOf="@+id/weather_config_list_item_precip_icon"
+        app:layout_constraintRight_toRightOf="@+id/weather_config_list_item_precip_icon"
+        tools:text="100"
+        />
+    <TextView
+        android:id="@+id/weather_config_list_item_low_precip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/low_precip"
+        app:layout_constraintLeft_toLeftOf="@+id/weather_config_list_item_precip_icon"
+        app:layout_constraintRight_toRightOf="@+id/weather_config_list_item_precip_icon"
+        app:layout_constraintTop_toBottomOf="@+id/weather_config_list_item_precip_icon"
+        tools:text="15"
+        />
+    <android.support.constraint.Guideline
+        android:id="@+id/weather_config_list_item_guideline_one_third"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.33"
+        />
+    <android.support.constraint.Guideline
+        android:id="@+id/weather_config_list_item_guideline_two_thirds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.67"
         />
 
-  </RelativeLayout>
+  </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>
