@@ -15,4 +15,11 @@
   <string name="high_temp_threshold">High Temp Threshold</string>
   <string name="low_precip_threshold">Low Precip Threshold</string>
   <string name="high_precip_threshold">High Precip Threshold</string>
+  <string name="high_temp">High Temp</string>
+  <string name="low_temp">Low Temp</string>
+  <string name="high_precip">High Precip</string>
+  <string name="low_precip">Low Precip</string>
+  <string name="precipitation_icon_for_config_list_item">Precipitation icon for config list item</string>
+  <string name="temp_icon_for_config_list_item">Temp icon for config list item</string>
+  <string name="image_to_use_for_config_list_item">Image to use for config list item</string>
 </resources>

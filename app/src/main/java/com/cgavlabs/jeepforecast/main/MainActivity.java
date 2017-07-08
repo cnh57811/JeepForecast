@@ -43,6 +43,7 @@ public class MainActivity extends BaseActivity
   @Inject MainContract.Presenter presenter;
   @Inject MainPagerAdapter pagerAdapter;
   @Inject GoogleApiClient googleApiClient;
+  @Inject WeakLocationListener weakLocationListener;
   @Inject LocationRequest locationRequest;
   @Inject PermissionService permissionSvc;
   @Inject SharedPrefs sharedPrefs;
@@ -146,21 +147,24 @@ public class MainActivity extends BaseActivity
   }
 
   @SuppressWarnings("MissingPermission") private void startLocationUpdates() {
-    Timber.d("startLocationUpdates");
-    if (sharedPrefs.isUsingCurrentLocation() && permissionSvc.hasLocationPermissions(
-        this.getApplicationContext()) && googleApiClient.isConnected()) {
+    if (sharedPrefs.isUsingCurrentLocation()
+        && permissionSvc.hasLocationPermissions(this.getApplicationContext())
+        && googleApiClient.isConnected()
+        && !requestingLocationUpdates) {
+      Timber.d("start LocationUpdates");
       LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest,
-          this);
+          weakLocationListener);
       requestingLocationUpdates = true;
     }
   }
 
   @SuppressWarnings("MissingPermission") private void stopLocationUpdates() {
-    Timber.d("stopLocationUpdates");
     if (permissionSvc.hasLocationPermissions(this.getApplicationContext())
         && googleApiClient.isConnected()
         && requestingLocationUpdates) {
-      LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
+      Timber.d("stop LocationUpdates");
+      LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,
+          weakLocationListener);
       requestingLocationUpdates = false;
     }
   }

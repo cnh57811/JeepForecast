@@ -84,7 +84,8 @@ public class NewWeatherConfigFragment extends BaseDialogFragment {
 
     Observable<Boolean> highPrecipObservable = RxHelper.getTextWatcherObservable(highPrecipET)
         .debounce(500, TimeUnit.MILLISECONDS)
-        .observeOn(AndroidSchedulers.mainThread()).map(s -> true);
+        .observeOn(AndroidSchedulers.mainThread())
+        .map(s -> true);
 
     AlertDialog.Builder builder = new AlertDialog.Builder(getContext()).setView(dialogView)
         .setPositiveButton("ADD", (dialogInterface, i) -> {
@@ -112,11 +113,7 @@ public class NewWeatherConfigFragment extends BaseDialogFragment {
           }
           return error;
         }).subscribe(error -> {
-      if (error == null) {
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
-      } else {
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
-      }
+      dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(error == null);
       lowTempET.setError(error);
       highTempET.setError(error);
     }, throwable -> Timber.e(throwable, "Uh oh"));
@@ -137,6 +134,7 @@ public class NewWeatherConfigFragment extends BaseDialogFragment {
     if (resultCode == RESULT_OK) {
       if (requestCode == SELECT_PICTURE) {
         Timber.d("image selected " + data.getData());
+        jeepImg.setBackground(null);
         Glide.with(this).load(data.getData()).into(jeepImg);
         jeepImg.setTag(data.getData().toString());
       }

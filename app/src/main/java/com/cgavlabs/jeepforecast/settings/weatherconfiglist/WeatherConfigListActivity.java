@@ -65,6 +65,7 @@ public class WeatherConfigListActivity extends BaseActivity
   @Override public void inject() {
     DaggerWeatherConfigComponent.builder()
         .appComponent(((App) getApplication()).getAppComponent())
+        .weatherConfigModule(new WeatherConfigModule(this))
         .build()
         .inject(this);
   }
