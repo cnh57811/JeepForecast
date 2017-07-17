@@ -11,4 +11,8 @@ public class Constants {
   // intent extras
   public static final String INTENT_EXTRA_LATITUDE = "latitude";
   public static final String INTENT_EXTRA_LONGITUDE = "longitude";
+  public static final String HIGH_TEMP = "highTemp";
+  public static final String LOW_TEMP = "lowTemp";
+  public static final String HIGH_PRECIP = "highPrecip";
+  public static final String LOW_PRECIP = "lowPrecip";
 }

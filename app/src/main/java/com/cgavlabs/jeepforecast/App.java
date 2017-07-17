@@ -2,7 +2,7 @@ package com.cgavlabs.jeepforecast;
 
 import android.app.Application;
 import com.cgavlabs.jeepforecast.di.AppComponent;
-import com.cgavlabs.jeepforecast.di.AppModule;
+import com.cgavlabs.jeepforecast.di.ContextModule;
 import com.cgavlabs.jeepforecast.di.DaggerAppComponent;
 import com.squareup.leakcanary.LeakCanary;
 import io.realm.Realm;
@@ -21,7 +21,7 @@ public class App extends Application {
     }
     LeakCanary.install(this);
 
-    appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
+    appComponent = DaggerAppComponent.builder().contextModule(new ContextModule(this)).build();
 
     Realm.init(this);
     RealmConfiguration rc = new RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build();

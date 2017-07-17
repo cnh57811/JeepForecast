@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.cgavlabs.jeepforecast.App;
 import com.cgavlabs.jeepforecast.BaseDialogFragment;
+import com.cgavlabs.jeepforecast.Constants;
 import com.cgavlabs.jeepforecast.R;
 import com.cgavlabs.jeepforecast.models.view.WeatherConfig;
 import com.cgavlabs.jeepforecast.utils.RxHelper;
@@ -55,6 +56,26 @@ public class NewWeatherConfigFragment extends BaseDialogFragment {
     EditText lowPrecipET = (EditText) dialogView.findViewById(R.id.config_precip_low);
     EditText highPrecipET = (EditText) dialogView.findViewById(R.id.config_precip_high);
 
+    Bundle paramsToEdit = getArguments();
+    String highTempString = null;
+    String lowTempString = null;
+    String highPrecipString = null;
+    String lowPrecipString = null;
+    String positiveButton = null;
+    if (paramsToEdit != null) {
+      positiveButton = "SAVE";
+      highTempString = paramsToEdit.getString(Constants.HIGH_TEMP);
+      lowTempString = paramsToEdit.getString(Constants.LOW_TEMP);
+      highPrecipString = paramsToEdit.getString(Constants.HIGH_PRECIP);
+      lowPrecipString = paramsToEdit.getString(Constants.LOW_PRECIP);
+    } else {
+      positiveButton = "ADD";
+    }
+    highTempET.setText(highTempString);
+    lowTempET.setText(lowTempString);
+    highPrecipET.setText(highPrecipString);
+    lowPrecipET.setText(lowPrecipString);
+
     List<WeatherConfig> weatherConfigs = presenter.getWeatherConfigs();
 
     Observable<Integer> lowTempObservable = getTextWatcherObservable(lowTempET, Integer.MAX_VALUE);
@@ -88,7 +109,7 @@ public class NewWeatherConfigFragment extends BaseDialogFragment {
         .map(s -> true);
 
     AlertDialog.Builder builder = new AlertDialog.Builder(getContext()).setView(dialogView)
-        .setPositiveButton("ADD", (dialogInterface, i) -> {
+        .setPositiveButton(positiveButton, (dialogInterface, i) -> {
           Integer lowTemp = Integer.valueOf(lowTempET.getText().toString());
           Integer highTemp = Integer.valueOf(highTempET.getText().toString());
           Integer lowPrecip = Integer.valueOf(lowPrecipET.getText().toString());
