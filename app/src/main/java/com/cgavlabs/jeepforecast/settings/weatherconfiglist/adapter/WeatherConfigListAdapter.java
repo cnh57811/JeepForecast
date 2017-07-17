@@ -18,6 +18,7 @@ import javax.inject.Inject;
 
 public class WeatherConfigListAdapter extends RecyclerView.Adapter {
 
+  private final View.OnLongClickListener longClickListener;
   private List<WeatherConfig> weatherConfigs = new ArrayList<>();
   private WeatherConfigListAdapterContract.Presenter presenter;
   private Context context;
@@ -26,6 +27,7 @@ public class WeatherConfigListAdapter extends RecyclerView.Adapter {
       Context context) {
     this.presenter = presenter;
     this.context = context;
+    this.longClickListener = (View.OnLongClickListener) context;
   }
 
   public void setWeatherConfigs(List<WeatherConfig> newWeatherConfigs) {
@@ -42,7 +44,7 @@ public class WeatherConfigListAdapter extends RecyclerView.Adapter {
   @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View v = LayoutInflater.from(parent.getContext())
         .inflate(R.layout.weather_config_list_item, parent, false);
-    return new ViewHolder(v);
+    return new ViewHolder(v, longClickListener);
   }
 
   @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
@@ -64,22 +66,25 @@ public class WeatherConfigListAdapter extends RecyclerView.Adapter {
     notifyDataSetChanged();
   }
 
-  static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+  static class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
 
+    private final View.OnLongClickListener longClickListener;
     @BindView(R.id.weather_config_list_item_high_temp) TextView highTemp;
     @BindView(R.id.weather_config_list_item_low_temp) TextView lowTemp;
     @BindView(R.id.weather_config_list_item_high_precip) TextView highPrecip;
     @BindView(R.id.weather_config_list_item_low_precip) TextView lowPrecip;
     @BindView(R.id.weather_config_list_item_image) ImageView image;
 
-    ViewHolder(final View itemView) {
+    ViewHolder(final View itemView, View.OnLongClickListener longClickListener) {
       super(itemView);
       ButterKnife.bind(this, itemView);
-      itemView.setOnClickListener(this);
+      itemView.setOnLongClickListener(this);
+      this.longClickListener = longClickListener;
     }
 
-    @Override public void onClick(View view) {
-      //Utils.invertViewVisibility(hidden);
+    @Override public boolean onLongClick(View view) {
+      longClickListener.onLongClick(view);
+      return true;
     }
   }
 }

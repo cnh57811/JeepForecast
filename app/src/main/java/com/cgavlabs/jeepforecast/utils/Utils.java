@@ -3,6 +3,7 @@ package com.cgavlabs.jeepforecast.utils;
 import android.view.View;
 import java.util.Calendar;
 import java.util.Date;
+import timber.log.Timber;
 
 public class Utils {
 
@@ -38,6 +39,7 @@ public class Utils {
 
   public static Integer getIntegerOrDefault(String s, int dflt) {
     try {
+      Timber.d("getIntegerOrDefault " + s);
       return Integer.valueOf(s);
     } catch (NumberFormatException ex) {
       return dflt;
