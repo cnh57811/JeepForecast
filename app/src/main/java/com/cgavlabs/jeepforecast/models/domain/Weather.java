@@ -6,94 +6,95 @@ import io.realm.annotations.PrimaryKey;
 
 public class Weather extends RealmObject {
 
-  @PrimaryKey private int id = 1;
-  private Double latitude;
-  private Double longitude;
-  private String timezone;
-  private Integer offset;
-  private Currently currently;
-  private Minutely minutely;
-  private Hourly hourly;
-  private Daily daily;
-  private RealmList<Alert> alerts = null;
+    @PrimaryKey
+    private int id = 1;
+    private Double latitude;
+    private Double longitude;
+    private String timezone;
+    private Integer offset;
+    private Currently currently;
+    private Minutely minutely;
+    private Hourly hourly;
+    private Daily daily;
+    private RealmList<Alert> alerts = null;
 
-  public int getId() {
-    return id;
-  }
+    public int getId() {
+        return id;
+    }
 
-  public void setId(int id) {
-    this.id = id;
-  }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-  public Double getLatitude() {
-    return latitude;
-  }
+    public Double getLatitude() {
+        return latitude;
+    }
 
-  public void setLatitude(Double latitude) {
-    this.latitude = latitude;
-  }
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
 
-  public Double getLongitude() {
-    return longitude;
-  }
+    public Double getLongitude() {
+        return longitude;
+    }
 
-  public void setLongitude(Double longitude) {
-    this.longitude = longitude;
-  }
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
 
-  public String getTimezone() {
-    return timezone;
-  }
+    public String getTimezone() {
+        return timezone;
+    }
 
-  public void setTimezone(String timezone) {
-    this.timezone = timezone;
-  }
+    public void setTimezone(String timezone) {
+        this.timezone = timezone;
+    }
 
-  public Integer getOffset() {
-    return offset;
-  }
+    public Integer getOffset() {
+        return offset;
+    }
 
-  public void setOffset(Integer offset) {
-    this.offset = offset;
-  }
+    public void setOffset(Integer offset) {
+        this.offset = offset;
+    }
 
-  public Currently getCurrently() {
-    return currently;
-  }
+    public Currently getCurrently() {
+        return currently;
+    }
 
-  public void setCurrently(Currently currently) {
-    this.currently = currently;
-  }
+    public void setCurrently(Currently currently) {
+        this.currently = currently;
+    }
 
-  public Minutely getMinutely() {
-    return minutely;
-  }
+    public Minutely getMinutely() {
+        return minutely;
+    }
 
-  public void setMinutely(Minutely minutely) {
-    this.minutely = minutely;
-  }
+    public void setMinutely(Minutely minutely) {
+        this.minutely = minutely;
+    }
 
-  public Hourly getHourly() {
-    return hourly;
-  }
+    public Hourly getHourly() {
+        return hourly;
+    }
 
-  public void setHourly(Hourly hourly) {
-    this.hourly = hourly;
-  }
+    public void setHourly(Hourly hourly) {
+        this.hourly = hourly;
+    }
 
-  public Daily getDaily() {
-    return daily;
-  }
+    public Daily getDaily() {
+        return daily;
+    }
 
-  public void setDaily(Daily daily) {
-    this.daily = daily;
-  }
+    public void setDaily(Daily daily) {
+        this.daily = daily;
+    }
 
-  public RealmList<Alert> getAlerts() {
-    return alerts;
-  }
+    public RealmList<Alert> getAlerts() {
+        return alerts;
+    }
 
-  public void setAlerts(RealmList<Alert> alerts) {
-    this.alerts = alerts;
-  }
+    public void setAlerts(RealmList<Alert> alerts) {
+        this.alerts = alerts;
+    }
 }

@@ -4,20 +4,21 @@ import com.cgavlabs.jeepforecast.models.domain.Currently;
 import com.cgavlabs.jeepforecast.models.domain.DailyData;
 import com.cgavlabs.jeepforecast.models.domain.Weather;
 import com.cgavlabs.jeepforecast.models.view.WeatherConfig;
+
 import java.util.List;
 
 public interface WeatherRepo {
-  void insertOrUpdate(Weather weather);
+    void insertOrUpdate(Weather weather);
 
-  DailyData getLatestDailyData();
+    DailyData getLatestDailyData();
 
-  Weather getLatestWeather(Double latitude, Double longitude);
+    Weather getLatestWeather(Double latitude, Double longitude);
 
-  Currently getCurrentWeather();
+    Currently getCurrentWeather();
 
-  List<WeatherConfig> getWeatherConfigs();
+    List<WeatherConfig> getWeatherConfigs();
 
-  void insert(WeatherConfig weatherConfig);
+    void insert(WeatherConfig weatherConfig);
 
-  List<WeatherConfig> getAllWeatherConfigs();
+    List<WeatherConfig> getAllWeatherConfigs();
 }

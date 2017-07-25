@@ -11,18 +11,22 @@ import static org.mockito.Mockito.verify;
 
 public class MainPresenterTest {
 
-  private static final Double LATITUDE = 5.7;
-  private static final Double LONGITUDE = 5.8;
-  @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
-  @Mock MainContract.Interactor interactor;
-  MainContract.Presenter mainPresenter;
+    private static final Double LATITUDE = 5.7;
+    private static final Double LONGITUDE = 5.8;
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
+    @Mock
+    MainContract.Interactor interactor;
+    MainContract.Presenter mainPresenter;
 
-  @Before public void setup() {
-    mainPresenter = new MainPresenter(interactor);
-  }
+    @Before
+    public void setup() {
+        mainPresenter = new MainPresenter(interactor);
+    }
 
-  @Test public void callWeather() throws Exception {
-    mainPresenter.callWeather(LATITUDE, LONGITUDE);
-    verify(interactor).callWeather(LATITUDE, LONGITUDE);
-  }
+    @Test
+    public void callWeather() throws Exception {
+        mainPresenter.callWeather(LATITUDE, LONGITUDE);
+        verify(interactor).callWeather(LATITUDE, LONGITUDE);
+    }
 }

@@ -3,115 +3,112 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cgavlabs.jeepforecast.today.TodayFragment"
-    >
+    tools:context="com.cgavlabs.jeepforecast.today.TodayFragment">
 
-  <android.support.constraint.ConstraintLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      >
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/content_desc_jeep_config"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/temperature_actual"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="16dp"
-        android:includeFontPadding="false"
-        android:lineSpacingExtra="0dp"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="100sp"
-        android:typeface="normal"
-        app:layout_constraintLeft_toLeftOf="@+id/image"
-        app:layout_constraintTop_toTopOf="@+id/image"
-        tools:text="57"
-        />
-    <TextView
-        android:id="@+id/degree_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        app:layout_constraintBaseline_toBaselineOf="@+id/temperature_actual"
-        app:layout_constraintLeft_toRightOf="@+id/temperature_actual"
-        tools:text="℉"
-        />
-    <TextView
-        android:id="@+id/temperature_high"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        app:layout_constraintBottom_toTopOf="@+id/temperature_actual"
-        app:layout_constraintLeft_toLeftOf="@+id/temperature_actual"
-        app:layout_constraintRight_toRightOf="@+id/temperature_actual"
-        app:layout_constraintTop_toTopOf="@+id/temperature_actual"
-        tools:text="88"
-        />
-    <TextView
-        android:id="@+id/temperature_low"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        app:layout_constraintBottom_toBottomOf="@+id/temperature_actual"
-        app:layout_constraintLeft_toLeftOf="@+id/temperature_actual"
-        app:layout_constraintRight_toRightOf="@+id/temperature_actual"
-        app:layout_constraintTop_toBottomOf="@+id/temperature_actual"
-        tools:text="32"
-        />
-    <TextView
-        android:id="@+id/current_temp_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/temperature_actual"
-        app:layout_constraintRight_toLeftOf="@+id/temperature_actual"
-        app:layout_constraintTop_toTopOf="@+id/temperature_actual"
-        tools:text="current temp time"
-        />
-    <TextView
-        android:id="@+id/day_temp_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintBottom_toTopOf="@+id/temperature_high"
-        app:layout_constraintLeft_toLeftOf="@+id/temperature_actual"
-        app:layout_constraintRight_toRightOf="@+id/temperature_actual"
-        tools:text="day temp time"
-        />
-    <Button
-        android:id="@+id/btn_choose_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Image"
-        app:layout_constraintBottom_toBottomOf="@+id/image"
-        app:layout_constraintLeft_toLeftOf="@+id/image"
-        />
-    <TextView
-        android:id="@+id/location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/temperature_actual"
-        app:layout_constraintLeft_toRightOf="@+id/temperature_actual"
-        app:layout_constraintTop_toTopOf="@+id/temperature_actual"
-        tools:text="Someplace, SW"
-        />
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/content_desc_jeep_config"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
-  </android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/temperature_actual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="16dp"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="0dp"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="100sp"
+            android:typeface="normal"
+            app:layout_constraintLeft_toLeftOf="@+id/image"
+            app:layout_constraintTop_toTopOf="@+id/image"
+            tools:text="57" />
+
+        <TextView
+            android:id="@+id/degree_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            app:layout_constraintBaseline_toBaselineOf="@+id/temperature_actual"
+            app:layout_constraintLeft_toRightOf="@+id/temperature_actual"
+            tools:text="℉" />
+
+        <TextView
+            android:id="@+id/temperature_high"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            app:layout_constraintBottom_toTopOf="@+id/temperature_actual"
+            app:layout_constraintLeft_toLeftOf="@+id/temperature_actual"
+            app:layout_constraintRight_toRightOf="@+id/temperature_actual"
+            app:layout_constraintTop_toTopOf="@+id/temperature_actual"
+            tools:text="88" />
+
+        <TextView
+            android:id="@+id/temperature_low"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            app:layout_constraintBottom_toBottomOf="@+id/temperature_actual"
+            app:layout_constraintLeft_toLeftOf="@+id/temperature_actual"
+            app:layout_constraintRight_toRightOf="@+id/temperature_actual"
+            app:layout_constraintTop_toBottomOf="@+id/temperature_actual"
+            tools:text="32" />
+
+        <TextView
+            android:id="@+id/current_temp_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/temperature_actual"
+            app:layout_constraintRight_toLeftOf="@+id/temperature_actual"
+            app:layout_constraintTop_toTopOf="@+id/temperature_actual"
+            tools:text="current temp time" />
+
+        <TextView
+            android:id="@+id/day_temp_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintBottom_toTopOf="@+id/temperature_high"
+            app:layout_constraintLeft_toLeftOf="@+id/temperature_actual"
+            app:layout_constraintRight_toRightOf="@+id/temperature_actual"
+            tools:text="day temp time" />
+
+        <Button
+            android:id="@+id/btn_choose_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Image"
+            app:layout_constraintBottom_toBottomOf="@+id/image"
+            app:layout_constraintLeft_toLeftOf="@+id/image" />
+
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/temperature_actual"
+            app:layout_constraintLeft_toRightOf="@+id/temperature_actual"
+            app:layout_constraintTop_toTopOf="@+id/temperature_actual"
+            tools:text="Someplace, SW" />
+
+    </android.support.constraint.ConstraintLayout>
 </FrameLayout>

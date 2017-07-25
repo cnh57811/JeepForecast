@@ -2,14 +2,18 @@ package com.cgavlabs.jeepforecast.today;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+
 import com.cgavlabs.jeepforecast.models.domain.Currently;
 import com.cgavlabs.jeepforecast.models.domain.DailyData;
 import com.cgavlabs.jeepforecast.models.domain.Weather;
 import com.cgavlabs.jeepforecast.models.view.Day;
 import com.cgavlabs.jeepforecast.utils.Utils;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import javax.inject.Inject;
+
 import rx.Single;
 
 public class TodayPresenter implements TodayContract.Presenter {
@@ -18,12 +22,14 @@ public class TodayPresenter implements TodayContract.Presenter {
   private final TodayContract.View view;
   private final TodayContract.Interactor interactor;
 
-  @Inject public TodayPresenter(TodayContract.View view, TodayContract.Interactor interactor) {
+  @Inject
+  public TodayPresenter(TodayContract.View view, TodayContract.Interactor interactor) {
     this.view = view;
     this.interactor = interactor;
   }
 
-  @Override public void getTodaysWeather(Double latitude, Double longitude) {
+  @Override
+  public void getTodaysWeather(Double latitude, Double longitude) {
     Weather todaysWeather = interactor.getTodaysWeather(latitude, longitude);
     if (todaysWeather != null) {
       String imageUri = interactor.getWeatherBasedImage(todaysWeather);
@@ -32,7 +38,8 @@ public class TodayPresenter implements TodayContract.Presenter {
     }
   }
 
-  @Override public Single<Bitmap> getBackgroundImage(Uri uri, int maxImgSize) {
+  @Override
+  public Single<Bitmap> getBackgroundImage(Uri uri, int maxImgSize) {
     return interactor.getBackgroundImage(uri, maxImgSize);
   }
 

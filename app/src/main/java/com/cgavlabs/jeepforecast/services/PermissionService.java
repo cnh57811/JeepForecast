@@ -4,16 +4,16 @@ import android.app.Activity;
 import android.content.Context;
 
 public interface PermissionService {
-  int PERMISSION_ACCESS_LOCATION = 1;
-  int PERMISSION_ACCESS_STORAGE = 2;
+    int PERMISSION_ACCESS_LOCATION = 1;
+    int PERMISSION_ACCESS_STORAGE = 2;
 
-  boolean hasLocationPermissions(Context context);
+    boolean hasLocationPermissions(Context context);
 
-  boolean hasLocationPermissions(String[] permissions, int[] grantResults);
+    boolean hasLocationPermissions(String[] permissions, int[] grantResults);
 
-  void requestLocationPermissions(Activity activity);
+    void requestLocationPermissions(Activity activity);
 
-  boolean hasStoragePermissions(Context context);
+    boolean hasStoragePermissions(Context context);
 
-  void requestStoragePermissions(Activity activity);
+    void requestStoragePermissions(Activity activity);
 }
