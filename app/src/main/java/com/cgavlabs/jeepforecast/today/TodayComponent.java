@@ -1,11 +1,11 @@
 package com.cgavlabs.jeepforecast.today;
 
 import com.cgavlabs.jeepforecast.di.AppComponent;
-import com.cgavlabs.jeepforecast.di.UserScope;
+import com.cgavlabs.jeepforecast.di.TodayScope;
 
 import dagger.Component;
 
-@UserScope
+@TodayScope
 @Component(dependencies = {AppComponent.class}, modules = {
         TodayModule.class
 })
