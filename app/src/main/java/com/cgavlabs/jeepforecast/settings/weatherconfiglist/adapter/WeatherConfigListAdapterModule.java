@@ -1,7 +1,6 @@
 package com.cgavlabs.jeepforecast.settings.weatherconfiglist.adapter;
 
 import com.cgavlabs.jeepforecast.repos.WeatherRepo;
-import com.cgavlabs.jeepforecast.services.BitmapService;
 
 import dagger.Module;
 import dagger.Provides;
@@ -16,8 +15,7 @@ public class WeatherConfigListAdapterModule {
     }
 
     @Provides
-    WeatherConfigListAdapterContract.Interactor provideInteractor(
-            BitmapService bitmapService, WeatherRepo weatherRepo) {
-        return new WeatherConfigListAdapterInteractor(bitmapService, weatherRepo);
+    WeatherConfigListAdapterContract.Interactor provideInteractor(WeatherRepo weatherRepo) {
+        return new WeatherConfigListAdapterInteractor(weatherRepo);
     }
 }

@@ -1,8 +1,5 @@
 package com.cgavlabs.jeepforecast.today;
 
-import android.graphics.Bitmap;
-import android.net.Uri;
-
 import com.cgavlabs.jeepforecast.models.domain.Currently;
 import com.cgavlabs.jeepforecast.models.domain.DailyData;
 import com.cgavlabs.jeepforecast.models.domain.Weather;
@@ -13,8 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.inject.Inject;
-
-import rx.Single;
 
 public class TodayPresenter implements TodayContract.Presenter {
 
@@ -36,11 +31,6 @@ public class TodayPresenter implements TodayContract.Presenter {
       Day day = mapToDay(todaysWeather, imageUri);
       view.updateTodaysWeather(day);
     }
-  }
-
-  @Override
-  public Single<Bitmap> getBackgroundImage(Uri uri, int maxImgSize) {
-    return interactor.getBackgroundImage(uri, maxImgSize);
   }
 
   private Day mapToDay(Weather todaysWeather, String imageUri) {

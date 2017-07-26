@@ -1,7 +1,6 @@
 package com.cgavlabs.jeepforecast.today;
 
 import com.cgavlabs.jeepforecast.repos.WeatherRepo;
-import com.cgavlabs.jeepforecast.services.BitmapService;
 
 import dagger.Module;
 import dagger.Provides;
@@ -21,8 +20,7 @@ public class TodayModule {
     }
 
     @Provides
-    public TodayContract.Interactor provideInteractor(BitmapService bitmapService,
-                                                      WeatherRepo weatherRepo) {
-        return new TodayInteractor(bitmapService, weatherRepo);
+    public TodayContract.Interactor provideInteractor(WeatherRepo weatherRepo) {
+        return new TodayInteractor(weatherRepo);
     }
 }
