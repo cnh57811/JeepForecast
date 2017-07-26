@@ -1,6 +1,5 @@
 package com.cgavlabs.jeepforecast.today;
 
-import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -30,11 +29,7 @@ import javax.inject.Inject;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import timber.log.Timber;
-
-import static android.app.Activity.RESULT_OK;
-import static com.cgavlabs.jeepforecast.Constants.SELECT_PICTURE;
 
 public class TodayFragment extends BaseFragment implements TodayContract.View {
 
@@ -97,24 +92,6 @@ public class TodayFragment extends BaseFragment implements TodayContract.View {
         super.onStop();
     }
 
-    @OnClick(R.id.btn_choose_photo)
-    public void getPhoto() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == SELECT_PICTURE) {
-                Glide.with(this).load(data.getData()).centerCrop().into(backgroundImg);
-            }
-        }
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onWeatherDataUpdated(@SuppressWarnings("UnusedParameters") DataSavedEvent e) {
         Timber.d("Event bus initiated weather update");
@@ -143,7 +120,9 @@ public class TodayFragment extends BaseFragment implements TodayContract.View {
             lowTemp.setText(day.getLowTemp());
             dayTempTime.setText(day.getLowTempTime());
             currentTempTime.setText(day.getCurrentTempTime());
-            Glide.with(this).load(day.getImageUri()).into(backgroundImg);
+            Glide.with(this)
+                    .load(day.getImageUri())
+                    .into(backgroundImg);
         } else {
             Timber.d("Latitude or Longitude was null can't update the view");
         }

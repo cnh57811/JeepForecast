@@ -13,9 +13,8 @@
             android:id="@+id/image"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:adjustViewBounds="true"
             android:contentDescription="@string/content_desc_jeep_config"
-            android:scaleType="fitCenter"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -92,14 +91,6 @@
             app:layout_constraintLeft_toLeftOf="@+id/temperature_actual"
             app:layout_constraintRight_toRightOf="@+id/temperature_actual"
             tools:text="day temp time" />
-
-        <Button
-            android:id="@+id/btn_choose_photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Image"
-            app:layout_constraintBottom_toBottomOf="@+id/image"
-            app:layout_constraintLeft_toLeftOf="@+id/image" />
 
         <TextView
             android:id="@+id/location"
