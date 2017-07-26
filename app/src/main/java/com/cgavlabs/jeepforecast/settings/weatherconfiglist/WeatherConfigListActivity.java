@@ -17,6 +17,7 @@ import com.cgavlabs.jeepforecast.Constants;
 import com.cgavlabs.jeepforecast.R;
 import com.cgavlabs.jeepforecast.models.view.WeatherConfig;
 import com.cgavlabs.jeepforecast.settings.weatherconfiglist.adapter.WeatherConfigListAdapter;
+import com.cgavlabs.jeepforecast.settings.weatherconfiglist.newweatherconfig.EditWeatherConfigFragment;
 import com.cgavlabs.jeepforecast.settings.weatherconfiglist.newweatherconfig.NewWeatherConfigFragment;
 
 import javax.inject.Inject;
@@ -72,22 +73,24 @@ public class WeatherConfigListActivity extends BaseActivity
 
     @Override
     public boolean onLongClick(View view) {
+        Integer id = (Integer) view.getTag();
         TextView highTempTv = ButterKnife.findById(view, R.id.weather_config_list_item_high_temp);
         TextView lowTempTv = ButterKnife.findById(view, R.id.weather_config_list_item_low_temp);
         TextView highPrecipTv = ButterKnife.findById(view, R.id.weather_config_list_item_high_precip);
         TextView lowPrecipTv = ButterKnife.findById(view, R.id.weather_config_list_item_low_precip);
         //String tag = (String)view.findViewById(R.id.weather_config_list_item_image).getTag();
-        String highTemp = highTempTv.getText().toString();
-        String lowTemp = lowTempTv.getText().toString();
-        String highPrecip = highPrecipTv.getText().toString();
-        String lowPrecip = lowPrecipTv.getText().toString();
+        int highTemp = Integer.valueOf(highTempTv.getText().toString());
+        int lowTemp = Integer.valueOf(lowTempTv.getText().toString());
+        int highPrecip = Integer.valueOf(highPrecipTv.getText().toString());
+        int lowPrecip = Integer.valueOf(lowPrecipTv.getText().toString());
         FragmentManager fm = getSupportFragmentManager();
-        NewWeatherConfigFragment dialog = new NewWeatherConfigFragment();
+        EditWeatherConfigFragment dialog = new EditWeatherConfigFragment();
         Bundle b = new Bundle();
-        b.putString(Constants.HIGH_TEMP, highTemp);
-        b.putString(Constants.LOW_TEMP, lowTemp);
-        b.putString(Constants.HIGH_PRECIP, highPrecip);
-        b.putString(Constants.LOW_PRECIP, lowPrecip);
+        b.putInt(Constants.ID, id);
+        b.putInt(Constants.HIGH_TEMP, highTemp);
+        b.putInt(Constants.LOW_TEMP, lowTemp);
+        b.putInt(Constants.HIGH_PRECIP, highPrecip);
+        b.putInt(Constants.LOW_PRECIP, lowPrecip);
         dialog.setArguments(b);
         dialog.show(fm, NEW_WEATHER_CONFIG);
         return true;

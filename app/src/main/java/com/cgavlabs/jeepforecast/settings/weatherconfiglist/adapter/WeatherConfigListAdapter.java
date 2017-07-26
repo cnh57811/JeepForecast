@@ -56,6 +56,7 @@ public class WeatherConfigListAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder configHolder = (ViewHolder) holder;
+        configHolder.itemView.setTag(weatherConfigs.get(position).getId());
         configHolder.highTemp.setText(String.valueOf(weatherConfigs.get(position).getHighTemp()));
         configHolder.lowTemp.setText(String.valueOf(weatherConfigs.get(position).getLowTemp()));
         configHolder.highPrecip.setText(String.valueOf(weatherConfigs.get(position).getHighPrecip()));
@@ -77,6 +78,7 @@ public class WeatherConfigListAdapter extends RecyclerView.Adapter {
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
 
         private final View.OnLongClickListener longClickListener;
+        View itemView;
         @BindView(R.id.weather_config_list_item_high_temp)
         TextView highTemp;
         @BindView(R.id.weather_config_list_item_low_temp)
@@ -90,6 +92,7 @@ public class WeatherConfigListAdapter extends RecyclerView.Adapter {
 
         ViewHolder(final View itemView, View.OnLongClickListener longClickListener) {
             super(itemView);
+            this.itemView = itemView;
             ButterKnife.bind(this, itemView);
             itemView.setOnLongClickListener(this);
             this.longClickListener = longClickListener;

@@ -1,24 +1,22 @@
 package com.cgavlabs.jeepforecast.settings.weatherconfiglist.newweatherconfig;
 
+
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 
-import com.bumptech.glide.Glide;
 import com.cgavlabs.jeepforecast.App;
+import com.cgavlabs.jeepforecast.Constants;
 import com.cgavlabs.jeepforecast.models.view.WeatherConfig;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import rx.Observable;
-import timber.log.Timber;
 
-import static android.app.Activity.RESULT_OK;
-import static com.cgavlabs.jeepforecast.Constants.SELECT_PICTURE;
 import static com.cgavlabs.jeepforecast.utils.RxHelper.getLowHighObservable;
 import static com.cgavlabs.jeepforecast.utils.RxHelper.getOverlapObservable;
 import static com.cgavlabs.jeepforecast.utils.RxHelper.getTextWatcherObservable;
@@ -26,7 +24,7 @@ import static com.cgavlabs.jeepforecast.utils.RxHelper.getWeatherConfigErrorObse
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Integer.MIN_VALUE;
 
-public class NewWeatherConfigFragment extends BaseWeatherConfigFragment {
+public class EditWeatherConfigFragment extends BaseWeatherConfigFragment {
 
     @Inject
     NewWeatherConfigContract.Presenter presenter;
@@ -36,30 +34,36 @@ public class NewWeatherConfigFragment extends BaseWeatherConfigFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
 
-        List<WeatherConfig> allWCs = presenter.getWeatherConfigs();
-        Observable<Integer> lowTempObservable = getTextWatcherObservable(lowTempET, MAX_VALUE);
-        Observable<Integer> highTempObservable = getTextWatcherObservable(highTempET, MIN_VALUE);
-        Observable<Boolean> lowIsLowerThanHighObservable = getLowHighObservable(lowTempObservable, highTempObservable);
-        Observable<Boolean> tempsOverlapObservable = getOverlapObservable(allWCs, lowTempObservable, highTempObservable);
+        Bundle paramsToEdit = getArguments();
+        int id = paramsToEdit.getInt(Constants.ID);
+        int lowTemp = paramsToEdit.getInt(Constants.LOW_TEMP);
+        int highTemp = paramsToEdit.getInt(Constants.HIGH_TEMP);
+        int lowPrecip = paramsToEdit.getInt(Constants.LOW_PRECIP);
+        int highPrecip = paramsToEdit.getInt(Constants.HIGH_PRECIP);
 
-        AlertDialog dialog = buildDialog(null);
+        lowTempET.setText(String.valueOf(lowTemp));
+        highTempET.setText(String.valueOf(highTemp));
+        lowPrecipET.setText(String.valueOf(lowPrecip));
+        highPrecipET.setText(String.valueOf(highPrecip));
+
+        List<WeatherConfig> allWCs = presenter.getWeatherConfigs();
+        List<WeatherConfig> allOtherWCS = new ArrayList<>();
+        for (WeatherConfig wc : allWCs) {
+            if (id != wc.getId()) {
+                allOtherWCS.add(wc);
+            }
+        }
+
+        Observable<Integer> lowTempObservable = getTextWatcherObservable(lowTempET, MAX_VALUE, lowTemp);
+        Observable<Integer> highTempObservable = getTextWatcherObservable(highTempET, MIN_VALUE, highTemp);
+        Observable<Boolean> lowIsLowerThanHighObservable = getLowHighObservable(lowTempObservable, highTempObservable);
+        Observable<Boolean> tempsOverlapObservable = getOverlapObservable(allOtherWCS, lowTempObservable, highTempObservable);
+
+        AlertDialog dialog = buildDialog(id);
 
         getWeatherConfigErrorObservable(lowIsLowerThanHighObservable, tempsOverlapObservable, dialog, lowTempET, highTempET);
 
         return dialog;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == SELECT_PICTURE) {
-                Timber.d("image selected " + data.getData());
-                jeepImg.setBackground(null);
-                Glide.with(this).load(data.getData()).into(jeepImg);
-                jeepImg.setTag(data.getData().toString());
-            }
-        }
     }
 
     @Override
@@ -68,9 +72,5 @@ public class NewWeatherConfigFragment extends BaseWeatherConfigFragment {
                 .appComponent(((App) getActivity().getApplication()).getAppComponent())
                 .build()
                 .inject(this);
-    }
-
-    public interface NewWeatherConfigDialogListener {
-        void onAddNewWeatherConfig(WeatherConfig wc);
     }
 }

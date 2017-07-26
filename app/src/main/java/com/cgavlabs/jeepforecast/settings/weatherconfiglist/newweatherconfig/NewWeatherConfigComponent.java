@@ -9,4 +9,6 @@ import dagger.Component;
 @Component(dependencies = {AppComponent.class}, modules = {NewWeatherConfigModule.class})
 public interface NewWeatherConfigComponent {
     void inject(NewWeatherConfigFragment fragment);
+
+    void inject(EditWeatherConfigFragment fragment);
 }

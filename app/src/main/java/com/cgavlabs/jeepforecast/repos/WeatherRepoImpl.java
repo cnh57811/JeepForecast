@@ -74,12 +74,26 @@ public class WeatherRepoImpl implements WeatherRepo {
     }
 
     @Override
-    public void insert(WeatherConfig weatherConfig) {
-        realm.executeTransaction(realm1 -> realm1.insert(weatherConfig));
+    public void insertOrUpdate(WeatherConfig wc) {
+        if (wc.getId() == null) {
+            int key = getNextKey();
+            wc.setId(key);
+        }
+        Timber.d(wc.toString());
+        realm.executeTransaction(realm1 -> realm1.insertOrUpdate(wc));
     }
 
     @Override
     public List<WeatherConfig> getAllWeatherConfigs() {
         return realm.where(WeatherConfig.class).findAll();
+    }
+
+    private int getNextKey() {
+        Number n = realm.where(WeatherConfig.class).max("id");
+        if (n != null) {
+            return n.intValue() + 1;
+        } else {
+            return 0;
+        }
     }
 }

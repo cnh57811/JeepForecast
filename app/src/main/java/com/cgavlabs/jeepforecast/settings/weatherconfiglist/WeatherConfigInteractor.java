@@ -22,6 +22,6 @@ public class WeatherConfigInteractor implements WeatherConfigContract.Interactor
 
     @Override
     public void addWeatherconfig(WeatherConfig weatherConfig) {
-        weatherRepo.insert(weatherConfig);
+        weatherRepo.insertOrUpdate(weatherConfig);
     }
 }
